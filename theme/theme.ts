@@ -1,4 +1,5 @@
 import { createTheme } from '@shopify/restyle';
+import { Dimensions } from 'react-native';
 
 const palette = {
 	pink: '#CE2D4F',
@@ -43,7 +44,7 @@ const theme = createTheme({
 	colors: {
 		//text
 		primaryText: palette.offBlack,
-		secondaryText: palette.secondaryText,
+		secondaryText: palette.primaryTextSoft,
 		buttonText: palette.white,
 		buttonTextBlack: palette.black,
 
@@ -67,6 +68,7 @@ const theme = createTheme({
 		activeIcon: palette.offBlack,
 		background: palette.offWhite,
 		foreground: palette.black,
+		inputBackground: palette.white,
 		primaryCardBackground: palette.white,
 		secondaryCardBackground: palette.offBlack,
 		border: palette.lightGray,
@@ -85,13 +87,13 @@ const theme = createTheme({
 		header: {
 			fontSize: 36,
 			color: 'primaryText',
-			fontFamily: 'PoppinsBold',
+			fontFamily: 'poppins-bold',
 		},
 		subheader: {
 			fontSize: 24,
 			fontWeight: '600',
 			color: 'primaryText',
-			fontFamily: 'PoppinsMedium',
+			fontFamily: 'poppins-medium',
 		},
 		cardHeader: {
 			fontSize: 20,
@@ -101,71 +103,65 @@ const theme = createTheme({
 			top: 12,
 			left: 16,
 			paddingBottom: 'xl',
-			// fontFamily: 'PoppinsMedium'
+			fontFamily: 'poppins-medium',
 		},
 		body: {
 			fontSize: 16,
 			color: 'primaryText',
-			fontFamily: 'Poppins',
+			fontFamily: 'poppins-regular',
 		},
 		pageHeader: {
 			position: 'absolute',
 			top: 50,
 			left: 25,
 			fontSize: 36,
-			// fontWeight: 'bold',
-			fontFamily: 'PoppinsBold',
+			color: 'primaryText',
+			fontFamily: 'poppins-bold',
 		},
 		button_primary: {
 			color: 'buttonText',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
 		button_secondary: {
 			color: 'buttonTextBlack',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
 		button_success: {
 			color: 'buttonText',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
 		button_successSecondary: {
 			color: 'success',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
 		button_warning: {
 			color: 'buttonText',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
 		button_warningSecondary: {
 			color: 'warning',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
 		button_error: {
 			color: 'buttonText',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
 		button_errorSecondary: {
 			color: 'error',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
 		button_link: {
 			color: 'secondaryText',
+			fontFamily: 'poppins-medium',
 			fontSize: 16,
-		},
-		assignment_date: {
-			fontSize: 18,
-			color: 'primaryText',
-			fontFamily: 'PoppinsMedium',
-		},
-		assignment_title: {
-			fontSize: 18,
-			color: 'primaryText',
-			fontFamily: 'PoppinsMedium',
-		},
-		assignment_course: {
-			fontSize: 15,
-			color: 'primaryText',
-			fontFamily: 'Poppins',
 		},
 	},
 	cardVariants: {
@@ -175,7 +171,7 @@ const theme = createTheme({
 			shadowOffset: { width: 2, height: 3 },
 			shadowOpacity: 0.1,
 			shadowRadius: 20,
-			borderRadius: 16,
+			borderRadius: 12,
 			marginTop: 'xl',
 			justifyContent: 'center',
 			padding: 'm',
@@ -209,7 +205,7 @@ const theme = createTheme({
 		},
 		disabled: {
 			backgroundColor: 'disabled',
-			borderRadius: 12,
+			borderRadius: 6,
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
 			shadowOpacity: 0.1,
@@ -218,7 +214,7 @@ const theme = createTheme({
 		},
 		success: {
 			backgroundColor: 'success',
-			borderRadius: 12,
+			borderRadius: 6,
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
 			shadowOpacity: 0.2,
@@ -227,11 +223,11 @@ const theme = createTheme({
 		},
 		successSecondary: {
 			backgroundColor: 'successSoft',
-			borderRadius: 12,
+			borderRadius: 6,
 		},
 		warning: {
 			backgroundColor: 'warning',
-			borderRadius: 12,
+			borderRadius: 6,
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
 			shadowOpacity: 0.2,
@@ -240,11 +236,11 @@ const theme = createTheme({
 		},
 		warningSecondary: {
 			backgroundColor: 'warningSoft',
-			borderRadius: 12,
+			borderRadius: 6,
 		},
 		error: {
 			backgroundColor: 'error',
-			borderRadius: 12,
+			borderRadius: 6,
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
 			shadowOpacity: 0.2,
@@ -253,7 +249,7 @@ const theme = createTheme({
 		},
 		errorSecondary: {
 			backgroundColor: 'errorSoft',
-			borderRadius: 12,
+			borderRadius: 6,
 		},
 		link: {
 			background: 'none',
@@ -264,11 +260,15 @@ const theme = createTheme({
 		primary: {
 			borderWidth: 1,
 			borderColor: 'border',
+			fontFamily: 'poppins-regular',
 			padding: 'm',
 			borderRadius: 8,
 			color: 'primaryText',
 			fontSize: 16,
 			fontWeight: '600',
+			backgroundColor: 'inputBackground',
+			minWidth: 200,
+			maxWidth: Dimensions.get('window').width * 0.6,
 		},
 		underline: {
 			borderBottomWidth: 1,
@@ -293,6 +293,7 @@ export const darkTheme = createTheme({
 		primaryText: palette.offWhite,
 		background: palette.black,
 		foreground: palette.white,
+		inputBackground: palette.offBlack,
 		icon: palette.dimGray,
 		activeIcon: palette.gray,
 		primaryCardBackground: palette.offBlack,

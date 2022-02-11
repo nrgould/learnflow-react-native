@@ -1,38 +1,58 @@
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
+import { ImageBackground, useWindowDimensions } from 'react-native';
 import Box from '../atoms/Box';
 import Button from '../atoms/Button';
 import Card from '../atoms/Card';
 import Text from '../atoms/Text';
+import Image from '../../assets/IMG_3711.jpg';
+import * as Haptics from 'expo-haptics';
 
 export default function FeedItem() {
 	const { height } = useWindowDimensions();
 	return (
-		<Box
-			alignItems='center'
-			justifyContent='center'
-			height={height - 80}
-			backgroundColor='background'>
-			<Card variant='primary' flex={1}>
-				<Text variant='header'>FeedItem</Text>
-				<Box
-					flexDirection='row'
-					alignItems='center'
-					justifyContent='center'>
-					<Button
-						label='Set Dark Mode'
-						variant='success'
-						onPress={() => console.log('nothing')}
-						marginHorizontal='m'
-					/>
-					<Button
-						label='Set Light Mode'
-						variant='error'
-						onPress={() => console.log('nothing')}
-						marginHorizontal='m'
-					/>
-				</Box>
-			</Card>
-		</Box>
+		<ImageBackground
+			style={{ height: height - 75, width: '100%' }}
+			source={Image}>
+			<Box
+				alignItems='center'
+				justifyContent='center'
+				height={height - 75}>
+				<Card variant={'primary'}>
+					<Text variant='header'>Feed Item</Text>
+					<Box
+						flexDirection='row'
+						alignItems='flex-end'
+						justifyContent='center'
+						marginTop='xxl'>
+						<Button
+							label='Success'
+							variant='success'
+							onPress={() =>
+								Haptics.notificationAsync(
+									Haptics.NotificationFeedbackType.Success
+								)
+							}
+							marginHorizontal='s'
+						/>
+						<Button
+							label='Error'
+							variant='error'
+							onPress={() =>
+								Haptics.notificationAsync(
+									Haptics.NotificationFeedbackType.Error
+								)
+							}
+							marginHorizontal='s'
+						/>
+					</Box>
+				</Card>
+			</Box>
+		</ImageBackground>
 	);
 }
+
+// const styles = StyleSheet.create({
+// 	image: {
+// 		width:
+// 	}
+// })

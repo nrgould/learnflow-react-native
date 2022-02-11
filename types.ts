@@ -10,5 +10,14 @@ export type ActionTypes = {
 	payload?: any;
 };
 
+export type FragmentType = {
+	videoUrl?: string;
+	creatorId: string;
+	question: {
+		text: string;
+		answer: number | string;
+	}
+}
+
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;

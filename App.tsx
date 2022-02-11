@@ -7,15 +7,37 @@ import Feed from './screens/Feed';
 import Notifications from './screens/Notifications';
 import Path from './screens/Path';
 import Profile from './screens/Profile';
-import Search from './screens/Search';
+import Search from './screens/Discover';
 import { store } from './store/store';
 import theme, { darkTheme } from './theme/theme';
 import { Ionicons } from '@expo/vector-icons';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const BottomTabs = createBottomTabNavigator();
 
+const fetchFonts = () => {
+	return Font.loadAsync({
+		'poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
+		'poppins-medium': require('./assets/fonts/Poppins-Medium.ttf'),
+		'poppins-semibold': require('./assets/fonts/Poppins-SemiBold.ttf'),
+		'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
+	});
+};
+
 export default function App() {
 	const [darkMode, setDarkMode] = useState(true);
+	const [dataLoaded, setDataLoaded] = useState(false);
+
+	if (!dataLoaded) {
+		return (
+			<AppLoading
+				startAsync={fetchFonts}
+				onFinish={() => setDataLoaded(true)}
+				onError={(error: any) => console.log(error)}
+			/>
+		);
+	}
 
 	const {
 		icon: iconDark,
