@@ -46,11 +46,13 @@ const theme = createTheme({
 		secondaryText: palette.secondaryText,
 		buttonText: palette.white,
 		buttonTextBlack: palette.black,
+
 		//primary / secondary
 		primary: palette.pink,
 		primarySoft: palette.lightPink,
 		secondary: palette.blue,
 		secondarySoft: palette.lightBlue,
+
 		//status colors
 		success: palette.green,
 		successSoft: palette.lightGreen,
@@ -59,6 +61,7 @@ const theme = createTheme({
 		error: palette.red,
 		errorSoft: palette.lightRed,
 		disabled: palette.gray,
+
 		//component colors
 		icon: palette.blueGray,
 		activeIcon: palette.offBlack,
@@ -193,16 +196,16 @@ const theme = createTheme({
 		primary: {
 			backgroundColor: 'primary',
 			fontFamily: 'Poppins',
-			borderRadius: 12,
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
+			borderRadius: 6,
 			shadowOpacity: 0.1,
 			shadowRadius: 6,
 			elevation: 5,
 		},
 		secondary: {
 			backgroundColor: 'secondarySoft',
-			borderRadius: 12,
+			borderRadius: 6,
 		},
 		disabled: {
 			backgroundColor: 'disabled',
