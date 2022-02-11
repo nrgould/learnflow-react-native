@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from '@shopify/restyle';
 import { useState } from 'react';
 import { Provider } from 'react-redux';
-import Box from './components/atoms/Box';
 import Feed from './screens/Feed';
 import Notifications from './screens/Notifications';
 import Path from './screens/Path';
@@ -11,6 +10,7 @@ import Profile from './screens/Profile';
 import Search from './screens/Search';
 import { store } from './store/store';
 import theme, { darkTheme } from './theme/theme';
+import { Ionicons } from '@expo/vector-icons';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -46,7 +46,21 @@ export default function App() {
 								? iconDark
 								: iconColor,
 						}}>
-						<BottomTabs.Screen name='Feed'>
+						<BottomTabs.Screen
+							name='Feed'
+							options={{
+								tabBarIcon: ({ color, size, focused }: any) => (
+									<Ionicons
+										name={
+											focused
+												? 'ios-home'
+												: 'ios-home-outline'
+										}
+										size={size}
+										color={color}
+									/>
+								),
+							}}>
 							{() => (
 								<Feed
 									darkMode={darkMode}
@@ -54,13 +68,74 @@ export default function App() {
 								/>
 							)}
 						</BottomTabs.Screen>
-						<BottomTabs.Screen name='Search' component={Search} />
-						<BottomTabs.Screen name='Path' component={Path} />
 						<BottomTabs.Screen
+							options={{
+								tabBarIcon: ({ color, size, focused }: any) => (
+									<Ionicons
+										name={
+											focused
+												? 'ios-search'
+												: 'ios-search-outline'
+										}
+										size={size}
+										color={color}
+									/>
+								),
+							}}
+							name='Search'
+							component={Search}
+						/>
+						<BottomTabs.Screen
+							options={{
+								tabBarIcon: ({ color, size, focused }: any) => (
+									<Ionicons
+										name={
+											focused
+												? 'ios-analytics'
+												: 'ios-analytics-outline'
+										}
+										size={size}
+										color={color}
+									/>
+								),
+							}}
+							name='Path'
+							component={Path}
+						/>
+						<BottomTabs.Screen
+							options={{
+								tabBarIcon: ({ color, size, focused }: any) => (
+									<Ionicons
+										name={
+											focused
+												? 'ios-notifications'
+												: 'ios-notifications-outline'
+										}
+										size={size}
+										color={color}
+									/>
+								),
+							}}
 							name='Notifications'
 							component={Notifications}
 						/>
-						<BottomTabs.Screen name='Profile' component={Profile} />
+						<BottomTabs.Screen
+							options={{
+								tabBarIcon: ({ color, size, focused }: any) => (
+									<Ionicons
+										name={
+											focused
+												? 'person'
+												: 'person-outline'
+										}
+										size={size}
+										color={color}
+									/>
+								),
+							}}
+							name='Profile'
+							component={Profile}
+						/>
 					</BottomTabs.Navigator>
 				</NavigationContainer>
 			</ThemeProvider>
