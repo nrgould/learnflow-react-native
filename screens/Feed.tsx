@@ -1,10 +1,10 @@
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Box from '../components/atoms/Box';
-import FeedItem from '../components/molecules/FeedItem';
-import FeedItemQuestion from '../components/molecules/FeedItemQuestion';
 import * as Haptics from 'expo-haptics';
+import FeedItem from '../components/organisms/FeedItem';
+import { useItemHeight } from '../hooks/useItemHeight';
+import { StatusBar } from 'expo-status-bar';
 
 interface Props {
 	darkMode: boolean;
@@ -12,26 +12,21 @@ interface Props {
 }
 
 export default function Feed(props: Props) {
-	const { height } = useWindowDimensions();
+	const height = useItemHeight();
 	return (
 		<Box backgroundColor='background'>
+			<StatusBar style={'light'} />
 			<ScrollView
 				snapToAlignment='center'
 				onScrollEndDrag={() =>
 					Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
 				}
 				decelerationRate='fast'
-				snapToInterval={height - 75}>
+				snapToInterval={height}>
 				<FeedItem />
-				<FeedItemQuestion />
 				<FeedItem />
-				<FeedItemQuestion />
 				<FeedItem />
-				<FeedItemQuestion />
 				<FeedItem />
-				<FeedItemQuestion />
-				<FeedItem />
-				<FeedItemQuestion />
 			</ScrollView>
 		</Box>
 	);

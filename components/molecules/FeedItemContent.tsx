@@ -6,17 +6,16 @@ import Card from '../atoms/Card';
 import Text from '../atoms/Text';
 import Image from '../../assets/IMG_3711.jpg';
 import * as Haptics from 'expo-haptics';
+import { useItemHeight } from '../../hooks/useItemHeight';
 
-export default function FeedItem() {
-	const { height } = useWindowDimensions();
+export default function FeedItemContent() {
+	// const { height } = useWindowDimensions();
+	const height = useItemHeight();
 	return (
 		<ImageBackground
-			style={{ height: height - 75, width: '100%' }}
+			style={{ height: height, width: '100%' }}
 			source={Image}>
-			<Box
-				alignItems='center'
-				justifyContent='center'
-				height={height - 75}>
+			<Box alignItems='center' justifyContent='center' height={height}>
 				<Card variant={'primary'}>
 					<Text variant='header'>Feed Item</Text>
 					<Box

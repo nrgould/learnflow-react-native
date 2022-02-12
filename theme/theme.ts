@@ -283,6 +283,11 @@ const theme = createTheme({
 	breakpoints: {
 		phone: 0,
 		tablet: 768,
+		smallDevice: 700,
+	},
+	constants: {
+		bottomTabHeightSmall: 50,
+		bottomTabHeightLarge: 75,
 	},
 });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
+import { useItemHeight } from '../../hooks/useItemHeight';
 import Box from '../atoms/Box';
 import Button from '../atoms/Button';
 import Card from '../atoms/Card';
@@ -7,9 +8,9 @@ import FormTextInput from '../atoms/FormTextInput';
 import Text from '../atoms/Text';
 
 export default function FeedItemQuestion() {
-	const { height } = useWindowDimensions();
+	const height = useItemHeight();
 	return (
-		<Box alignItems='center' justifyContent='center' height={height - 75}>
+		<Box alignItems='center' justifyContent='center' height={height}>
 			<Card variant={'primary'}>
 				<Text variant='cardHeader'>Question:</Text>
 				<Text variant='body' marginTop='l'>
