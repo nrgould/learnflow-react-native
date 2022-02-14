@@ -58,7 +58,8 @@ const Button = ({
 		<TouchableOpacity onPress={onPress}>
 			<ButtonContainer
 				variant={disabled ? 'disabled' : variant}
-				padding='m'
+				padding='s'
+				paddingHorizontal='m'
 				marginVertical='s'
 				{...props}>
 				{loading ? (

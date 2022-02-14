@@ -53,6 +53,7 @@ const theme = createTheme({
 		primarySoft: palette.lightPink,
 		secondary: palette.blue,
 		secondarySoft: palette.lightBlue,
+		btnSecondary: palette.darkLiver,
 
 		//status colors
 		success: palette.green,
@@ -64,7 +65,6 @@ const theme = createTheme({
 		disabled: palette.gray,
 
 		//component colors
-		icon: palette.blueGray,
 		activeIcon: palette.offBlack,
 		background: palette.offWhite,
 		foreground: palette.black,
@@ -73,6 +73,7 @@ const theme = createTheme({
 		secondaryCardBackground: palette.offBlack,
 		border: palette.lightGray,
 		shadow: palette.black,
+		icon: palette.blueGray,
 	},
 	spacing: {
 		none: 0,
@@ -124,7 +125,7 @@ const theme = createTheme({
 			fontSize: 16,
 		},
 		button_secondary: {
-			color: 'buttonTextBlack',
+			color: 'buttonText',
 			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
@@ -200,7 +201,7 @@ const theme = createTheme({
 			elevation: 5,
 		},
 		secondary: {
-			backgroundColor: 'secondarySoft',
+			backgroundColor: 'btnSecondary',
 			borderRadius: 6,
 		},
 		disabled: {
@@ -278,6 +279,19 @@ const theme = createTheme({
 			color: 'primaryText',
 			fontSize: 16,
 			fontWeight: '500',
+		},
+		search: {
+			borderWidth: 1,
+			borderColor: 'border',
+			fontFamily: 'poppins-regular',
+			padding: 's',
+			borderRadius: 8,
+			color: 'primaryText',
+			fontSize: 16,
+			fontWeight: '600',
+			backgroundColor: 'inputBackground',
+			minWidth: 200,
+			// maxWidth: Dimensions.get('window').width * 0.6,
 		},
 	},
 	breakpoints: {

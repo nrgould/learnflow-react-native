@@ -11,7 +11,7 @@ export default function FeedItemQuestion() {
 	const height = useItemHeight();
 	return (
 		<Box alignItems='center' justifyContent='center' height={height}>
-			<Card variant={'primary'}>
+			<Card width='90%' variant={'primary'}>
 				<Text variant='cardHeader'>Question:</Text>
 				<Text variant='body' marginTop='l'>
 					Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -32,6 +32,8 @@ export default function FeedItemQuestion() {
 						variant='primary'
 						onPress={() => console.log('submit question')}
 						marginHorizontal='s'
+						paddingVertical='m'
+						paddingHorizontal='m'
 					/>
 				</Box>
 			</Card>

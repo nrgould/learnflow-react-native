@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, useWindowDimensions } from 'react-native';
+import { ImageBackground } from 'react-native';
 import Box from '../atoms/Box';
 import Button from '../atoms/Button';
 import Card from '../atoms/Card';
@@ -9,7 +9,6 @@ import * as Haptics from 'expo-haptics';
 import { useItemHeight } from '../../hooks/useItemHeight';
 
 export default function FeedItemContent() {
-	// const { height } = useWindowDimensions();
 	const height = useItemHeight();
 	return (
 		<ImageBackground

@@ -5,6 +5,11 @@ export type ThemeState = {
 	darkMode: boolean;
 };
 
+export type NavigationTypes = {
+	navigation: any;
+	route?: any;
+};
+
 export type ActionTypes = {
 	type: string;
 	payload?: any;
@@ -16,8 +21,8 @@ export type FragmentType = {
 	question: {
 		text: string;
 		answer: number | string;
-	}
-}
+	};
+};
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;

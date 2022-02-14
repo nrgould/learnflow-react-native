@@ -14,7 +14,5 @@ export function useItemHeight(): number {
 		? bottomTabHeightSmall
 		: bottomTabHeightLarge;
 
-	console.log(tabBarHeight);
-
 	return height - tabBarHeight;
 }

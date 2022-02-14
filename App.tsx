@@ -16,7 +16,7 @@ import AppLoading from 'expo-app-loading';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useItemHeight } from './hooks/useItemHeight';
+import DiscoverStackScreen from './navigation/DiscoverStackScreen';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -125,8 +125,8 @@ export default function App() {
 										/>
 									),
 								}}
-								name='Search'
-								component={Search}
+								name='DiscoverStack'
+								component={DiscoverStackScreen}
 							/>
 							<BottomTabs.Screen
 								options={{
