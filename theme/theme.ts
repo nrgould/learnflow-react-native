@@ -44,7 +44,7 @@ const theme = createTheme({
 	colors: {
 		//text
 		primaryText: palette.offBlack,
-		secondaryText: palette.primaryTextSoft,
+		secondaryText: palette.darkLiver,
 		buttonText: palette.white,
 		buttonTextBlack: palette.black,
 
@@ -286,12 +286,10 @@ const theme = createTheme({
 			fontFamily: 'poppins-regular',
 			padding: 's',
 			borderRadius: 8,
-			color: 'primaryText',
 			fontSize: 16,
 			fontWeight: '600',
 			backgroundColor: 'inputBackground',
 			minWidth: 200,
-			// maxWidth: Dimensions.get('window').width * 0.6,
 		},
 	},
 	breakpoints: {
@@ -310,6 +308,7 @@ export const darkTheme = createTheme({
 	colors: {
 		...theme.colors,
 		primaryText: palette.offWhite,
+		secondaryText: palette.primaryTextSoft,
 		background: palette.black,
 		foreground: palette.white,
 		inputBackground: palette.offBlack,

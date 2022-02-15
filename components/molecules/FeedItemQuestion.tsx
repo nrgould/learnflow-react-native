@@ -1,5 +1,4 @@
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import Box from '../atoms/Box';
 import Button from '../atoms/Button';

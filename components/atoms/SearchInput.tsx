@@ -13,7 +13,7 @@ import {
 	useTheme,
 	VariantProps,
 } from '@shopify/restyle';
-import React, { useState } from 'react';
+import React from 'react';
 import Box from './Box';
 import Theme from '../../theme/theme';
 import { TextInput } from 'react-native-gesture-handler';
@@ -53,6 +53,9 @@ type Props = SpacingProps<typeof Theme> &
 		error?: string;
 		placeholder?: string;
 		variant?: string;
+		autoFocus?: boolean;
+		searchFocused?: boolean;
+		handleSearchFocus?: () => void;
 	};
 
 const restyleFunctions = [color, spacing, border, backgroundColor];
@@ -63,37 +66,32 @@ export default function SearchInput({
 	value,
 	placeholder,
 	onChange,
+	searchFocused,
+	handleSearchFocus,
+	autoFocus,
 	variant = 'primary',
 	...rest
 }: Props) {
 	const props = useRestyle(restyleFunctions, { ...rest });
 	const theme = useTheme<typeof Theme>();
 
-	const [focused, setFocused] = useState(false);
-
-	function handleFocus() {
-		setFocused(!focused);
-	}
-
 	return (
 		<ContainerComponent
-			{...props}
 			variant={variant}
-			style={styles.container}
-			marginVertical='s'>
+			style={{ ...styles.container, width: '100%', flex: 1 }}>
 			<TextInputComponent
 				{...props}
 				placeholderTextColor={theme.colors.secondaryText}
 				placeholder={placeholder}
 				onChange={onChange}
 				returnKeyType='done'
-				onFocus={handleFocus}
+				autoFocus={autoFocus}
+				onFocus={handleSearchFocus}
 				style={styles.input}
-				color='primaryText'
 			/>
 			<Ionicons
 				size={24}
-				name={focused ? 'search' : 'search-outline'}
+				name={searchFocused ? 'search' : 'search-outline'}
 				color={theme.colors.secondaryText}
 			/>
 		</ContainerComponent>

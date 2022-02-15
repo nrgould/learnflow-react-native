@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '../components/atoms/Box';
 import Text from '../components/atoms/Text';
 import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
@@ -7,30 +7,83 @@ import { NavigationTypes } from '../types';
 import DiscoverModule from '../components/molecules/DiscoverModule';
 import SearchInput from '../components/atoms/SearchInput';
 import RestyledScrollView from '../components/atoms/RestyledScrollView';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Card from '../components/atoms/Card';
+
+const SAMPLE_MODULE = {
+	title: 'Calculus I',
+	description:
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque illo repellat architecto obcaecati. Itaque laborum aut consequatur nobis sed nam?',
+};
 
 export default function Discover({ navigation }: NavigationTypes) {
-	const SAMPLE_MODULE = {
-		title: 'Calculus I',
-		description:
-			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque illo repellat architecto obcaecati. Itaque laborum aut consequatur nobis sed nam?',
-	};
+	const [searchFocused, setSearchFocused] = useState(false);
+
+	function handleSearchFocus() {
+		setSearchFocused(!searchFocused);
+	}
+
+	if (searchFocused) {
+		return (
+			<RestyledSafeAreaView>
+				<Box
+					marginHorizontal='l'
+					marginBottom='s'
+					flexDirection='row'
+					alignItems='center'
+					justifyContent='space-between'>
+					<TouchableOpacity onPress={() => setSearchFocused(false)}>
+						<Ionicons
+							name='chevron-back'
+							size={24}
+							color={'white'}
+							style={{ marginRight: 12 }}
+						/>
+					</TouchableOpacity>
+					<SearchInput
+						placeholder='What do you want to learn?'
+						variant={'search'}
+						color='primaryText'
+						autoFocus={true}
+						searchFocused={true}
+					/>
+				</Box>
+				<RestyledScrollView style={{ height: '100%' }}>
+					<Box height='100%' marginHorizontal='l' marginBottom='s'>
+						<Card variant='primary'>
+							<Text variant='body'>Search Item</Text>
+						</Card>
+					</Box>
+				</RestyledScrollView>
+			</RestyledSafeAreaView>
+		);
+	}
 
 	return (
 		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
 			<RestyledScrollView
 				marginTop='s'
-				height='100%'
+				style={{ minHeight: '100%' }}
 				backgroundColor='background'>
 				<Box marginHorizontal='l' marginBottom='s'>
-					<Text variant='header'>Discover</Text>
+					<Text variant='header' marginBottom='s'>
+						Discover
+					</Text>
 					<SearchInput
 						placeholder='What do you want to learn?'
 						variant={'search'}
 						style={{ minWidth: '100%' }}
 						marginBottom='m'
+						searchFocused={searchFocused}
+						handleSearchFocus={handleSearchFocus}
 					/>
 				</Box>
-				<Box marginHorizontal='l' flexDirection='row' flexWrap={'wrap'}>
+				<Box
+					marginHorizontal='l'
+					marginVertical='s'
+					flexDirection='row'
+					flexWrap={'wrap'}>
 					<Tag navigation={navigation} text='Algebra' />
 					<Tag navigation={navigation} text='Calculus I' />
 					<Tag navigation={navigation} text='Astronomy' />
@@ -39,8 +92,15 @@ export default function Discover({ navigation }: NavigationTypes) {
 					<Tag navigation={navigation} text='Java' />
 					<Tag navigation={navigation} text='Python' />
 				</Box>
-
 				<Box marginHorizontal='l'>
+					<DiscoverModule
+						module={SAMPLE_MODULE}
+						navigation={navigation}
+					/>
+					<DiscoverModule
+						module={SAMPLE_MODULE}
+						navigation={navigation}
+					/>
 					<DiscoverModule
 						module={SAMPLE_MODULE}
 						navigation={navigation}

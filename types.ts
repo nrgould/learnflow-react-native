@@ -15,7 +15,13 @@ export type ActionTypes = {
 	payload?: any;
 };
 
-export type FragmentType = {
+export type ModuleType = {
+	content: ParticleType[];
+	title: string;
+	description: string;
+}
+
+export type ParticleType = {
 	videoUrl?: string;
 	creatorId: string;
 	question: {

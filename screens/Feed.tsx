@@ -1,17 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import Box from '../components/atoms/Box';
 import * as Haptics from 'expo-haptics';
 import FeedItem from '../components/organisms/FeedItem';
 import { useItemHeight } from '../hooks/useItemHeight';
 import { StatusBar } from 'expo-status-bar';
+import { NavigationTypes } from '../types';
 
-interface Props {
-	darkMode: boolean;
-	setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export default function Feed(props: Props) {
+export default function Feed({ navigation }: NavigationTypes) {
 	const height = useItemHeight();
 	return (
 		<Box backgroundColor='background'>
@@ -23,10 +19,10 @@ export default function Feed(props: Props) {
 				}
 				decelerationRate='fast'
 				snapToInterval={height}>
-				<FeedItem />
-				<FeedItem />
-				<FeedItem />
-				<FeedItem />
+				<FeedItem navigation={navigation} />
+				<FeedItem navigation={navigation} />
+				<FeedItem navigation={navigation} />
+				<FeedItem navigation={navigation} />
 			</ScrollView>
 		</Box>
 	);
