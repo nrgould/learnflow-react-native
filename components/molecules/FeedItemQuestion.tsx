@@ -4,8 +4,10 @@ import Animated, {
 	Extrapolate,
 	interpolate,
 	useAnimatedStyle,
+	withSpring,
 } from 'react-native-reanimated';
 import { useItemHeight } from '../../hooks/useItemHeight';
+import AnimatedCard from '../atoms/AnimatedCard';
 import Box from '../atoms/Box';
 import Button from '../atoms/Button';
 import Card from '../atoms/Card';
@@ -44,7 +46,8 @@ export default function FeedItemQuestion({ idx, translateY }: Props) {
 
 	return (
 		<Box alignItems='center' justifyContent='center' height={itemHeight}>
-			<Animated.View style={[styles.card, rStyle]}>
+			{/* <Animated.View style={[styles.card, rStyle]}> */}
+			<AnimatedCard style={rStyle}>
 				<Text variant='cardHeader'>Question:</Text>
 				<Text variant='body' marginTop='l'>
 					Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -69,7 +72,8 @@ export default function FeedItemQuestion({ idx, translateY }: Props) {
 						paddingHorizontal='m'
 					/>
 				</Box>
-			</Animated.View>
+				{/* </Animated.View> */}
+			</AnimatedCard>
 		</Box>
 	);
 }

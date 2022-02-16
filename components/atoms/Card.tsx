@@ -7,7 +7,6 @@ import {
 	VariantProps,
 } from '@shopify/restyle';
 import React from 'react';
-import Animated from 'react-native-reanimated';
 import Theme from '../../theme/theme';
 import Box from './Box';
 
@@ -20,9 +19,7 @@ type Props = SpacingProps<typeof Theme> &
 	};
 
 const CardComponent = createRestyleComponent<
-	Props &
-		React.ComponentProps<typeof Animated.View> &
-		React.ComponentProps<typeof Box>,
+	Props & React.ComponentProps<typeof Box>,
 	typeof Theme
 >([spacing, cardVariant]);
 
