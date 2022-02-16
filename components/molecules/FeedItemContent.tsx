@@ -28,7 +28,7 @@ export default function FeedItemContent({ navigation }: NavigationTypes) {
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 	}
 
-	console.log(status);
+	// console.log(status);
 	return (
 		<Box
 			alignItems='center'
