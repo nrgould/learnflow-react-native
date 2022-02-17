@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, {
 	Extrapolate,
@@ -17,15 +17,24 @@ import Text from '../atoms/Text';
 interface Props {
 	idx: number;
 	translateY: Animated.SharedValue<number>;
+	answered: boolean;
+	setAnswered: React.Dispatch<React.SetStateAction<boolean>>;
+	allowScroll: boolean;
+	setAllowScroll: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function FeedItemQuestion({ idx, translateY }: Props) {
+export default function FeedItemQuestion({
+	idx,
+	translateY,
+	answered,
+	setAnswered,
+	allowScroll,
+	setAllowScroll,
+}: Props) {
 	const itemHeight = useItemHeight();
 
-	// console.log(idx);
-	// console.log('Before: ', idx * itemHeight * 2);
-	// console.log('Center: ', idx * itemHeight * 2 + itemHeight);
-	// console.log('After: ', (idx + 1) * itemHeight * 2);
+	const isQuestionPage =
+		translateY.value === idx * itemHeight * 2 + itemHeight;
 
 	const inputRange = [
 		idx * itemHeight * 2,
@@ -40,13 +49,32 @@ export default function FeedItemQuestion({ idx, translateY }: Props) {
 			[0, 1, 0],
 			Extrapolate.CLAMP
 		);
+		const opacity = interpolate(
+			translateY.value,
+			inputRange,
+			[-1, 1, -1],
+			Extrapolate.CLAMP
+		);
 
-		return { transform: [{ scale }] };
+		return { transform: [{ scale }], opacity };
 	});
+
+	useEffect(() => {
+		console.log(allowScroll);
+		if (isQuestionPage) {
+			setAllowScroll(false);
+		}
+	});
+
+	function handleAnswer() {
+		setAnswered(true);
+		if (answered && isQuestionPage) {
+			setAllowScroll(true);
+		}
+	}
 
 	return (
 		<Box alignItems='center' justifyContent='center' height={itemHeight}>
-			{/* <Animated.View style={[styles.card, rStyle]}> */}
 			<AnimatedCard style={rStyle}>
 				<Text variant='cardHeader'>Question:</Text>
 				<Text variant='body' marginTop='l'>
@@ -66,30 +94,13 @@ export default function FeedItemQuestion({ idx, translateY }: Props) {
 					<Button
 						label='Submit'
 						variant='primary'
-						onPress={() => console.log('submit question')}
+						onPress={handleAnswer}
 						marginHorizontal='s'
 						paddingVertical='m'
 						paddingHorizontal='m'
 					/>
 				</Box>
-				{/* </Animated.View> */}
 			</AnimatedCard>
 		</Box>
 	);
 }
-
-const styles = StyleSheet.create({
-	card: {
-		backgroundColor: '#211C1E',
-		shadowColor: '#161314',
-		shadowOffset: { width: 2, height: 3 },
-		shadowOpacity: 0.1,
-		shadowRadius: 20,
-		borderRadius: 12,
-		marginTop: 12,
-		justifyContent: 'center',
-		padding: 8,
-		paddingTop: 12,
-		position: 'relative',
-	},
-});

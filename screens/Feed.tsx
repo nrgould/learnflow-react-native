@@ -11,14 +11,19 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export default function Feed({ navigation }: NavigationTypes) {
+	const [answered, setAnswered] = useState(false);
+	const [allowScroll, setAllowScroll] = useState(true);
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
+
+	console.log(allowScroll);
 
 	const feedItems = new Array(4).fill(0);
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {
-		// console.log(event.contentOffset.y);
 		translateY.value = event.contentOffset.y;
+		// console.log(event);
+		// if scrolling is disabled and scroll begins => error haptic && message saying "need to answer question first"
 	});
 
 	return (
@@ -27,19 +32,25 @@ export default function Feed({ navigation }: NavigationTypes) {
 			<Animated.ScrollView
 				onScroll={scrollHandler}
 				snapToAlignment='center'
+				pagingEnabled
+				scrollEnabled={allowScroll}
 				scrollEventThrottle={16}
 				onScrollEndDrag={() =>
 					Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
 				}
 				decelerationRate='fast'
 				snapToInterval={itemHeight}>
-				{feedItems.map((num, idx) => {
+				{feedItems.map((_, idx) => {
 					return (
 						<FeedItem
 							idx={idx}
 							key={idx}
 							translateY={translateY}
 							navigation={navigation}
+							answered={answered}
+							setAnswered={setAnswered}
+							allowScroll={allowScroll}
+							setAllowScroll={setAllowScroll}
 						/>
 					);
 				})}

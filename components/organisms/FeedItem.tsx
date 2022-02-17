@@ -7,14 +7,32 @@ import Animated from 'react-native-reanimated';
 interface Props extends NavigationTypes {
 	idx: number;
 	translateY: Animated.SharedValue<number>;
+	answered: boolean;
+	setAnswered: React.Dispatch<React.SetStateAction<boolean>>;
+	allowScroll: boolean;
+	setAllowScroll: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function FeedItem({ navigation, idx, translateY }: Props) {
-	console.log(translateY.value);
+export default function FeedItem({
+	navigation,
+	idx,
+	translateY,
+	answered,
+	setAnswered,
+	allowScroll,
+	setAllowScroll,
+}: Props) {
 	return (
 		<React.Fragment>
 			<FeedItemContent navigation={navigation} />
-			<FeedItemQuestion idx={idx} translateY={translateY} />
+			<FeedItemQuestion
+				answered={answered}
+				setAnswered={setAnswered}
+				allowScroll={allowScroll}
+				setAllowScroll={setAllowScroll}
+				idx={idx}
+				translateY={translateY}
+			/>
 		</React.Fragment>
 	);
 }
