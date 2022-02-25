@@ -9,7 +9,14 @@ import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
 import { NavigationTypes } from '../../types';
 
-export default function FeedItemContent({ navigation }: NavigationTypes) {
+interface Props extends NavigationTypes {
+	videoURL?: any;
+}
+
+export default function FeedItemContent({
+	navigation,
+	videoURL = require('../../assets/video/sampleTikTok.mov'),
+}: Props) {
 	const height = useItemHeight();
 	const video = useRef<any>(null);
 	const [videoPos, setVideoPos] = useState<number>(0);
@@ -28,7 +35,6 @@ export default function FeedItemContent({ navigation }: NavigationTypes) {
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 	}
 
-	// console.log(status);
 	return (
 		<Box
 			alignItems='center'
@@ -37,7 +43,7 @@ export default function FeedItemContent({ navigation }: NavigationTypes) {
 			width='100%'>
 			<Video
 				ref={video}
-				source={require('../../assets/video/sampleTikTok.mov')}
+				source={videoURL}
 				style={{ height: height, width: '100%' }}
 				resizeMode='cover'
 				isLooping
@@ -46,6 +52,7 @@ export default function FeedItemContent({ navigation }: NavigationTypes) {
 				useNativeControls={false}
 				onPlaybackStatusUpdate={setStatus}
 				progressUpdateIntervalMillis={200}
+				volume={10}
 			/>
 			<Box
 				flexDirection='column'

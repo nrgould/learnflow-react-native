@@ -1,6 +1,6 @@
-import { FragmentType } from '../types';
+import { ParticleType } from '../types';
 
-export class Fragment implements FragmentType {
+export class Particle implements ParticleType {
 	videoUrl?: string;
 	creatorId: string;
 	question: { text: string; answer: string | number };

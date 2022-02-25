@@ -1,19 +1,21 @@
 import React from 'react';
 import { Switch } from 'react-native-gesture-handler';
 import Box from '../components/atoms/Box';
-import Button from '../components/atoms/Button';
-import Card from '../components/atoms/Card';
 import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
 import Text from '../components/atoms/Text';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { setDarkMode } from '../store/actions/theme';
+import { setDark, setLight } from '../store/themeSlice';
 
 export default function Profile() {
 	const dispatch = useAppDispatch();
 	const darkMode = useAppSelector((state) => state.theme.darkMode);
 
-	function handleSetDarkMode(e) {
-		dispatch(setDarkMode(!darkMode));
+	function handleSetDarkMode() {
+		if (darkMode) {
+			dispatch(setLight());
+		} else {
+			dispatch(setDark());
+		}
 	}
 
 	return (

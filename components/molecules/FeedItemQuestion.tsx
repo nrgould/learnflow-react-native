@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, {
 	Extrapolate,
 	interpolate,
 	useAnimatedStyle,
-	withSpring,
 } from 'react-native-reanimated';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import AnimatedCard from '../atoms/AnimatedCard';
 import Box from '../atoms/Box';
 import Button from '../atoms/Button';
-import Card from '../atoms/Card';
 import FormTextInput from '../atoms/FormTextInput';
 import Text from '../atoms/Text';
 
@@ -46,7 +43,13 @@ export default function FeedItemQuestion({
 		const scale = interpolate(
 			translateY.value,
 			inputRange,
-			[0, 1, 0],
+			[0.5, 1, 0.5],
+			Extrapolate.CLAMP
+		);
+		const rotate = interpolate(
+			translateY.value,
+			inputRange,
+			[0.2, 0, -0.2],
 			Extrapolate.CLAMP
 		);
 		const opacity = interpolate(
@@ -56,14 +59,7 @@ export default function FeedItemQuestion({
 			Extrapolate.CLAMP
 		);
 
-		return { transform: [{ scale }], opacity };
-	});
-
-	useEffect(() => {
-		console.log(allowScroll);
-		if (isQuestionPage) {
-			setAllowScroll(false);
-		}
+		return { transform: [{ rotateZ: rotate }, { scale }], opacity };
 	});
 
 	function handleAnswer() {

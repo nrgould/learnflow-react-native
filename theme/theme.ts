@@ -100,10 +100,6 @@ const theme = createTheme({
 			fontSize: 20,
 			fontWeight: '600',
 			color: 'primaryText',
-			position: 'absolute',
-			top: 12,
-			left: 16,
-			paddingBottom: 'xl',
 			fontFamily: 'poppins-medium',
 		},
 		body: {
@@ -173,10 +169,10 @@ const theme = createTheme({
 			shadowOpacity: 0.1,
 			shadowRadius: 20,
 			borderRadius: 12,
-			marginTop: 'xl',
+			marginTop: 'm',
 			justifyContent: 'center',
 			padding: 'm',
-			paddingTop: 'xl',
+			// paddingTop: 'xl',
 			position: 'relative',
 		},
 		secondary: {

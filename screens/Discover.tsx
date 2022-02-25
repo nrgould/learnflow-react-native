@@ -10,6 +10,11 @@ import RestyledScrollView from '../components/atoms/RestyledScrollView';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Card from '../components/atoms/Card';
+import Animated, {
+	useAnimatedScrollHandler,
+	useSharedValue,
+} from 'react-native-reanimated';
+import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
 
 const SAMPLE_MODULE = {
 	title: 'Calculus I',
@@ -20,9 +25,18 @@ const SAMPLE_MODULE = {
 export default function Discover({ navigation }: NavigationTypes) {
 	const [searchFocused, setSearchFocused] = useState(false);
 
+	const translateY = useSharedValue(0);
+
 	function handleSearchFocus() {
 		setSearchFocused(!searchFocused);
 	}
+
+	const scrollHandler = useAnimatedScrollHandler((event) => {
+		translateY.value = event.contentOffset.y;
+	});
+
+	const AniamtedScrollView =
+		Animated.createAnimatedComponent(RestyledScrollView);
 
 	if (searchFocused) {
 		return (
@@ -62,7 +76,9 @@ export default function Discover({ navigation }: NavigationTypes) {
 
 	return (
 		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
-			<RestyledScrollView
+			{/* <AnimatedScrollHeader translateY={translateY} title='Discover' /> */}
+			<AniamtedScrollView
+				onScroll={scrollHandler}
 				marginTop='s'
 				style={{ minHeight: '100%' }}
 				backgroundColor='background'>
@@ -114,7 +130,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 						navigation={navigation}
 					/>
 				</Box>
-			</RestyledScrollView>
+			</AniamtedScrollView>
 		</RestyledSafeAreaView>
 	);
 }

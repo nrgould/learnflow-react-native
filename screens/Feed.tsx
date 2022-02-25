@@ -16,13 +16,10 @@ export default function Feed({ navigation }: NavigationTypes) {
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
 
-	console.log(allowScroll);
-
 	const feedItems = new Array(4).fill(0);
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		translateY.value = event.contentOffset.y;
-		// console.log(event);
 		// if scrolling is disabled and scroll begins => error haptic && message saying "need to answer question first"
 	});
 
