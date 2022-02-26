@@ -76,9 +76,10 @@ export default function Discover({ navigation }: NavigationTypes) {
 
 	return (
 		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
-			{/* <AnimatedScrollHeader translateY={translateY} title='Discover' /> */}
+			<AnimatedScrollHeader translateY={translateY} title='Discover' />
 			<AnimatedScrollView
 				onScroll={scrollHandler}
+				scrollEventThrottle={16}
 				marginTop='s'
 				style={{ minHeight: '100%' }}
 				backgroundColor='background'>

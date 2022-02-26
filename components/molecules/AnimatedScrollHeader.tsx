@@ -1,22 +1,24 @@
-import { Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import React from 'react';
 import Animated, {
 	Extrapolate,
 	interpolate,
-	useAnimatedScrollHandler,
 	useAnimatedStyle,
-	useSharedValue,
 } from 'react-native-reanimated';
+import Text from '../atoms/Text';
+import Box from '../atoms/Box';
 
 const { width } = Dimensions.get('window');
 
-// const HEADER_HEIGHT = 200;
 const COLLAPSED_HEADER_HEIGHT = 80;
 
 interface Props {
 	translateY: Animated.SharedValue<number>;
 	title: string;
 }
+
+const AnimatedText = Animated.createAnimatedComponent(Text);
+const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 export default function AnimatedScrollHeader({ translateY, title }: Props) {
 	const rTextStyle = useAnimatedStyle(() => {
@@ -38,22 +40,18 @@ export default function AnimatedScrollHeader({ translateY, title }: Props) {
 			[0, 1],
 			Extrapolate.CLAMP
 		);
-		// const animHeight = interpolate(
-		// 	translateY.value,
-		// 	[0, 100],
-		// 	[0, COLLAPSED_HEADER_HEIGHT],
-		// 	Extrapolate.CLAMP
-		// );
 		return {
 			opacity,
 		};
 	});
 	return (
-		<Animated.View style={[styles.header, rHeaderStyle]}>
-			<Animated.Text style={[styles.headerTitle, rTextStyle]}>
+		<AnimatedBox
+			backgroundColor='background'
+			style={[styles.header, rHeaderStyle]}>
+			<AnimatedText variant='headerTitle' style={[rTextStyle]}>
 				{title}
-			</Animated.Text>
-		</Animated.View>
+			</AnimatedText>
+		</AnimatedBox>
 	);
 }
 
@@ -61,11 +59,9 @@ const styles = StyleSheet.create({
 	title: {
 		marginTop: COLLAPSED_HEADER_HEIGHT,
 		fontSize: 40,
-		color: '#000',
 		width: '90%',
 	},
 	header: {
-		backgroundColor: 'white',
 		height: COLLAPSED_HEADER_HEIGHT,
 		width: width,
 		position: 'absolute',
@@ -76,12 +72,5 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-end',
 		zIndex: 5,
-	},
-	headerTitle: {
-		color: '#000',
-		fontWeight: '700',
-		marginBottom: 10,
-		zIndex: 5,
-		fontSize: 22,
 	},
 });

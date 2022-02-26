@@ -95,6 +95,13 @@ const theme = createTheme({
 			color: 'primaryText',
 			fontFamily: 'poppins-bold',
 		},
+		headerTitle: {
+			fontSize: 20,
+			color: 'primaryText',
+			fontFamily: 'poppins-bold',
+			zIndex: 5,
+			marginBottom: 's',
+		},
 		subheader: {
 			fontSize: 24,
 			fontWeight: '600',
