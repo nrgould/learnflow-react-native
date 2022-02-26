@@ -59,6 +59,7 @@ const theme = createTheme({
 		secondarySoft: palette.lightBlue,
 		tertiary: palette.aqua,
 		grayBtn: palette.darkLiver,
+		whiteBtn: palette.offWhite,
 
 		//status colors
 		success: palette.green,
@@ -96,7 +97,7 @@ const theme = createTheme({
 			fontFamily: 'poppins-bold',
 		},
 		headerTitle: {
-			fontSize: 20,
+			fontSize: 18,
 			color: 'primaryText',
 			fontFamily: 'poppins-bold',
 			zIndex: 5,

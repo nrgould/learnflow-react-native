@@ -14,9 +14,9 @@ import Animated, {
 	useSharedValue,
 	withDelay,
 	withSpring,
-	withTiming,
 } from 'react-native-reanimated';
 import { Dimensions, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 interface Props extends NavigationTypes {
 	videoURL?: any;
@@ -35,7 +35,7 @@ export default function FeedItemContent({
 	const [status, setStatus] = React.useState<any>({});
 
 	const theme = useTheme<Theme>();
-	const { primary, primaryText, border } = theme.colors;
+	const { primary, primaryText, border, whiteBtn } = theme.colors;
 
 	const scale = useSharedValue(0);
 
@@ -115,14 +115,40 @@ export default function FeedItemContent({
 					marginBottom='s'
 					marginHorizontal='m'
 					width='100%'>
-					<Box flexDirection='row'>
-						<Button
-							label={status.isPlaying ? 'Pause' : 'Play'}
-							variant={status.isPlaying ? 'error' : 'success'}
+					<Box
+						flexDirection='column'
+						alignItems='center'
+						justifyContent='center'
+						position='absolute'
+						right={20}
+						bottom={120}>
+						<Ionicons
+							size={42}
+							name={status.isPlaying ? 'pause' : 'play'}
+							color={whiteBtn}
 							onPress={
 								status.isPlaying ? handlePause : handlePlay
 							}
-							marginHorizontal='s'
+							style={{ marginBottom: 10 }}
+						/>
+						<Ionicons
+							size={32}
+							name='heart-outline'
+							color={whiteBtn}
+							style={{ marginBottom: 10 }}
+						/>
+						<Ionicons
+							size={32}
+							name='refresh-outline'
+							color={whiteBtn}
+							style={{ marginBottom: 10 }}
+							onPress={() => setVideoPos(0)}
+						/>
+						<Ionicons
+							size={32}
+							name='share-outline'
+							color={whiteBtn}
+							style={{ marginBottom: 10 }}
 						/>
 					</Box>
 					<Slider

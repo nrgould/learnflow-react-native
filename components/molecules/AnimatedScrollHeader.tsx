@@ -8,9 +8,11 @@ import Animated, {
 import Text from '../atoms/Text';
 import Box from '../atoms/Box';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-const COLLAPSED_HEADER_HEIGHT = 80;
+const isSmallDevice = height < 700;
+
+const COLLAPSED_HEADER_HEIGHT = isSmallDevice ? 60 : 80;
 
 interface Props {
 	translateY: Animated.SharedValue<number>;
