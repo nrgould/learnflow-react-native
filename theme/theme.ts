@@ -3,7 +3,11 @@ import { Dimensions } from 'react-native';
 
 const palette = {
 	pink: '#CE2D4F',
-	blue: '#094074',
+	// blue: '#094074',
+	blue: '#008BF8',
+	purple: '#6E6BC7',
+	aqua: '#04A777',
+	brown: '#FB8B24',
 
 	lightPink: '#f4cdd5',
 	lightBlue: '#e7f3fd',
@@ -53,6 +57,7 @@ const theme = createTheme({
 		primarySoft: palette.lightPink,
 		secondary: palette.blue,
 		secondarySoft: palette.lightBlue,
+		tertiary: palette.aqua,
 		btnSecondary: palette.darkLiver,
 
 		//status colors
@@ -101,6 +106,11 @@ const theme = createTheme({
 			fontWeight: '600',
 			color: 'primaryText',
 			fontFamily: 'poppins-medium',
+		},
+		stat: {
+			fontSize: 36,
+			color: 'primaryText',
+			fontFamily: 'poppins-bold',
 		},
 		body: {
 			fontSize: 16,

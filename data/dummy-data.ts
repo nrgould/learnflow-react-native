@@ -16,31 +16,37 @@ export const QUESTIONS = [
 
 export const PARTICLES = [
 	new Particle(
+		'Derivatives',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[0]
 	),
 	new Particle(
+		'Chain Rule',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[1]
 	),
 	new Particle(
+		'Anti-Derivatives',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[2]
 	),
 	new Particle(
+		'Limits',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[3]
 	),
 	new Particle(
+		'Integrals',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[4]
 	),
 	new Particle(
+		'Min/Max',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[5]
@@ -49,9 +55,9 @@ export const PARTICLES = [
 
 const MODULES = [
 	new Module(
-		[PARTICLES[0], PARTICLES[1], PARTICLES[2], PARTICLES[3]],
+		[...PARTICLES],
 		'Calculus',
-		'lorem ipsum this is a description'
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!'
 	),
 ];
 

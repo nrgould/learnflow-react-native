@@ -35,7 +35,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 		translateY.value = event.contentOffset.y;
 	});
 
-	const AniamtedScrollView =
+	const AnimatedScrollView =
 		Animated.createAnimatedComponent(RestyledScrollView);
 
 	if (searchFocused) {
@@ -77,7 +77,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 	return (
 		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
 			{/* <AnimatedScrollHeader translateY={translateY} title='Discover' /> */}
-			<AniamtedScrollView
+			<AnimatedScrollView
 				onScroll={scrollHandler}
 				marginTop='s'
 				style={{ minHeight: '100%' }}
@@ -130,7 +130,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 						navigation={navigation}
 					/>
 				</Box>
-			</AniamtedScrollView>
+			</AnimatedScrollView>
 		</RestyledSafeAreaView>
 	);
 }

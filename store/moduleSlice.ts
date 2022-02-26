@@ -1,7 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { serializedModules } from '../data/dummy-data';
+import { ModuleType } from '../types';
 
-const initialState = {
+export interface ModuleState {
+	selectedModule: ModuleType | null;
+	status: 'idle' | 'loading' | 'failed';
+}
+
+const initialState: ModuleState = {
 	selectedModule: null,
 	status: 'idle',
 };
@@ -16,7 +22,6 @@ export const fetchModuleAsync = createAsyncThunk(
 	'module/fetchModule',
 	async function () {
 		const response = await fetchModule(0);
-		// console.log(response.data);
 		return response.data;
 	}
 );
@@ -42,6 +47,6 @@ export const moduleSlice = createSlice({
 	},
 });
 
-export const actions = moduleSlice.actions;
+export const { clearModule } = moduleSlice.actions;
 
 export default moduleSlice.reducer;

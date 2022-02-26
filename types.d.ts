@@ -41,6 +41,7 @@ export type UserQuestionType = QuestionType & {
 };
 
 export type ParticleType = {
+	title: string;
 	videoUrl?: string;
 	creatorId: string;
 	question: QuestionType;

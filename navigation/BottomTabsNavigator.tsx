@@ -7,9 +7,9 @@ import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Feed from '../screens/Feed';
 import DiscoverStackScreen from './DiscoverStackScreen';
-import Path from '../screens/Path';
 import Notifications from '../screens/Notifications';
 import Profile from '../screens/Profile';
+import LearningStackScreen from './LearningStackScreen';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -79,8 +79,8 @@ export default function BottomTabsNavigator() {
 							/>
 						),
 					}}
-					name='Path'
-					component={Path}
+					name='LearningStack'
+					component={LearningStackScreen}
 				/>
 				<BottomTabs.Screen
 					options={{
