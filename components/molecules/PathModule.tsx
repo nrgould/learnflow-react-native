@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Card from '../atoms/Card';
 import Box from '../atoms/Box';
 import { default as CustomText } from '../atoms/Text';
-import Svg, { Circle, Text } from 'react-native-svg';
+import Svg, { Circle } from 'react-native-svg';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
 import Animated, {
@@ -11,41 +11,39 @@ import Animated, {
 	withTiming,
 } from 'react-native-reanimated';
 import { Dimensions, TouchableOpacity } from 'react-native';
-import { NavigationTypes } from '../../types';
+import { ModuleType, NavigationTypes } from '../../types';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const { height } = Dimensions.get('window');
 const isSmallDevice = height < 700;
 
-const CIRCLE_LENGTH = isSmallDevice ? 190 : 225;
+const CIRCLE_LENGTH = isSmallDevice ? 190 : 210;
 const R = isSmallDevice ? 35 : CIRCLE_LENGTH / (2 * Math.PI);
 const STROKE_WIDTH = 10;
 
 interface Props extends NavigationTypes {
-	completedContent: number;
-	totalContent: number;
 	progressColor: string;
+	module: ModuleType;
 }
 
 export default function PathModule({
-	completedContent,
-	totalContent,
 	progressColor,
 	navigation,
+	module,
 }: Props) {
 	const theme = useTheme<Theme>();
 	const { background } = theme.colors;
+
+	const { completedContent, totalContent } = module;
 
 	const progress = useSharedValue(0);
 	const progressVal = completedContent / totalContent;
 
 	const cardHeight = height / 8;
 
-	console.log(cardHeight);
-
 	function onPress() {
-		navigation.navigate('ModuleDetails');
+		navigation.navigate('ModuleDetails', { title: module.title });
 	}
 
 	useEffect(() => {
@@ -72,7 +70,9 @@ export default function PathModule({
 						flexDirection='column'
 						alignItems='flex-start'
 						justifyContent='space-around'>
-						<CustomText variant='cardHeader'>Algebra</CustomText>
+						<CustomText variant='cardHeader'>
+							{module.title}
+						</CustomText>
 						<CustomText variant='body'>
 							{completedContent} / {totalContent} Particles
 						</CustomText>

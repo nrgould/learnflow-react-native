@@ -5,11 +5,13 @@ import { ModuleType } from '../types';
 export interface ModuleState {
 	selectedModule: ModuleType | null;
 	status: 'idle' | 'loading' | 'failed';
+	modules: ModuleType[] | null;
 }
 
 const initialState: ModuleState = {
 	selectedModule: null,
 	status: 'idle',
+	modules: null,
 };
 
 function fetchModule(id: number) {
@@ -18,10 +20,26 @@ function fetchModule(id: number) {
 	);
 }
 
+function fetchModules() {
+	return new Promise<{ data: any }>((resolve) =>
+		setTimeout(() => resolve({ data: serializedModules }), 500)
+	);
+}
+
+//fetch single module
 export const fetchModuleAsync = createAsyncThunk(
 	'module/fetchModule',
 	async function () {
 		const response = await fetchModule(0);
+		return response.data;
+	}
+);
+
+//fetch all user modules
+export const fetchModulesAsync = createAsyncThunk(
+	'module/fetchModules',
+	async function () {
+		const response = await fetchModules();
 		return response.data;
 	}
 );
@@ -43,6 +61,13 @@ export const moduleSlice = createSlice({
 			.addCase(fetchModuleAsync.fulfilled, (state, action) => {
 				state.status = 'idle';
 				state.selectedModule = action.payload;
+			})
+			.addCase(fetchModulesAsync.pending, (state) => {
+				state.status = 'loading';
+			})
+			.addCase(fetchModulesAsync.fulfilled, (state, action) => {
+				state.status = 'idle';
+				state.modules = action.payload;
 			});
 	},
 });

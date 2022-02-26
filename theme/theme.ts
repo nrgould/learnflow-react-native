@@ -58,7 +58,7 @@ const theme = createTheme({
 		secondary: palette.blue,
 		secondarySoft: palette.lightBlue,
 		tertiary: palette.aqua,
-		btnSecondary: palette.darkLiver,
+		grayBtn: palette.darkLiver,
 
 		//status colors
 		success: palette.green,
@@ -135,6 +135,11 @@ const theme = createTheme({
 			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
+		button_tertiary: {
+			color: 'buttonText',
+			fontFamily: 'poppins-medium',
+			fontSize: 16,
+		},
 		button_success: {
 			color: 'buttonText',
 			fontFamily: 'poppins-medium',
@@ -207,7 +212,11 @@ const theme = createTheme({
 			elevation: 5,
 		},
 		secondary: {
-			backgroundColor: 'btnSecondary',
+			backgroundColor: 'secondary',
+			borderRadius: 6,
+		},
+		tertiary: {
+			backgroundColor: 'grayBtn',
 			borderRadius: 6,
 		},
 		disabled: {

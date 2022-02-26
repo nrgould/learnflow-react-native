@@ -14,8 +14,6 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 	const { selectedModule } = useAppSelector((state) => state.module);
 	const status = useAppSelector((state) => state.module.status);
 
-	console.log(selectedModule?.content);
-
 	useEffect(() => {
 		dispatch(fetchModuleAsync());
 		navigation.setOptions({

@@ -24,11 +24,12 @@ export type ModuleType = {
 	content: ParticleType[];
 	title: string;
 	description: string;
+	completedContent: number;
+	totalContent: number;
 };
 
 export type UserModuleType = ModuleType & {
 	completed: boolean;
-	percentComplete: number;
 };
 
 export type QuestionType = {

@@ -57,7 +57,30 @@ const MODULES = [
 	new Module(
 		[...PARTICLES],
 		'Calculus',
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!'
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
+		40,
+		107
+	),
+	new Module(
+		[...PARTICLES],
+		'Calculus 2',
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
+		97,
+		135
+	),
+	new Module(
+		[...PARTICLES],
+		'Calculus 3',
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
+		67,
+		112
+	),
+	new Module(
+		[...PARTICLES],
+		'Linear Algebra',
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
+		53,
+		87
 	),
 ];
 

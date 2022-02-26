@@ -19,7 +19,7 @@ export default function DiscoverModule({ navigation, module }: Props) {
 
 	return (
 		<TouchableOpacity onPress={navigationHandler}>
-			<Card variant='primary'  style={{ width: '100%' }}>
+			<Card variant='primary' style={{ width: '100%' }}>
 				<Text variant='cardHeader'>Calculus I</Text>
 				<Text
 					marginTop='s'
@@ -34,15 +34,15 @@ export default function DiscoverModule({ navigation, module }: Props) {
 					marginTop='s'
 					alignItems='center'
 					justifyContent='flex-end'>
-					<Button
+					{/* <Button
 						label='View'
 						variant='secondary'
 						onPress={navigationHandler}
 						marginRight='s'
-					/>
+					/> */}
 					<Button
 						label='Add'
-						variant='primary'
+						variant='secondary'
 						onPress={navigationHandler}
 					/>
 				</Box>
