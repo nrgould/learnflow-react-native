@@ -18,7 +18,7 @@ export default function Tag({ text, navigation }: Props) {
 			<Box
 				borderColor='border'
 				borderWidth={1}
-				borderRadius={20}
+				borderRadius='l'
 				backgroundColor='background'
 				marginRight='s'
 				marginBottom='s'>

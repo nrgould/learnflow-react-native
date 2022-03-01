@@ -15,6 +15,7 @@ import Animated, {
 	useSharedValue,
 } from 'react-native-reanimated';
 import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
+import { useItemHeight } from '../hooks/useItemHeight';
 
 const SAMPLE_MODULE = {
 	title: 'Calculus I',
@@ -24,6 +25,7 @@ const SAMPLE_MODULE = {
 
 export default function Discover({ navigation }: NavigationTypes) {
 	const [searchFocused, setSearchFocused] = useState(false);
+	const itemHeight = useItemHeight();
 
 	const translateY = useSharedValue(0);
 
@@ -81,7 +83,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 				onScroll={scrollHandler}
 				scrollEventThrottle={16}
 				marginTop='s'
-				style={{ minHeight: '100%' }}
+				style={{ minHeight: itemHeight }}
 				backgroundColor='background'>
 				<Box marginHorizontal='l' marginBottom='s'>
 					<Text variant='header' marginBottom='s'>

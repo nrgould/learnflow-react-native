@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Box from '../atoms/Box';
-import Button from '../atoms/Button';
 import * as Haptics from 'expo-haptics';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Video } from 'expo-av';

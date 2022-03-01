@@ -3,8 +3,9 @@ import { Dimensions } from 'react-native';
 
 const palette = {
 	pink: '#CE2D4F',
-	// blue: '#094074',
+
 	blue: '#008BF8',
+	darkBlue: '#094074',
 	purple: '#6E6BC7',
 	aqua: '#04A777',
 	brown: '#FB8B24',
@@ -20,6 +21,7 @@ const palette = {
 	black: '#161314',
 	offBlack: '#211C1E',
 	pureBlack: '#000',
+
 	white: '#fff',
 	offWhite: '#f9f9f9',
 	darkLiver: '#4D4246',
@@ -51,12 +53,14 @@ const theme = createTheme({
 		secondaryText: palette.darkLiver,
 		buttonText: palette.white,
 		buttonTextBlack: palette.black,
+		whiteText: palette.white,
 
 		//primary / secondary
 		primary: palette.pink,
 		primarySoft: palette.lightPink,
 		secondary: palette.blue,
 		secondarySoft: palette.lightBlue,
+		secondaryDark: palette.darkBlue,
 		tertiary: palette.aqua,
 		grayBtn: palette.darkLiver,
 		whiteBtn: palette.offWhite,
@@ -183,6 +187,11 @@ const theme = createTheme({
 			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
+		questionText: {
+			color: 'whiteText',
+			fontFamily: 'poppins-bold',
+			fontSize: 20,
+		},
 	},
 	cardVariants: {
 		primary: {
@@ -195,7 +204,6 @@ const theme = createTheme({
 			marginTop: 'm',
 			justifyContent: 'center',
 			padding: 'm',
-			// paddingTop: 'xl',
 			position: 'relative',
 		},
 		secondary: {
@@ -206,6 +214,28 @@ const theme = createTheme({
 			alignItems: 'center',
 			justifyContent: 'center',
 			padding: 'm',
+		},
+		questionBox: {
+			backgroundColor: 'secondary',
+			borderRadius: 's',
+			shadowColor: 'secondaryDark',
+			shadowOffset: { width: 0, height: 4 },
+			shadowOpacity: 1,
+			shadowRadius: 0,
+			marginTop: 'm',
+			justifyContent: 'center',
+			padding: 'm',
+			marginHorizontal: 's',
+		},
+		answerBox: {
+			backgroundColor: 'primaryCardBackground',
+			borderRadius: 's',
+			borderColor: 'border',
+			borderWidth: 2,
+			marginTop: 'm',
+			padding: 'm',
+			justifyContent: 'center',
+			marginHorizontal: 's',
 		},
 	},
 	buttonVariants: {
@@ -324,6 +354,13 @@ const theme = createTheme({
 		bottomTabHeightSmall: 50,
 		bottomTabHeightLarge: 75,
 	},
+	borderRadii: {
+		xs: 4,
+		s: 8,
+		m: 12,
+		l: 24,
+		xl: 48,
+	},
 });
 
 export const darkTheme = createTheme({
@@ -339,7 +376,7 @@ export const darkTheme = createTheme({
 		activeIcon: palette.gray,
 		primaryCardBackground: palette.offBlack,
 		secondaryCardBackground: palette.offWhite,
-		border: palette.darkLiver,
+		border: palette.dimGray,
 	},
 });
 

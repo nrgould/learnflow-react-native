@@ -1,35 +1,33 @@
 import {
+	BorderProps,
 	createRestyleComponent,
 	createVariant,
+	LayoutProps,
+	layout,
 	spacing,
+	border,
 	SpacingProps,
-	useRestyle,
 	VariantProps,
 } from '@shopify/restyle';
-import React from 'react';
+import { View } from 'react-native';
 import Theme from '../../theme/theme';
-import Box from './Box';
 
 const cardVariant = createVariant({ themeKey: 'cardVariants' });
 
 type Props = SpacingProps<typeof Theme> &
-	VariantProps<typeof Theme, 'cardVariants'> & {
-		children: any;
+	BorderProps<typeof Theme> &
+	LayoutProps<typeof Theme> &
+	VariantProps<typeof Theme, 'cardVariants'> &
+	React.ComponentProps<typeof View> & {
+		children?: any;
 		style?: object;
 	};
 
-const CardComponent = createRestyleComponent<
-	Props & React.ComponentProps<typeof Box>,
-	typeof Theme
->([spacing, cardVariant]);
+const Card = createRestyleComponent<Props, typeof Theme>([
+	spacing,
+	layout,
+	border,
+	cardVariant,
+]);
 
-const restyleFunctions = [cardVariant as any, spacing];
-
-export default function Card({ children, style, variant, ...rest }: Props) {
-	const props = useRestyle(restyleFunctions, { ...rest, variant });
-	return (
-		<CardComponent {...props} style={style} variant={variant}>
-			{children}
-		</CardComponent>
-	);
-}
+export default Card;

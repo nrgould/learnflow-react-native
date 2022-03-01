@@ -82,34 +82,6 @@ const MODULES = [
 		53,
 		87
 	),
-	new Module(
-		[...PARTICLES],
-		'Linear Algebra',
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
-		53,
-		87
-	),
-	new Module(
-		[...PARTICLES],
-		'Linear Algebra',
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
-		53,
-		87
-	),
-	new Module(
-		[...PARTICLES],
-		'Linear Algebra',
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
-		53,
-		87
-	),
-	new Module(
-		[...PARTICLES],
-		'Linear Algebra',
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
-		53,
-		87
-	),
 ];
 
 export const serializedModules = JSON.parse(JSON.stringify(MODULES));

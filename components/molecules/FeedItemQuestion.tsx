@@ -46,12 +46,6 @@ export default function FeedItemQuestion({
 			[0.5, 1, 0.5],
 			Extrapolate.CLAMP
 		);
-		const rotate = interpolate(
-			translateY.value,
-			inputRange,
-			[0.2, 0, -0.2],
-			Extrapolate.CLAMP
-		);
 		const opacity = interpolate(
 			translateY.value,
 			inputRange,
@@ -59,7 +53,7 @@ export default function FeedItemQuestion({
 			Extrapolate.CLAMP
 		);
 
-		return { transform: [{ rotateZ: rotate }, { scale }], opacity };
+		return { transform: [{ scale }], opacity };
 	});
 
 	function handleAnswer() {
