@@ -3,6 +3,7 @@ import FeedItemQuestion from '../molecules/FeedItemQuestion';
 import FeedItemContent from '../molecules/FeedItemContent';
 import { NavigationTypes } from '../../types';
 import Animated from 'react-native-reanimated';
+import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 
 interface Props extends NavigationTypes {
 	idx: number;
@@ -25,14 +26,15 @@ export default function FeedItem({
 	return (
 		<React.Fragment>
 			<FeedItemContent navigation={navigation} />
-			<FeedItemQuestion
+			<MultipleChoiceQuestion />
+			{/* <FeedItemQuestion
 				answered={answered}
 				setAnswered={setAnswered}
 				allowScroll={allowScroll}
 				setAllowScroll={setAllowScroll}
 				idx={idx}
 				translateY={translateY}
-			/>
+			/> */}
 		</React.Fragment>
 	);
 }

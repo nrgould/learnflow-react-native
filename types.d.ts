@@ -1,3 +1,4 @@
+import { string } from 'yup';
 import { SharedValues } from './components/AnimatedHelpers/util';
 import { rootReducer } from './store/reducers/rootReducer';
 import { store } from './store/store';
@@ -58,3 +59,9 @@ export type Offset = SharedValues<{
 	originalX: number;
 	originalY: number;
 }>;
+
+export type Option = {
+	content: string;
+	isAnswer: boolean;
+	id: string;
+};

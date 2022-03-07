@@ -54,13 +54,13 @@ export default function QuestionBox({
 	const isGestureActive = useSharedValue(false);
 	const translateX = useSharedValue(position.x);
 	const translateY = useSharedValue(position.y);
-	const offsetX = useSharedValue(0);
-	const offsetY = useSharedValue(0);
 
 	console.log(offsets[index].height.value);
 
 	const CORRECT_TRANSLATION_Y_LOWER = -boxLocation.y + ANSWER_BOX_HEIGHT;
-	// console.log(CORRECT_TRANSLATION_Y_LOWER);
+	const SNAP_POINT_X = boxLocation.x;
+	const SNAP_POINT_Y =
+		-boxLocation.y + ANSWER_BOX_HEIGHT + ANSWER_BOX_HEIGHT / 2;
 
 	const panGestureEvent = useAnimatedGestureHandler<
 		PanGestureHandlerGestureEvent,
@@ -75,16 +75,11 @@ export default function QuestionBox({
 		onActive: ({ translationX, translationY }, ctx) => {
 			translateX.value = ctx.x + translationX;
 			translateY.value = ctx.y + translationY;
-
-			console.log(translationY);
 		},
 		onEnd: ({ translationX, translationY, velocityX, velocityY }) => {
-			const snapPointsX = [
-				boxLocation.x,
-				SCREEN_WIDTH - ANSWER_BOX_WIDTH,
-			];
+			const snapPointsX = [SNAP_POINT_X, SCREEN_WIDTH - ANSWER_BOX_WIDTH];
 			const snapPointsY = [
-				-boxLocation.y + ANSWER_BOX_HEIGHT + ANSWER_BOX_HEIGHT / 2,
+				SNAP_POINT_Y,
 				SCREEN_HEIGHT - ANSWER_BOX_HEIGHT,
 			];
 
@@ -137,7 +132,7 @@ export default function QuestionBox({
 				height={ANSWER_BOX_HEIGHT}
 				alignItems='center'
 				justifyContent='center'
-				style={rStyle}>
+				style={[rStyle]}>
 				<AnimatedText variant='questionText'>{content}</AnimatedText>
 			</AnimatedCard>
 		</PanGestureHandler>

@@ -187,10 +187,15 @@ const theme = createTheme({
 			fontFamily: 'poppins-medium',
 			fontSize: 16,
 		},
-		questionText: {
+		questionButtonText: {
 			color: 'whiteText',
 			fontFamily: 'poppins-bold',
 			fontSize: 20,
+		},
+		questionText: {
+			fontFamily: 'poppins-bold',
+			fontSize: 20,
+			color: 'primaryText',
 		},
 	},
 	cardVariants: {
@@ -232,6 +237,16 @@ const theme = createTheme({
 			borderColor: 'border',
 			borderWidth: 2,
 			justifyContent: 'center',
+		},
+		optionBox: {
+			backgroundColor: 'primary',
+			borderRadius: 's',
+			shadowColor: 'secondaryDark',
+			shadowOffset: { width: 0, height: 4 },
+			// shadowOpacity: 1,
+			shadowRadius: 0,
+			justifyContent: 'center',
+			margin: 'xs',
 		},
 	},
 	buttonVariants: {

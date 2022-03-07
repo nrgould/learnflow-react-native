@@ -10,6 +10,7 @@ import DiscoverStackScreen from './DiscoverStackScreen';
 import Notifications from '../screens/Question';
 import Profile from '../screens/Profile';
 import LearningStackScreen from './LearningStackScreen';
+import MultipleChoiceQuestion from '../components/organisms/MultipleChoiceQuestion';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -98,7 +99,7 @@ export default function BottomTabsNavigator() {
 						),
 					}}
 					name='Notifications'
-					component={Notifications}
+					component={MultipleChoiceQuestion}
 				/>
 				<BottomTabs.Screen
 					options={{
