@@ -1,3 +1,4 @@
+import { SharedValues } from './components/AnimatedHelpers/util';
 import { rootReducer } from './store/reducers/rootReducer';
 import { store } from './store/store';
 
@@ -48,5 +49,12 @@ export type ParticleType = {
 	question: QuestionType;
 };
 
-// export type RootState = ReturnType<typeof rootReducer>;
-// export type AppDispatch = typeof store.dispatch;
+export type Offset = SharedValues<{
+	order: number;
+	width: number;
+	height: number;
+	x: number;
+	y: number;
+	originalX: number;
+	originalY: number;
+}>;

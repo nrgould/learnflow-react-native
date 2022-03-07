@@ -11,50 +11,117 @@ import Animated, {
 	useSharedValue,
 	withSpring,
 } from 'react-native-reanimated';
-import { errorHaptic, mediumHaptic, successHaptic } from '../../util';
+import { snapPoint } from 'react-native-redash';
+import { ANSWER_BOX_HEIGHT, ANSWER_BOX_WIDTH } from '../../theme/layout';
+import { Offset } from '../../types';
+import {
+	errorHaptic,
+	mediumHaptic,
+	successHaptic,
+} from '../../util/hapticFeedback';
 import Card from '../atoms/Card';
 import Text from '../atoms/Text';
 
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 interface QuestionBoxProps {
 	content: string;
-	isAnswer?: boolean;
+	isAnswer: boolean;
+	offsets: Offset[];
+	index: number;
+	position: {
+		x: number;
+		y: number;
+	};
+	boxLocation: {
+		x: number;
+		y: number;
+	};
 }
-
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const AnimatedCard = Animated.createAnimatedComponent(Card);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-export default function QuestionBox({ content, isAnswer }: QuestionBoxProps) {
-	const translateX = useSharedValue(0);
-	const translateY = useSharedValue(0);
+const springDamping = 12;
 
-	const panGestureEvent =
-		useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-			onStart: (event) => {
-				runOnJS(mediumHaptic)();
-			},
-			onActive: (event) => {
-				console.log(event.translationY, -SCREEN_HEIGHT * 0.15);
-				translateX.value = event.translationX;
-				translateY.value = event.translationY;
-			},
-			onEnd: (event) => {
-				console.log(event.translationY);
-				if (event.translationY < -SCREEN_HEIGHT * 0.15 && isAnswer) {
-					translateX.value = withSpring(70);
-					translateY.value = withSpring(-165);
-					runOnJS(successHaptic)();
-				} else {
-					translateX.value = withSpring(0);
-					translateY.value = withSpring(0);
-					runOnJS(errorHaptic)();
-				}
-			},
-		});
+export default function QuestionBox({
+	content,
+	isAnswer,
+	position,
+	boxLocation,
+	index,
+	offsets,
+}: QuestionBoxProps) {
+	const isGestureActive = useSharedValue(false);
+	const translateX = useSharedValue(position.x);
+	const translateY = useSharedValue(position.y);
+	const offsetX = useSharedValue(0);
+	const offsetY = useSharedValue(0);
+
+	console.log(offsets[index].height.value);
+
+	const CORRECT_TRANSLATION_Y_LOWER = -boxLocation.y + ANSWER_BOX_HEIGHT;
+	// console.log(CORRECT_TRANSLATION_Y_LOWER);
+
+	const panGestureEvent = useAnimatedGestureHandler<
+		PanGestureHandlerGestureEvent,
+		{ x: number; y: number }
+	>({
+		onStart: (_, ctx) => {
+			ctx.x = translateX.value;
+			ctx.y = translateY.value;
+			runOnJS(mediumHaptic)();
+			isGestureActive.value = true;
+		},
+		onActive: ({ translationX, translationY }, ctx) => {
+			translateX.value = ctx.x + translationX;
+			translateY.value = ctx.y + translationY;
+
+			console.log(translationY);
+		},
+		onEnd: ({ translationX, translationY, velocityX, velocityY }) => {
+			const snapPointsX = [
+				boxLocation.x,
+				SCREEN_WIDTH - ANSWER_BOX_WIDTH,
+			];
+			const snapPointsY = [
+				-boxLocation.y + ANSWER_BOX_HEIGHT + ANSWER_BOX_HEIGHT / 2,
+				SCREEN_HEIGHT - ANSWER_BOX_HEIGHT,
+			];
+
+			const snapPointX = snapPoint(translationX, velocityX, snapPointsX);
+			const snapPointY = snapPoint(translationY, velocityY, snapPointsY);
+
+			if (translationY < CORRECT_TRANSLATION_Y_LOWER && isAnswer) {
+				//correct answer, places into slot
+				translateX.value = withSpring(snapPointX, {
+					damping: springDamping,
+					velocity: velocityX,
+				});
+				translateY.value = withSpring(snapPointY, {
+					damping: springDamping,
+					velocity: velocityY,
+				});
+				runOnJS(successHaptic)();
+			} else {
+				//returns to bank
+				translateX.value = withSpring(position.x, {
+					damping: springDamping,
+				});
+				translateY.value = withSpring(position.y, {
+					damping: springDamping,
+				});
+				runOnJS(errorHaptic)();
+			}
+			isGestureActive.value = false;
+		},
+	});
 
 	const rStyle = useAnimatedStyle(() => {
 		return {
+			zIndex: isGestureActive.value ? 100 : 0,
+			position: 'absolute',
+			top: 0,
+			left: 0,
 			transform: [
 				{ translateX: translateX.value },
 				{ translateY: translateY.value },
@@ -65,15 +132,12 @@ export default function QuestionBox({ content, isAnswer }: QuestionBoxProps) {
 	return (
 		<PanGestureHandler onGestureEvent={panGestureEvent}>
 			<AnimatedCard
-				width={SCREEN_WIDTH / 3.5}
+				width={ANSWER_BOX_WIDTH}
 				variant='questionBox'
-				height={60}
+				height={ANSWER_BOX_HEIGHT}
 				alignItems='center'
 				justifyContent='center'
-				onLayout={({ nativeEvent }) => {
-					console.log(nativeEvent);
-				}}
-				style={[rStyle]}>
+				style={rStyle}>
 				<AnimatedText variant='questionText'>{content}</AnimatedText>
 			</AnimatedCard>
 		</PanGestureHandler>

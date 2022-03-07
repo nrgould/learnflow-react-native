@@ -34,9 +34,7 @@ export default function PathModule({
 }: Props) {
 	const theme = useTheme<Theme>();
 	const { background } = theme.colors;
-
 	const { completedContent, totalContent } = module;
-
 	const progress = useSharedValue(0);
 	const progressVal = completedContent / totalContent;
 
