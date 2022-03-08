@@ -1,32 +1,39 @@
 import React from 'react';
 import FeedItemQuestion from '../molecules/FeedItemQuestion';
 import FeedItemContent from '../molecules/FeedItemContent';
-import { NavigationTypes } from '../../types';
+import { NavigationTypes, ParticleType } from '../../types';
 import Animated from 'react-native-reanimated';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
+import { useItemHeight } from '../../hooks/useItemHeight';
 
 interface Props extends NavigationTypes {
-	idx: number;
+	index: number;
 	translateY: Animated.SharedValue<number>;
-	answered: boolean;
-	setAnswered: React.Dispatch<React.SetStateAction<boolean>>;
+	answered?: boolean;
+	setAnswered?: React.Dispatch<React.SetStateAction<boolean>>;
 	allowScroll: boolean;
 	setAllowScroll: React.Dispatch<React.SetStateAction<boolean>>;
+	particle: ParticleType;
 }
 
 export default function FeedItem({
 	navigation,
-	idx,
+	index,
 	translateY,
-	answered,
-	setAnswered,
 	allowScroll,
 	setAllowScroll,
+	particle,
 }: Props) {
+	const height = useItemHeight();
+
+	const onLockScroll = () => {
+		console.log(translateY.value);
+	};
+
 	return (
 		<React.Fragment>
 			<FeedItemContent navigation={navigation} />
-			<MultipleChoiceQuestion />
+			<MultipleChoiceQuestion question={particle.question} />
 			{/* <FeedItemQuestion
 				answered={answered}
 				setAnswered={setAnswered}

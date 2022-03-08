@@ -30,17 +30,9 @@ export type ModuleType = {
 	totalContent: number;
 };
 
-export type UserModuleType = ModuleType & {
-	completed: boolean;
-};
-
 export type QuestionType = {
 	text: string;
-	answer: number | string;
-};
-
-export type UserQuestionType = QuestionType & {
-	answered: boolean;
+	options: Option[4];
 };
 
 export type ParticleType = {
@@ -48,6 +40,7 @@ export type ParticleType = {
 	videoUrl?: string;
 	creatorId: string;
 	question: QuestionType;
+	id: string;
 };
 
 export type Offset = SharedValues<{

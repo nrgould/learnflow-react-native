@@ -1,10 +1,10 @@
-import { QuestionType } from '../types';
+import { Option, QuestionType } from '../types';
 
 export class Question implements QuestionType {
 	text: string;
-	answer: string | number;
-	constructor(text: string, answer: string | number) {
+	options: Option[];
+	constructor(text: string, options: Option[]) {
 		this.text = text;
-		this.answer = answer;
+		this.options = options;
 	}
 }

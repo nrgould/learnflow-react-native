@@ -1,5 +1,4 @@
 import React from 'react';
-import { ANSWER_HEIGHT } from '../../theme/layout';
 import Box from '../atoms/Box';
 import Card from '../atoms/Card';
 import Text from '../atoms/Text';
@@ -18,13 +17,10 @@ export default function MultipleChoiceQuestionHeader({
 	statusColor,
 }: Props) {
 	return (
-		<Box
-			height={ANSWER_HEIGHT}
-			alignItems='flex-start'
-			justifyContent={'center'}>
+		<Box alignItems='flex-start' justifyContent='center'>
 			<Box
 				flexDirection='row'
-				marginBottom='m'
+				marginBottom='xs'
 				alignItems='center'
 				width='100%'
 				justifyContent='space-between'>
@@ -37,8 +33,15 @@ export default function MultipleChoiceQuestionHeader({
 				<Text
 					variant='subheader'
 					fontFamily='poppins-semibold'
-					color={attempts === 1 ? 'warning' : 'primaryText'}>
-					{attempts} {attempts > 1 ? 'attempts' : 'attempt'} left
+					fontSize={18}
+					color={
+						attempts === 1
+							? 'warning'
+							: attempts === 0
+							? 'error'
+							: 'primaryText'
+					}>
+					{attempts} {attempts === 1 ? 'attempt' : 'attempts'} left
 				</Text>
 			</Box>
 			<Card
@@ -54,11 +57,14 @@ export default function MultipleChoiceQuestionHeader({
 			</Card>
 			<Box
 				justifyContent='center'
+				marginTop={'l'}
+				height={100}
+				borderWidth={1}
+				borderColor='border'
 				alignItems='center'
-				width='100%'
-				height={60}>
+				width='100%'>
 				<Text
-					marginTop={'l'}
+					textAlign='center'
 					style={{ color: statusColor }}
 					fontFamily='poppins-semibold'
 					variant='subheader'>

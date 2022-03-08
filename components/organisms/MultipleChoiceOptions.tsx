@@ -24,7 +24,7 @@ export default function MultipleChoiceOptions({
 			height={OPTIONS_HEIGHT}
 			alignItems='center'
 			justifyContent={'center'}>
-			<Text variant='body' marginBottom='l'>
+			<Text variant='body' fontFamily='poppins-semibold' marginBottom='l'>
 				Select an option:
 			</Text>
 			{options.map(({ id, content, isAnswer }, index) => (
@@ -38,7 +38,7 @@ export default function MultipleChoiceOptions({
 					id={id}
 				/>
 			))}
-			<Text variant='body' marginTop='l'>
+			<Text variant='body' color='secondaryText' marginTop='l'>
 				Skip
 			</Text>
 		</Box>

@@ -2,16 +2,25 @@ import { Module } from '../models/module';
 import { Particle } from '../models/particle';
 import { Question } from '../models/question';
 
+const QUESTION = 'x^2 + 6x + 9 = (x + 3) times what?';
+
+const OPTIONS = [
+	{ id: '1', content: '(X - 3)', isAnswer: false },
+	{ id: '2', content: '(X + 3)', isAnswer: true },
+	{ id: '3', content: '(X - 6)', isAnswer: false },
+	{ id: '4', content: '(X + 6)', isAnswer: false },
+];
+
 export const QUESTIONS = [
-	new Question('this is a question', 'this is an answer'),
-	new Question('this is a question 1', 'this is an answer 1'),
-	new Question('this is a question 2', 'this is an answer 2'),
-	new Question('this is a question 3', 'this is an answer 3'),
-	new Question('this is a question 4', 'this is an answer 4'),
-	new Question('this is a question 5', 'this is an answer 5'),
-	new Question('this is a question 6', 'this is an answer 6'),
-	new Question('this is a question 7', 'this is an answer 7'),
-	new Question('this is a question 8', 'this is an answer 8'),
+	new Question(QUESTION, OPTIONS),
+	new Question(QUESTION, OPTIONS),
+	new Question(QUESTION, OPTIONS),
+	new Question(QUESTION, OPTIONS),
+	new Question(QUESTION, OPTIONS),
+	new Question(QUESTION, OPTIONS),
+	new Question(QUESTION, OPTIONS),
+	new Question(QUESTION, OPTIONS),
+	new Question(QUESTION, OPTIONS),
 ];
 
 export const PARTICLES = [
@@ -19,37 +28,43 @@ export const PARTICLES = [
 		'Derivatives',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
-		QUESTIONS[0]
+		QUESTIONS[0],
+		'01'
 	),
 	new Particle(
 		'Chain Rule',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
-		QUESTIONS[1]
+		QUESTIONS[1],
+		'02'
 	),
 	new Particle(
 		'Anti-Derivatives',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
-		QUESTIONS[2]
+		QUESTIONS[2],
+		'03'
 	),
 	new Particle(
 		'Limits',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
-		QUESTIONS[3]
+		QUESTIONS[3],
+		'04'
 	),
 	new Particle(
 		'Integrals',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
-		QUESTIONS[4]
+		QUESTIONS[4],
+		'05'
 	),
 	new Particle(
 		'Min/Max',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
-		QUESTIONS[5]
+		QUESTIONS[5],
+		'06'
 	),
 ];
 
@@ -85,3 +100,4 @@ const MODULES = [
 ];
 
 export const serializedModules = JSON.parse(JSON.stringify(MODULES));
+export const serializedParticles = JSON.parse(JSON.stringify(PARTICLES));
