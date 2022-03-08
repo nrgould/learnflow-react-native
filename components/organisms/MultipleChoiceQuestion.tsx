@@ -58,23 +58,21 @@ export default function MultipleChoiceQuestion({ question }: Props) {
 	};
 
 	return (
-		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
-			<Box height={height} backgroundColor='background'>
-				<Box position='relative' marginHorizontal={'l'} flex={1}>
-					<MultipleChoiceQuestionHeader
-						attempts={attempts}
-						question={text}
-						statusMessage={statusMessage}
-						statusColor={statusColor}
-					/>
-					<MultipleChoiceOptions
-						disabled={disabled}
-						onAnswer={onAnswer}
-						options={options}
-						selectedOptions={selectedOptions}
-					/>
-				</Box>
+		<Box height={height} backgroundColor='background'>
+			<Box position='relative' marginHorizontal={'l'} flex={1}>
+				<MultipleChoiceQuestionHeader
+					attempts={attempts}
+					question={text}
+					statusMessage={statusMessage}
+					statusColor={statusColor}
+				/>
+				<MultipleChoiceOptions
+					disabled={disabled}
+					onAnswer={onAnswer}
+					options={options}
+					selectedOptions={selectedOptions}
+				/>
 			</Box>
-		</RestyledSafeAreaView>
+		</Box>
 	);
 }

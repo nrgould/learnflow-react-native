@@ -3,7 +3,7 @@ import Box from '../components/atoms/Box';
 import FeedItem from '../components/organisms/FeedItem';
 import { useItemHeight } from '../hooks/useItemHeight';
 import { StatusBar } from 'expo-status-bar';
-import { NavigationTypes, ParticleType } from '../types';
+import { NavigationTypes } from '../types';
 import Animated, {
 	useAnimatedScrollHandler,
 	useSharedValue,
@@ -62,6 +62,7 @@ export default function Feed({ navigation }: NavigationTypes) {
 			<StatusBar style={'light'} />
 			<AnimatedFlatList
 				data={serializedParticles}
+				snapToInterval={itemHeight}
 				renderItem={renderItem}
 				onScroll={scrollHandler}
 				snapToAlignment='center'
@@ -70,7 +71,6 @@ export default function Feed({ navigation }: NavigationTypes) {
 				scrollEventThrottle={16}
 				onScrollEndDrag={mediumHaptic}
 				decelerationRate='fast'
-				snapToInterval={itemHeight}
 				refreshControl={
 					<RefreshControl
 						refreshing={refreshing}
@@ -78,30 +78,6 @@ export default function Feed({ navigation }: NavigationTypes) {
 					/>
 				}
 			/>
-			{/* <Animated.ScrollView
-				onScroll={scrollHandler}
-				snapToAlignment='center'
-				pagingEnabled
-				scrollEnabled={allowScroll}
-				scrollEventThrottle={16}
-				onScrollEndDrag={mediumHaptic}
-				decelerationRate='fast'
-				snapToInterval={itemHeight}>
-				{feedItems.map((_, idx) => {
-					return (
-						<FeedItem
-							idx={idx}
-							key={idx}
-							translateY={translateY}
-							navigation={navigation}
-							answered={answered}
-							setAnswered={setAnswered}
-							allowScroll={allowScroll}
-							setAllowScroll={setAllowScroll}
-						/>
-					);
-				})}
-			</Animated.ScrollView> */}
 		</Box>
 	);
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ANSWER_HEIGHT } from '../../theme/layout';
 import Box from '../atoms/Box';
 import Card from '../atoms/Card';
 import Text from '../atoms/Text';
@@ -17,10 +18,14 @@ export default function MultipleChoiceQuestionHeader({
 	statusColor,
 }: Props) {
 	return (
-		<Box alignItems='flex-start' justifyContent='center'>
+		<Box
+			height={ANSWER_HEIGHT}
+			alignItems='flex-start'
+			justifyContent='center'>
 			<Box
 				flexDirection='row'
 				marginBottom='xs'
+				marginTop='m'
 				alignItems='center'
 				width='100%'
 				justifyContent='space-between'>
@@ -59,8 +64,6 @@ export default function MultipleChoiceQuestionHeader({
 				justifyContent='center'
 				marginTop={'l'}
 				height={100}
-				borderWidth={1}
-				borderColor='border'
 				alignItems='center'
 				width='100%'>
 				<Text

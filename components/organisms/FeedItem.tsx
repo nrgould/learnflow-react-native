@@ -24,10 +24,14 @@ export default function FeedItem({
 	setAllowScroll,
 	particle,
 }: Props) {
-	const height = useItemHeight();
+	const itemHeight = useItemHeight();
 
 	const onLockScroll = () => {
-		console.log(translateY.value);
+		const offset = index * itemHeight * 2;
+
+		if (translateY.value === offset) {
+			setAllowScroll(false);
+		}
 	};
 
 	return (
