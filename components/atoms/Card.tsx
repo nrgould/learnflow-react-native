@@ -1,6 +1,8 @@
 import {
 	BorderProps,
 	createRestyleComponent,
+	backgroundColor,
+	BackgroundColorProps,
 	createVariant,
 	LayoutProps,
 	layout,
@@ -17,6 +19,7 @@ const cardVariant = createVariant({ themeKey: 'cardVariants' });
 type Props = SpacingProps<typeof Theme> &
 	BorderProps<typeof Theme> &
 	LayoutProps<typeof Theme> &
+	BackgroundColorProps<typeof Theme> &
 	VariantProps<typeof Theme, 'cardVariants'> &
 	React.ComponentProps<typeof View> & {
 		children?: any;
@@ -25,6 +28,7 @@ type Props = SpacingProps<typeof Theme> &
 
 const Card = createRestyleComponent<Props, typeof Theme>([
 	spacing,
+	backgroundColor,
 	layout,
 	border,
 	cardVariant,

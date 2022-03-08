@@ -193,7 +193,7 @@ const theme = createTheme({
 			fontSize: 20,
 		},
 		questionText: {
-			fontFamily: 'poppins-bold',
+			fontFamily: 'poppins-semibold',
 			fontSize: 20,
 			color: 'primaryText',
 		},

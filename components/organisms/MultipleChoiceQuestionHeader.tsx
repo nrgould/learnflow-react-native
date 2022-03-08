@@ -6,17 +6,41 @@ import Text from '../atoms/Text';
 
 interface Props {
 	question: string;
+	attempts: number;
+	statusMessage: string;
+	statusColor: string;
 }
 
-export default function MultipleChoiceQuestionHeader({ question }: Props) {
+export default function MultipleChoiceQuestionHeader({
+	question,
+	attempts,
+	statusMessage,
+	statusColor,
+}: Props) {
 	return (
 		<Box
 			height={ANSWER_HEIGHT}
 			alignItems='flex-start'
 			justifyContent={'center'}>
-			<Text variant='subheader' color='secondary' marginBottom='m'>
-				Practice
-			</Text>
+			<Box
+				flexDirection='row'
+				marginBottom='m'
+				alignItems='center'
+				width='100%'
+				justifyContent='space-between'>
+				<Text
+					variant='subheader'
+					fontFamily='poppins-semibold'
+					color='secondary'>
+					Practice
+				</Text>
+				<Text
+					variant='subheader'
+					fontFamily='poppins-semibold'
+					color={attempts === 1 ? 'warning' : 'primaryText'}>
+					{attempts} {attempts > 1 ? 'attempts' : 'attempt'} left
+				</Text>
+			</Box>
 			<Card
 				variant='answerBox'
 				borderStyle='dashed'
@@ -24,8 +48,23 @@ export default function MultipleChoiceQuestionHeader({ question }: Props) {
 				justifyContent='center'
 				padding='m'
 				width='100%'>
-				<Text variant='questionText'>{question}</Text>
+				<Text variant='questionText' fontSize={24}>
+					{question}
+				</Text>
 			</Card>
+			<Box
+				justifyContent='center'
+				alignItems='center'
+				width='100%'
+				height={60}>
+				<Text
+					marginTop={'l'}
+					style={{ color: statusColor }}
+					fontFamily='poppins-semibold'
+					variant='subheader'>
+					{statusMessage}
+				</Text>
+			</Box>
 		</Box>
 	);
 }

@@ -1,6 +1,9 @@
+import { useTheme } from '@shopify/restyle';
 import React, { useState } from 'react';
 import { useItemHeight } from '../../hooks/useItemHeight';
+import { Theme } from '../../theme/theme';
 import { Option } from '../../types';
+import { errorHaptic, successHaptic } from '../../util/hapticFeedback';
 import Box from '../atoms/Box';
 import MultipleChoiceOptions from './MultipleChoiceOptions';
 import MultipleChoiceQuestionHeader from './MultipleChoiceQuestionHeader';
@@ -15,24 +18,54 @@ const OPTIONS = [
 ];
 
 export default function MultipleChoiceQuestion() {
-	const [answered, setAnswered] = useState(false);
+	const theme = useTheme<Theme>();
+	const [disabled, setDisabled] = useState(false);
+	const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+	const [attempts, setAttempts] = useState(3);
+	const [statusMessage, setStatusMessage] = useState('');
+	const [statusColor, setStatusColor] = useState(theme.colors.primaryText);
+	const height = useItemHeight();
 
 	const onAnswer = (id: string) => {
 		const answer = OPTIONS.find((option) => option.id === id);
+
+		const newSelected = [...selectedOptions, answer];
+		setSelectedOptions(newSelected as Option[]);
+        setAttempts(attempts - 1);
 		if (answer?.isAnswer) {
-			console.log('Correct');
-			setAnswered(true);
+			//correct
+			setStatusColor(theme.colors.success);
+			setStatusMessage('Correct');
+			setDisabled(true);
+			successHaptic();
+		} else if (attempts > 1) {
+			//wrong but more attempts
+			setStatusColor(theme.colors.error);
+			setStatusMessage('wrong. Try again');
+			errorHaptic();
 		} else {
-			console.log('wrong. Try again');
+			// wrong and out of attempts
+			setStatusColor(theme.colors.error);
+			setStatusMessage('Maybe try a different question');
+			setDisabled(true);
 		}
 	};
 
-	const height = useItemHeight();
 	return (
 		<Box height={height} backgroundColor='background'>
 			<Box position='relative' marginHorizontal={'l'} flex={1}>
-				<MultipleChoiceQuestionHeader question={QUESTION} />
-				<MultipleChoiceOptions onAnswer={onAnswer} options={OPTIONS} />
+				<MultipleChoiceQuestionHeader
+					attempts={attempts}
+					question={QUESTION}
+					statusMessage={statusMessage}
+					statusColor={statusColor}
+				/>
+				<MultipleChoiceOptions
+					disabled={disabled}
+					onAnswer={onAnswer}
+					options={OPTIONS}
+					selectedOptions={selectedOptions}
+				/>
 			</Box>
 		</Box>
 	);

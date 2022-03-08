@@ -8,9 +8,16 @@ import MultipleChoiceOption from '../molecules/MultipleChoiceOption';
 interface Props {
 	options: Option[];
 	onAnswer: (id: string) => void;
+	disabled: boolean;
+	selectedOptions: Option[];
 }
 
-export default function MultipleChoiceOptions({ options, onAnswer }: Props) {
+export default function MultipleChoiceOptions({
+	options,
+	onAnswer,
+	disabled,
+	selectedOptions,
+}: Props) {
 	return (
 		<Box
 			flexDirection={'column'}
@@ -26,6 +33,8 @@ export default function MultipleChoiceOptions({ options, onAnswer }: Props) {
 					content={content}
 					isAnswer={isAnswer}
 					onAnswer={onAnswer}
+					disabled={disabled}
+					selectedOptions={selectedOptions}
 					id={id}
 				/>
 			))}
