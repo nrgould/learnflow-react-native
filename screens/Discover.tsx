@@ -20,13 +20,14 @@ import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { fetchModulesAsync } from '../store/moduleSlice';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../theme/theme';
+import Icon from '../components/atoms/Icon';
 
 export default function Discover({ navigation }: NavigationTypes) {
 	const theme = useTheme<Theme>();
 	const [searchFocused, setSearchFocused] = useState(false);
 	const itemHeight = useItemHeight();
 
-	const { primary, secondary, tertiary } = theme.colors;
+	const { primary, secondary, tertiary, secondaryText } = theme.colors;
 
 	const translateY = useSharedValue(0);
 
@@ -105,8 +106,6 @@ export default function Discover({ navigation }: NavigationTypes) {
 				onScroll={scrollHandler}
 				scrollEventThrottle={16}
 				marginTop='s'
-				style={{ minHeight: itemHeight }}
-				contentContainerStyle={{ marginBottom: 75 }}
 				backgroundColor='background'>
 				<Box marginHorizontal='l' marginBottom='s'>
 					<Text variant='header' marginBottom='s'>
@@ -135,6 +134,24 @@ export default function Discover({ navigation }: NavigationTypes) {
 					<Tag navigation={navigation} text='Python' />
 				</Box>
 				<Box marginHorizontal='l'>
+					<Box
+						flexDirection='row'
+						marginTop='m'
+						alignItems='center'
+						justifyContent='flex-start'>
+						<Icon
+							name='bulb'
+							size={24}
+							color={secondaryText}
+							style={{ marginRight: theme.spacing.s }}
+						/>
+						<Text
+							variant='subheader'
+							color='secondaryText'
+							fontSize={18}>
+							We think you'd like these
+						</Text>
+					</Box>
 					{modules?.map((module, index) => {
 						let color: string;
 						if (index % 3 === 0) {
