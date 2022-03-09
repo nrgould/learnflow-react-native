@@ -24,13 +24,10 @@ const wait = (timeout: any) => {
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export default function Feed({ navigation }: NavigationTypes) {
-	const [answered, setAnswered] = useState(false);
 	const [allowScroll, setAllowScroll] = useState(true);
 	const [refreshing, setRefreshing] = useState(false);
-	const [currentIndex, setCurrentIndex] = useState(0);
 	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
 	const translateY = useSharedValue(0);
-	// const index = useSharedValue(0);
 	const itemHeight = useItemHeight();
 
 	console.log('refreshing:', refreshing);
@@ -41,7 +38,6 @@ export default function Feed({ navigation }: NavigationTypes) {
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		translateY.value = event.contentOffset.y;
-		// if scrolling is disabled and scroll begins => error haptic && message saying "need to answer question first"
 	});
 
 	const onRefresh = React.useCallback(() => {
@@ -49,14 +45,11 @@ export default function Feed({ navigation }: NavigationTypes) {
 		wait(2000).then(() => setRefreshing(false));
 	}, []);
 
-	const onViewableItemsChangedRef = useRef(
-		({ viewableItems, changed }: any) => {
-			console.log(changed);
-			if (viewableItems && viewableItems.length > 0) {
-				setCurrentVisibleIndex(viewableItems[0].index);
-			}
+	const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
+		if (viewableItems && viewableItems.length > 0) {
+			setCurrentVisibleIndex(viewableItems[0].index);
 		}
-	);
+	});
 
 	const renderItem = ({ item, index }: RenderItemProps) => {
 		return (

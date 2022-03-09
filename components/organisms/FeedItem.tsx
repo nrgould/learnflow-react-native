@@ -47,14 +47,6 @@ export default function FeedItem({
 				index={index}
 			/>
 			<MultipleChoiceQuestion question={particle.question} />
-			{/* <FeedItemQuestion
-				answered={answered}
-				setAnswered={setAnswered}
-				allowScroll={allowScroll}
-				setAllowScroll={setAllowScroll}
-				idx={idx}
-				translateY={translateY}
-			/> */}
 		</React.Fragment>
 	);
 }

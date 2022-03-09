@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '../components/atoms/Box';
 import Text from '../components/atoms/Text';
 import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
@@ -16,16 +16,17 @@ import Animated, {
 } from 'react-native-reanimated';
 import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
 import { useItemHeight } from '../hooks/useItemHeight';
-
-const SAMPLE_MODULE = {
-	title: 'Calculus I',
-	description:
-		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque illo repellat architecto obcaecati. Itaque laborum aut consequatur nobis sed nam?',
-};
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { fetchModulesAsync } from '../store/moduleSlice';
+import { useTheme } from '@shopify/restyle';
+import { Theme } from '../theme/theme';
 
 export default function Discover({ navigation }: NavigationTypes) {
+	const theme = useTheme<Theme>();
 	const [searchFocused, setSearchFocused] = useState(false);
 	const itemHeight = useItemHeight();
+
+	const { primary, secondary, tertiary } = theme.colors;
 
 	const translateY = useSharedValue(0);
 
@@ -39,6 +40,27 @@ export default function Discover({ navigation }: NavigationTypes) {
 
 	const AnimatedScrollView =
 		Animated.createAnimatedComponent(RestyledScrollView);
+
+	const modules = useAppSelector((state) => state.module.modules);
+	const status = useAppSelector((state) => state.module.status);
+
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(fetchModulesAsync());
+	}, [dispatch]);
+
+	if (status === 'loading') {
+		return (
+			<Box
+				flex={1}
+				alignItems='center'
+				justifyContent='center'
+				backgroundColor='background'>
+				<Text variant='header'>Loading...</Text>
+			</Box>
+		);
+	}
 
 	if (searchFocused) {
 		return (
@@ -84,6 +106,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 				scrollEventThrottle={16}
 				marginTop='s'
 				style={{ minHeight: itemHeight }}
+				contentContainerStyle={{ marginBottom: 75 }}
 				backgroundColor='background'>
 				<Box marginHorizontal='l' marginBottom='s'>
 					<Text variant='header' marginBottom='s'>
@@ -112,26 +135,24 @@ export default function Discover({ navigation }: NavigationTypes) {
 					<Tag navigation={navigation} text='Python' />
 				</Box>
 				<Box marginHorizontal='l'>
-					<DiscoverModule
-						module={SAMPLE_MODULE}
-						navigation={navigation}
-					/>
-					<DiscoverModule
-						module={SAMPLE_MODULE}
-						navigation={navigation}
-					/>
-					<DiscoverModule
-						module={SAMPLE_MODULE}
-						navigation={navigation}
-					/>
-					<DiscoverModule
-						module={SAMPLE_MODULE}
-						navigation={navigation}
-					/>
-					<DiscoverModule
-						module={SAMPLE_MODULE}
-						navigation={navigation}
-					/>
+					{modules?.map((module, index) => {
+						let color: string;
+						if (index % 3 === 0) {
+							color = primary;
+						} else if (index % 3 === 2) {
+							color = secondary;
+						} else {
+							color = tertiary;
+						}
+						return (
+							<DiscoverModule
+								color={color}
+								key={index}
+								module={module}
+								navigation={navigation}
+							/>
+						);
+					})}
 				</Box>
 			</AnimatedScrollView>
 		</RestyledSafeAreaView>

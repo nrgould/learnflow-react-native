@@ -1,16 +1,18 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { NavigationTypes } from '../../types';
+import { ModuleType, NavigationTypes } from '../../types';
 import Box from '../atoms/Box';
 import Button from '../atoms/Button';
 import Card from '../atoms/Card';
+import Icon from '../atoms/Icon';
 import Text from '../atoms/Text';
 
 interface Props extends NavigationTypes {
-	module: any;
+	module: ModuleType;
+	color: string;
 }
 
-export default function DiscoverModule({ navigation, module }: Props) {
+export default function DiscoverModule({ navigation, module, color }: Props) {
 	const { title, description } = module;
 
 	function navigationHandler() {
@@ -20,7 +22,13 @@ export default function DiscoverModule({ navigation, module }: Props) {
 	return (
 		<TouchableOpacity onPress={navigationHandler}>
 			<Card variant='primary' style={{ width: '100%' }}>
-				<Text variant='cardHeader'>Calculus I</Text>
+				<Box
+					flexDirection='row'
+					justifyContent='space-between'
+					alignItems='flex-start'>
+					<Text variant='cardHeader'>{title}</Text>
+					<Icon name='contract-sharp' size={42} color={color} />
+				</Box>
 				<Text
 					marginTop='s'
 					variant='body'
@@ -28,24 +36,18 @@ export default function DiscoverModule({ navigation, module }: Props) {
 					color='secondaryText'>
 					{description}
 				</Text>
-				<Box
+				{/* <Box
 					width='100%'
 					flexDirection='row'
 					marginTop='s'
 					alignItems='center'
 					justifyContent='flex-end'>
-					{/* <Button
-						label='View'
-						variant='secondary'
-						onPress={navigationHandler}
-						marginRight='s'
-					/> */}
 					<Button
 						label='Add'
 						variant='secondary'
 						onPress={navigationHandler}
 					/>
-				</Box>
+				</Box> */}
 			</Card>
 		</TouchableOpacity>
 	);

@@ -20,7 +20,7 @@ const isSmallDevice = height < 700;
 
 const CIRCLE_LENGTH = isSmallDevice ? 190 : 210;
 const R = isSmallDevice ? 35 : CIRCLE_LENGTH / (2 * Math.PI);
-const STROKE_WIDTH = 10;
+const STROKE_WIDTH = 8;
 
 interface Props extends NavigationTypes {
 	progressColor: string;
@@ -56,7 +56,7 @@ export default function PathModule({
 		<TouchableOpacity onPress={onPress}>
 			<Card
 				variant='primary'
-				marginVertical='s'
+				marginVertical='xs'
 				style={{ height: cardHeight }}>
 				<Box
 					position='relative'
@@ -85,7 +85,7 @@ export default function PathModule({
 								cy='50'
 								r={R}
 								stroke={background}
-								strokeWidth={STROKE_WIDTH + 5}
+								strokeWidth={STROKE_WIDTH + 4}
 							/>
 							<AnimatedCircle
 								cx='50'
@@ -108,7 +108,7 @@ export default function PathModule({
 									: cardHeight / 2.6,
 								left: isSmallDevice
 									? cardHeight / 2.9
-									: cardHeight / 2.8,
+									: cardHeight / 2.95,
 								// transform: [{ translateX: -7 }, { translateY: -5 }],
 								fontSize: isSmallDevice ? 14 : 18,
 							}}>

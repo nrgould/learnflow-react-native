@@ -7,10 +7,9 @@ import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Feed from '../screens/Feed';
 import DiscoverStackScreen from './DiscoverStackScreen';
-import Notifications from '../screens/Question';
+import Notifications from '../screens/Notifications';
 import Profile from '../screens/Profile';
 import LearningStackScreen from './LearningStackScreen';
-import MultipleChoiceQuestion from '../components/organisms/MultipleChoiceQuestion';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -99,7 +98,7 @@ export default function BottomTabsNavigator() {
 						),
 					}}
 					name='Notifications'
-					component={MultipleChoiceQuestion}
+					component={Notifications}
 				/>
 				<BottomTabs.Screen
 					options={{

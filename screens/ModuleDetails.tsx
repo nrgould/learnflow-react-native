@@ -38,7 +38,7 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 		);
 	}
 	return (
-		<RestyledSafeAreaView>
+		<RestyledSafeAreaView edges={['top', 'left', 'right']}>
 			<RestyledScrollView
 				style={{ minHeight: '100%' }}
 				backgroundColor='background'>

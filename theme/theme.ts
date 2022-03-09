@@ -62,6 +62,7 @@ const theme = createTheme({
 		secondarySoft: palette.lightBlue,
 		secondaryDark: palette.darkBlue,
 		tertiary: palette.aqua,
+		tertiarySoft: palette.aqua,
 		grayBtn: palette.darkLiver,
 		whiteBtn: palette.offWhite,
 

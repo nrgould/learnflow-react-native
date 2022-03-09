@@ -12,10 +12,11 @@ import Animated, {
 	useSharedValue,
 	withSpring,
 } from 'react-native-reanimated';
-import { Dimensions, Image } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { lightHaptic, mediumHaptic } from '../../util/hapticFeedback';
 import Text from '../atoms/Text';
+import Icon from '../atoms/Icon';
 
 interface Props extends NavigationTypes {
 	videoURL?: any;
@@ -116,7 +117,7 @@ export default function FeedItemContent({
 						position='absolute'
 						right={20}
 						bottom={120}>
-						<Ionicons
+						<Icon
 							size={42}
 							name={status.isPlaying ? 'pause' : 'play'}
 							color={whiteBtn}
@@ -135,7 +136,7 @@ export default function FeedItemContent({
 								lightHaptic();
 							}}
 						/>
-						<Ionicons
+						<Icon
 							size={32}
 							name='refresh-outline'
 							color={whiteBtn}

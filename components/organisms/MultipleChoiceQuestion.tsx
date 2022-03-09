@@ -1,5 +1,7 @@
 import { useTheme } from '@shopify/restyle';
-import React, { useState } from 'react';
+import { formatDistance } from 'date-fns';
+import { differenceInMilliseconds } from 'date-fns/esm';
+import React, { useEffect, useState } from 'react';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Theme } from '../../theme/theme';
 import { Option, QuestionType } from '../../types';
@@ -8,14 +10,6 @@ import Box from '../atoms/Box';
 import MultipleChoiceOptions from './MultipleChoiceOptions';
 import MultipleChoiceQuestionHeader from './MultipleChoiceQuestionHeader';
 
-// const QUESTION = 'x^2 + 6x + 9 = (x + 3) times what?';
-
-// const OPTIONS = [
-// 	{ id: '1', content: '(X - 3)', isAnswer: false },
-// 	{ id: '2', content: '(X + 3)', isAnswer: true },
-// 	{ id: '3', content: '(X - 6)', isAnswer: false },
-// 	{ id: '4', content: '(X + 6)', isAnswer: false },
-// ];
 interface Props {
 	question: QuestionType;
 }
@@ -37,6 +31,7 @@ export default function MultipleChoiceQuestion({ question }: Props) {
 		const newSelected = [...selectedOptions, answer];
 		setSelectedOptions(newSelected as Option[]);
 		setAttempts(attempts - 1);
+
 		if (answer?.isAnswer) {
 			//correct
 			setStatusColor(theme.colors.success);
