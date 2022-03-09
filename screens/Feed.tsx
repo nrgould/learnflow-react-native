@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Box from '../components/atoms/Box';
 import FeedItem from '../components/organisms/FeedItem';
 import { useItemHeight } from '../hooks/useItemHeight';
@@ -27,11 +27,17 @@ export default function Feed({ navigation }: NavigationTypes) {
 	const [answered, setAnswered] = useState(false);
 	const [allowScroll, setAllowScroll] = useState(true);
 	const [refreshing, setRefreshing] = useState(false);
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
 	const translateY = useSharedValue(0);
 	// const index = useSharedValue(0);
 	const itemHeight = useItemHeight();
 
-	console.log(refreshing);
+	console.log('refreshing:', refreshing);
+
+	const viewConfigRef = useRef({
+		viewAreaCoveragePercentThreshold: 90,
+	});
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		translateY.value = event.contentOffset.y;
@@ -43,11 +49,21 @@ export default function Feed({ navigation }: NavigationTypes) {
 		wait(2000).then(() => setRefreshing(false));
 	}, []);
 
+	const onViewableItemsChangedRef = useRef(
+		({ viewableItems, changed }: any) => {
+			console.log(changed);
+			if (viewableItems && viewableItems.length > 0) {
+				setCurrentVisibleIndex(viewableItems[0].index);
+			}
+		}
+	);
+
 	const renderItem = ({ item, index }: RenderItemProps) => {
 		return (
 			<FeedItem
 				particle={item}
 				index={index}
+				currentVisibleIndex={currentVisibleIndex}
 				key={item.id}
 				translateY={translateY}
 				navigation={navigation}
@@ -62,15 +78,21 @@ export default function Feed({ navigation }: NavigationTypes) {
 			<StatusBar style={'light'} />
 			<AnimatedFlatList
 				data={serializedParticles}
+				initialNumToRender={3}
+				maxToRenderPerBatch={3}
+				windowSize={5}
+				removeClippedSubviews={true}
+				onViewableItemsChanged={onViewableItemsChangedRef.current}
 				snapToInterval={itemHeight}
 				renderItem={renderItem}
 				onScroll={scrollHandler}
 				snapToAlignment='center'
-				pagingEnabled
+				pagingEnabled={true}
 				scrollEnabled={allowScroll}
 				scrollEventThrottle={16}
 				onScrollEndDrag={mediumHaptic}
 				decelerationRate='fast'
+				viewabilityConfig={viewConfigRef.current}
 				refreshControl={
 					<RefreshControl
 						refreshing={refreshing}

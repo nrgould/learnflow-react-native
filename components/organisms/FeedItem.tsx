@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FeedItemQuestion from '../molecules/FeedItemQuestion';
 import FeedItemContent from '../molecules/FeedItemContent';
 import { NavigationTypes, ParticleType } from '../../types';
@@ -14,6 +14,7 @@ interface Props extends NavigationTypes {
 	allowScroll: boolean;
 	setAllowScroll: React.Dispatch<React.SetStateAction<boolean>>;
 	particle: ParticleType;
+	currentVisibleIndex: number;
 }
 
 export default function FeedItem({
@@ -23,7 +24,9 @@ export default function FeedItem({
 	allowScroll,
 	setAllowScroll,
 	particle,
+	currentVisibleIndex,
 }: Props) {
+	const [liked, setLiked] = useState(false);
 	const itemHeight = useItemHeight();
 
 	const onLockScroll = () => {
@@ -36,7 +39,13 @@ export default function FeedItem({
 
 	return (
 		<React.Fragment>
-			<FeedItemContent navigation={navigation} />
+			<FeedItemContent
+				liked={liked}
+				setLiked={setLiked}
+				navigation={navigation}
+				currentVisibleIndex={currentVisibleIndex}
+				index={index}
+			/>
 			<MultipleChoiceQuestion question={particle.question} />
 			{/* <FeedItemQuestion
 				answered={answered}

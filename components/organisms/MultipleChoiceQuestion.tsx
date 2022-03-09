@@ -5,7 +5,6 @@ import { Theme } from '../../theme/theme';
 import { Option, QuestionType } from '../../types';
 import { errorHaptic, successHaptic } from '../../util/hapticFeedback';
 import Box from '../atoms/Box';
-import RestyledSafeAreaView from '../atoms/RestyledSafeAreaView';
 import MultipleChoiceOptions from './MultipleChoiceOptions';
 import MultipleChoiceQuestionHeader from './MultipleChoiceQuestionHeader';
 

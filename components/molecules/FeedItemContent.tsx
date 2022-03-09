@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Box from '../atoms/Box';
-import * as Haptics from 'expo-haptics';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Video } from 'expo-av';
 import Slider from '@react-native-community/slider';
@@ -11,54 +10,63 @@ import { TapGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
 	useAnimatedStyle,
 	useSharedValue,
-	withDelay,
 	withSpring,
 } from 'react-native-reanimated';
 import { Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { lightHaptic, mediumHaptic } from '../../util/hapticFeedback';
+import Text from '../atoms/Text';
 
 interface Props extends NavigationTypes {
 	videoURL?: any;
+	liked: boolean;
+	setLiked: React.Dispatch<React.SetStateAction<boolean>>;
+	currentVisibleIndex: number;
+	index: number;
 }
 
 const { width } = Dimensions.get('window');
 
-const AnimatedImage = Animated.createAnimatedComponent(Image);
+const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
 
 export default function FeedItemContent({
+	liked,
+	setLiked,
 	videoURL = require('../../assets/video/sampleTikTok.mov'),
+	currentVisibleIndex,
+	index,
 }: Props) {
 	const height = useItemHeight();
 	const video = useRef<any>(null);
 	const [videoPos, setVideoPos] = useState<number>(0);
 	const [status, setStatus] = React.useState<any>({});
-
 	const theme = useTheme<Theme>();
-	const { primary, primaryText, border, whiteBtn } = theme.colors;
+	const { primary, border, whiteBtn, error } = theme.colors;
 
 	const scale = useSharedValue(0);
 
-	const rStyle = useAnimatedStyle(() => {
+	const iconStyle = useAnimatedStyle(() => {
 		return {
-			transform: [{ scale: Math.max(scale.value, 0) }],
+			transform: [{ scale: Math.max(scale.value, 1) }],
 		};
 	});
 
 	function handlePlay() {
 		video.current.playAsync();
-		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+		lightHaptic();
 	}
 
 	function handlePause() {
 		video.current.pauseAsync();
-		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+		lightHaptic();
 	}
 
 	const onDoubleTap = useCallback(() => {
-		console.log('DOUBLE TAP');
-		scale.value = withSpring(1, undefined, (isFinished) => {
+		mediumHaptic();
+		setLiked(true);
+		scale.value = withSpring(1, { damping: 5 }, (isFinished) => {
 			if (isFinished) {
-				scale.value = withDelay(500, withSpring(0));
+				scale.value = withSpring(0);
 			}
 		});
 	}, []);
@@ -70,28 +78,14 @@ export default function FeedItemContent({
 				justifyContent='center'
 				height={height}
 				width='100%'>
-				<Animated.View>
-					<AnimatedImage
-						source={require('../../assets/heart.png')}
-						style={[
-							{
-								shadowOffset: { width: 0, height: 20 },
-								shadowOpacity: 0.2,
-								shadowRadius: 35,
-								width: width,
-								height: width,
-								position: 'absolute',
-								zIndex: 100,
-								top: 0,
-								bottom: 0,
-								left: 0,
-								right: 0,
-							},
-							rStyle,
-						]}
-						resizeMode='center'
-					/>
-				</Animated.View>
+				<Box
+					width={width}
+					height={100}
+					position='absolute'
+					top={0}
+					backgroundColor='background'>
+					<Text>header</Text>
+				</Box>
 				<Video
 					ref={video}
 					source={videoURL}
@@ -104,6 +98,7 @@ export default function FeedItemContent({
 					onPlaybackStatusUpdate={setStatus}
 					progressUpdateIntervalMillis={200}
 					volume={10}
+					shouldPlay={index === currentVisibleIndex}
 				/>
 				<Box
 					flexDirection='column'
@@ -130,11 +125,15 @@ export default function FeedItemContent({
 							}
 							style={{ marginBottom: 10 }}
 						/>
-						<Ionicons
-							size={32}
-							name='heart-outline'
-							color={whiteBtn}
-							style={{ marginBottom: 10 }}
+						<AnimatedIcon
+							size={42}
+							name={liked ? 'heart' : 'heart-outline'}
+							color={liked ? error : whiteBtn}
+							style={[iconStyle, { marginBottom: 10 }]}
+							onPress={() => {
+								setLiked(!liked);
+								lightHaptic();
+							}}
 						/>
 						<Ionicons
 							size={32}
@@ -142,12 +141,6 @@ export default function FeedItemContent({
 							color={whiteBtn}
 							style={{ marginBottom: 10 }}
 							onPress={() => setVideoPos(0)}
-						/>
-						<Ionicons
-							size={32}
-							name='share-outline'
-							color={whiteBtn}
-							style={{ marginBottom: 10 }}
 						/>
 					</Box>
 					<Slider
@@ -158,7 +151,7 @@ export default function FeedItemContent({
 						onValueChange={setVideoPos}
 						maximumTrackTintColor={border}
 						minimumTrackTintColor={primary}
-						thumbTintColor={primaryText}
+						thumbTintColor={whiteBtn}
 						step={200}
 					/>
 				</Box>
@@ -166,9 +159,3 @@ export default function FeedItemContent({
 		</TapGestureHandler>
 	);
 }
-
-// const styles = StyleSheet.create({
-// 	image: {
-// 		width:
-// 	}
-// })
