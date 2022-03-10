@@ -2,17 +2,18 @@ import { useTheme } from '@shopify/restyle';
 import React, { useState } from 'react';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Theme } from '../../theme/theme';
-import { Option, QuestionType } from '../../types';
+import { Option } from '../../types';
 import { errorHaptic, successHaptic } from '../../util/hapticFeedback';
 import Box from '../atoms/Box';
 import MultipleChoiceOptions from './MultipleChoiceOptions';
 import MultipleChoiceQuestionHeader from './MultipleChoiceQuestionHeader';
 
 interface Props {
-	question: QuestionType;
+	question: string;
+	options: any[];
 }
 
-export default function MultipleChoiceQuestion({ question }: Props) {
+export default function MultipleChoiceQuestion({ question, options }: Props) {
 	const theme = useTheme<Theme>();
 	const [disabled, setDisabled] = useState(false);
 	const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
@@ -20,8 +21,6 @@ export default function MultipleChoiceQuestion({ question }: Props) {
 	const [statusMessage, setStatusMessage] = useState('');
 	const [statusColor, setStatusColor] = useState(theme.colors.primaryText);
 	const height = useItemHeight();
-
-	const { options, text } = question;
 
 	const onAnswer = (id: string) => {
 		const answer = options.find((option: Option) => option.id === id);
@@ -54,7 +53,7 @@ export default function MultipleChoiceQuestion({ question }: Props) {
 			<Box position='relative' marginHorizontal={'l'} flex={1}>
 				<MultipleChoiceQuestionHeader
 					attempts={attempts}
-					question={text}
+					question={question}
 					statusMessage={statusMessage}
 					statusColor={statusColor}
 				/>

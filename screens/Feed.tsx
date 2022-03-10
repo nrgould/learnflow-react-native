@@ -30,23 +30,6 @@ export default function Feed({ navigation }: NavigationTypes) {
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
 
-	const renderItem = ({ item, index }: RenderItemProps) => {
-		return (
-			<FeedItem
-				particle={item}
-				index={index}
-				currentVisibleIndex={currentVisibleIndex}
-				key={item.id}
-				translateY={translateY}
-				navigation={navigation}
-			/>
-		);
-	};
-
-	const memoizedValue = useMemo(() => renderItem, [feedItems]);
-
-	console.log(memoizedValue);
-
 	console.log('refreshing:', refreshing);
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {
@@ -68,6 +51,24 @@ export default function Feed({ navigation }: NavigationTypes) {
 		}
 	});
 
+	const renderItem = ({ item, index }: RenderItemProps) => {
+		return (
+			<FeedItem
+				particle={item}
+				index={index}
+				currentVisibleIndex={currentVisibleIndex}
+				key={item.id}
+				translateY={translateY}
+				navigation={navigation}
+			/>
+		);
+	};
+
+	const memoizedRenderItem = useMemo(
+		() => renderItem,
+		[feedItems, currentVisibleIndex]
+	);
+
 	return (
 		<Box backgroundColor='background'>
 			<StatusBar style={'light'} />
@@ -79,7 +80,7 @@ export default function Feed({ navigation }: NavigationTypes) {
 				removeClippedSubviews={true}
 				onViewableItemsChanged={onViewableItemsChangedRef.current}
 				snapToInterval={itemHeight}
-				renderItem={memoizedValue}
+				renderItem={memoizedRenderItem}
 				onScroll={scrollHandler}
 				snapToAlignment='center'
 				pagingEnabled={true}

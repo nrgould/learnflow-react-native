@@ -4,6 +4,7 @@ import { NavigationTypes, ParticleType } from '../../types';
 import Animated from 'react-native-reanimated';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import { useItemHeight } from '../../hooks/useItemHeight';
+import { shuffle } from '../../util/shuffle';
 
 interface Props extends NavigationTypes {
 	index: number;
@@ -22,6 +23,10 @@ export default function FeedItem({
 }: Props) {
 	const [liked, setLiked] = useState(false);
 
+	const { options, text } = particle.question;
+
+	const shuffledOptions = shuffle(options);
+
 	return (
 		<React.Fragment>
 			<FeedItemContent
@@ -31,7 +36,7 @@ export default function FeedItem({
 				currentVisibleIndex={currentVisibleIndex}
 				index={index}
 			/>
-			<MultipleChoiceQuestion question={particle.question} />
+			<MultipleChoiceQuestion options={shuffledOptions} question={text} />
 		</React.Fragment>
 	);
 }
