@@ -7,11 +7,9 @@ import { useItemHeight } from '../../hooks/useItemHeight';
 
 interface Props extends NavigationTypes {
 	index: number;
-	translateY: Animated.SharedValue<number>;
+	translateY?: Animated.SharedValue<number>;
 	answered?: boolean;
 	setAnswered?: React.Dispatch<React.SetStateAction<boolean>>;
-	allowScroll: boolean;
-	setAllowScroll: React.Dispatch<React.SetStateAction<boolean>>;
 	particle: ParticleType;
 	currentVisibleIndex: number;
 }
@@ -19,22 +17,10 @@ interface Props extends NavigationTypes {
 export default function FeedItem({
 	navigation,
 	index,
-	translateY,
-	allowScroll,
-	setAllowScroll,
 	particle,
 	currentVisibleIndex,
 }: Props) {
 	const [liked, setLiked] = useState(false);
-	const itemHeight = useItemHeight();
-
-	const onLockScroll = () => {
-		const offset = index * itemHeight * 2;
-
-		if (translateY.value === offset) {
-			setAllowScroll(false);
-		}
-	};
 
 	return (
 		<React.Fragment>

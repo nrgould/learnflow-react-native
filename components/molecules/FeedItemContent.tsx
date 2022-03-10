@@ -73,28 +73,25 @@ export default function FeedItemContent({
 		video.current.pauseAsync();
 	}
 
-	const singleTap = Gesture.Tap()
-		.maxDuration(250)
-		.onEnd((event) => {
-			runOnJS(lightHaptic)();
-			if (status.isPlaying) {
-				runOnJS(handlePause)();
-			} else {
-				runOnJS(handlePlay)();
+	const singleTap = Gesture.Tap().onEnd((event) => {
+		runOnJS(lightHaptic)();
+		if (status.isPlaying) {
+			runOnJS(handlePause)();
+		} else {
+			runOnJS(handlePlay)();
+		}
+
+		position.x.value = event.x;
+		position.y.value = event.y;
+
+		scale.value = withSpring(1, { damping: 7 }, (isFinished) => {
+			if (isFinished) {
+				scale.value = withSpring(0);
 			}
-
-			position.x.value = event.x;
-			position.y.value = event.y;
-
-			scale.value = withSpring(1, { damping: 7 }, (isFinished) => {
-				if (isFinished) {
-					scale.value = withSpring(0);
-				}
-			});
 		});
+	});
 
 	const doubleTap = Gesture.Tap()
-		.maxDuration(250)
 		.numberOfTaps(2)
 		.onEnd(() => {
 			runOnJS(setLiked)(true);
@@ -109,20 +106,20 @@ export default function FeedItemContent({
 
 	return (
 		<>
-			<GestureDetector gesture={taps}>
+			<Box
+				alignItems='center'
+				justifyContent='center'
+				height={height}
+				width='100%'>
 				<Box
-					alignItems='center'
-					justifyContent='center'
-					height={height}
-					width='100%'>
-					<Box
-						width={width}
-						height={100}
-						position='absolute'
-						style={{ top: 0, left: 0 }}
-						backgroundColor='background'>
-						<Text>header</Text>
-					</Box>
+					width={width}
+					height={100}
+					position='absolute'
+					style={{ top: 0, left: 0 }}
+					backgroundColor='background'>
+					<Text>header</Text>
+				</Box>
+				<GestureDetector gesture={taps}>
 					<Video
 						ref={video}
 						source={videoURL}
@@ -137,64 +134,61 @@ export default function FeedItemContent({
 						volume={10}
 						shouldPlay={index === currentVisibleIndex}
 					/>
+				</GestureDetector>
+				<Box
+					flexDirection='column'
+					alignItems='center'
+					justifyContent='center'
+					position='absolute'
+					bottom={0}
+					zIndex={100}
+					marginBottom='s'
+					marginHorizontal='m'
+					width='100%'>
 					<Box
 						flexDirection='column'
 						alignItems='center'
 						justifyContent='center'
 						position='absolute'
-						bottom={0}
-						zIndex={100}
-						marginBottom='s'
-						marginHorizontal='m'
-						width='100%'>
-						<Box
-							flexDirection='column'
-							alignItems='center'
-							justifyContent='center'
-							position='absolute'
-							right={20}
-							bottom={120}>
-							<AnimatedIcon
-								size={42}
-								name={liked ? 'heart' : 'heart-outline'}
-								color={liked ? error : whiteBtn}
-								style={[iconStyle, { marginBottom: 10 }]}
-								onPress={() => {
-									setLiked(!liked);
-									lightHaptic();
-								}}
-							/>
-							<Icon
-								size={32}
-								name='refresh-outline'
-								color={whiteBtn}
-								style={{ marginBottom: 10 }}
-								onPress={() => setVideoPos(0)}
-							/>
-						</Box>
-						<Slider
-							style={{ width: '100%' }}
-							minimumValue={0}
-							maximumValue={status.durationMillis}
-							value={status.positionMillis}
-							onValueChange={setVideoPos}
-							maximumTrackTintColor={border}
-							minimumTrackTintColor={primary}
-							thumbTintColor={whiteBtn}
-							step={200}
+						right={20}
+						bottom={120}>
+						<AnimatedIcon
+							size={42}
+							name={liked ? 'heart' : 'heart-outline'}
+							color={liked ? error : whiteBtn}
+							style={[iconStyle, { marginBottom: 10 }]}
+							onPress={() => {
+								setLiked(!liked);
+								lightHaptic();
+							}}
+						/>
+						<Icon
+							size={32}
+							name='refresh-outline'
+							color={whiteBtn}
+							style={{ marginBottom: 10 }}
+							onPress={() => setVideoPos(0)}
 						/>
 					</Box>
-					<AnimatedIcon
-						size={42}
-						name={status.isPlaying ? 'pause' : 'play'}
-						color={whiteBtn}
-						style={[
-							tapStyle,
-							{ zIndex: 100, position: 'absolute' },
-						]}
+					<Slider
+						style={{ width: '100%' }}
+						minimumValue={0}
+						maximumValue={status.durationMillis}
+						value={status.positionMillis}
+						onValueChange={setVideoPos}
+						maximumTrackTintColor={border}
+						minimumTrackTintColor={primary}
+						thumbTintColor={whiteBtn}
+						step={200}
 					/>
 				</Box>
-			</GestureDetector>
+				<AnimatedIcon
+					size={42}
+					name={status.isPlaying ? 'play' : 'pause'}
+					color={whiteBtn}
+					style={[tapStyle, { zIndex: 100, position: 'absolute' }]}
+				/>
+			</Box>
 		</>
 	);
 }

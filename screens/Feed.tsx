@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import Box from '../components/atoms/Box';
 import FeedItem from '../components/organisms/FeedItem';
 import { useItemHeight } from '../hooks/useItemHeight';
@@ -24,32 +24,11 @@ const wait = (timeout: any) => {
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export default function Feed({ navigation }: NavigationTypes) {
-	const [allowScroll, setAllowScroll] = useState(true);
 	const [refreshing, setRefreshing] = useState(false);
 	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
+	const [feedItems, setFeedItems] = useState(serializedParticles);
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
-
-	console.log('refreshing:', refreshing);
-
-	const viewConfigRef = useRef({
-		viewAreaCoveragePercentThreshold: 90,
-	});
-
-	const scrollHandler = useAnimatedScrollHandler((event) => {
-		translateY.value = event.contentOffset.y;
-	});
-
-	const onRefresh = React.useCallback(() => {
-		setRefreshing(true);
-		wait(2000).then(() => setRefreshing(false));
-	}, []);
-
-	const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
-		if (viewableItems && viewableItems.length > 0) {
-			setCurrentVisibleIndex(viewableItems[0].index);
-		}
-	});
 
 	const renderItem = ({ item, index }: RenderItemProps) => {
 		return (
@@ -60,11 +39,34 @@ export default function Feed({ navigation }: NavigationTypes) {
 				key={item.id}
 				translateY={translateY}
 				navigation={navigation}
-				allowScroll={allowScroll}
-				setAllowScroll={setAllowScroll}
 			/>
 		);
 	};
+
+	const memoizedValue = useMemo(() => renderItem, [feedItems]);
+
+	console.log(memoizedValue);
+
+	console.log('refreshing:', refreshing);
+
+	const scrollHandler = useAnimatedScrollHandler((event) => {
+		translateY.value = event.contentOffset.y;
+	});
+
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+		wait(2000).then(() => setRefreshing(false));
+	}, []);
+
+	const viewConfigRef = useRef({
+		viewAreaCoveragePercentThreshold: 90,
+	});
+
+	const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
+		if (viewableItems && viewableItems.length > 0) {
+			setCurrentVisibleIndex(viewableItems[0].index);
+		}
+	});
 
 	return (
 		<Box backgroundColor='background'>
@@ -77,11 +79,10 @@ export default function Feed({ navigation }: NavigationTypes) {
 				removeClippedSubviews={true}
 				onViewableItemsChanged={onViewableItemsChangedRef.current}
 				snapToInterval={itemHeight}
-				renderItem={renderItem}
+				renderItem={memoizedValue}
 				onScroll={scrollHandler}
 				snapToAlignment='center'
 				pagingEnabled={true}
-				scrollEnabled={allowScroll}
 				scrollEventThrottle={16}
 				onScrollEndDrag={mediumHaptic}
 				decelerationRate='fast'

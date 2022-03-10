@@ -50,7 +50,10 @@ export default function AnimatedScrollHeader({ translateY, title }: Props) {
 		<AnimatedBox
 			backgroundColor='background'
 			style={[styles.header, rHeaderStyle]}>
-			<AnimatedText variant='headerTitle' style={[rTextStyle]}>
+			<AnimatedText
+				variant='headerTitle'
+				fontFamily='poppins-medium'
+				style={[rTextStyle]}>
 				{title}
 			</AnimatedText>
 		</AnimatedBox>

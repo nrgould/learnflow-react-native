@@ -7,11 +7,13 @@ import { NavigationTypes } from '../types';
 
 interface Props extends NavigationTypes {}
 
-export default function Path({ navigation }: Props) {
+export default function Path({}: Props) {
 	return (
 		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
-			<Box flex={1}>
-				<Text variant='header'>Notifications</Text>
+			<Box height='100%' backgroundColor='background'>
+				<Box marginHorizontal='l'>
+					<Text variant='header'>Notifications</Text>
+				</Box>
 			</Box>
 		</RestyledSafeAreaView>
 	);
