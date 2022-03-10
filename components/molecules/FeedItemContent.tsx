@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Box from '../atoms/Box';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Video } from 'expo-av';
@@ -6,11 +6,7 @@ import Slider from '@react-native-community/slider';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
 import { NavigationTypes } from '../../types';
-import {
-	TapGestureHandler,
-	Gesture,
-	GestureDetector,
-} from 'react-native-gesture-handler';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
 	runOnJS,
 	useAnimatedStyle,
@@ -20,7 +16,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { lightHaptic, mediumHaptic } from '../../util/hapticFeedback';
+import { lightHaptic } from '../../util/hapticFeedback';
 import Text from '../atoms/Text';
 import Icon from '../atoms/Icon';
 import { useVector } from 'react-native-redash';

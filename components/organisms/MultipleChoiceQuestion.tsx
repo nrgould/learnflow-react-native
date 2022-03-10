@@ -1,7 +1,5 @@
 import { useTheme } from '@shopify/restyle';
-import { formatDistance } from 'date-fns';
-import { differenceInMilliseconds } from 'date-fns/esm';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Theme } from '../../theme/theme';
 import { Option, QuestionType } from '../../types';

@@ -4,6 +4,7 @@ import {
 	BackgroundColorProps,
 	border,
 	BorderProps,
+	composeRestyleFunctions,
 	createRestyleComponent,
 	createVariant,
 	spacing,
@@ -35,12 +36,12 @@ const ButtonContainer = createRestyleComponent<
 	typeof Theme
 >([buttonVariant], Box);
 
-const restyleFunctions = [
+const restyleFunctions = composeRestyleFunctions([
 	buttonVariant as any,
 	spacing,
 	border,
 	backgroundColor,
-];
+]);
 
 const Button = ({
 	onPress,

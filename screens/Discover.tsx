@@ -15,7 +15,6 @@ import Animated, {
 	useSharedValue,
 } from 'react-native-reanimated';
 import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
-import { useItemHeight } from '../hooks/useItemHeight';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { fetchModulesAsync } from '../store/moduleSlice';
 import { useTheme } from '@shopify/restyle';
@@ -25,7 +24,6 @@ import Icon from '../components/atoms/Icon';
 export default function Discover({ navigation }: NavigationTypes) {
 	const theme = useTheme<Theme>();
 	const [searchFocused, setSearchFocused] = useState(false);
-	const itemHeight = useItemHeight();
 
 	const { primary, secondary, tertiary, secondaryText } = theme.colors;
 

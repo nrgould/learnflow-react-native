@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import FeedItemQuestion from '../molecules/FeedItemQuestion';
 import FeedItemContent from '../molecules/FeedItemContent';
 import { NavigationTypes, ParticleType } from '../../types';
 import Animated from 'react-native-reanimated';

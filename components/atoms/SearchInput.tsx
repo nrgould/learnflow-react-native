@@ -12,6 +12,7 @@ import {
 	useRestyle,
 	useTheme,
 	VariantProps,
+	composeRestyleFunctions,
 } from '@shopify/restyle';
 import React from 'react';
 import Box from './Box';
@@ -58,7 +59,12 @@ type Props = SpacingProps<typeof Theme> &
 		handleSearchFocus?: () => void;
 	};
 
-const restyleFunctions = [color, spacing, border, backgroundColor];
+const restyleFunctions = composeRestyleFunctions([
+	color,
+	spacing,
+	border,
+	backgroundColor,
+]);
 
 export default function SearchInput({
 	disabled,
@@ -72,7 +78,7 @@ export default function SearchInput({
 	variant = 'primary',
 	...rest
 }: Props) {
-	const props = useRestyle(restyleFunctions, { ...rest });
+	const props = useRestyle(restyleFunctions, rest);
 	const theme = useTheme<typeof Theme>();
 
 	return (

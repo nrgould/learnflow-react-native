@@ -3,6 +3,7 @@ import {
 	BackgroundColorProps,
 	border,
 	BorderProps,
+	composeRestyleFunctions,
 	createRestyleComponent,
 	createVariant,
 	spacing,
@@ -43,7 +44,11 @@ type Props = SpacingProps<typeof Theme> &
 		variant?: string;
 	};
 
-const restyleFunctions = [spacing, border, backgroundColor];
+const restyleFunctions = composeRestyleFunctions([
+	spacing,
+	border,
+	backgroundColor,
+]);
 
 export default function FormTextInput({
 	label,
