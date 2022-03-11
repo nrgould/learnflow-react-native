@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Box from '../components/atoms/Box';
 import FeedItem from '../components/organisms/FeedItem';
 import { useItemHeight } from '../hooks/useItemHeight';
@@ -10,7 +10,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import { mediumHaptic } from '../util/hapticFeedback';
 import { FlatList, RefreshControl } from 'react-native';
-import { serializedParticles } from '../data/dummy-data';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { fetchFeedAsync } from '../store/feedSlice';
+import Text from '../components/atoms/Text';
+import { useTheme } from '@shopify/restyle';
+import { Theme } from '../theme/theme';
 
 interface RenderItemProps {
 	item: any;
@@ -26,11 +30,21 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 export default function Feed({ navigation }: NavigationTypes) {
 	const [refreshing, setRefreshing] = useState(false);
 	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
-	const [feedItems, setFeedItems] = useState(serializedParticles);
+	const theme = useTheme<Theme>();
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
 
+	const dispatch = useAppDispatch();
+	const { feed } = useAppSelector((state) => state.feed);
+	const status = useAppSelector((state) => state.feed.status);
+
+	useEffect(() => {
+		dispatch(fetchFeedAsync());
+	}, [dispatch]);
+
 	console.log('refreshing:', refreshing);
+
+	const { primary, background } = theme.colors;
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		translateY.value = event.contentOffset.y;
@@ -64,16 +78,25 @@ export default function Feed({ navigation }: NavigationTypes) {
 		);
 	};
 
-	const memoizedRenderItem = useMemo(
-		() => renderItem,
-		[feedItems, currentVisibleIndex]
-	);
+	const memoizedRenderItem = useMemo(() => renderItem, [currentVisibleIndex]);
+
+	if (status === 'loading') {
+		return (
+			<Box
+				flex={1}
+				alignItems='center'
+				justifyContent='center'
+				backgroundColor='background'>
+				<Text variant='header'>Loading...</Text>
+			</Box>
+		);
+	}
 
 	return (
 		<Box backgroundColor='background'>
 			<StatusBar style={'light'} />
 			<AnimatedFlatList
-				data={serializedParticles}
+				data={feed}
 				initialNumToRender={3}
 				maxToRenderPerBatch={3}
 				windowSize={5}
@@ -92,6 +115,8 @@ export default function Feed({ navigation }: NavigationTypes) {
 					<RefreshControl
 						refreshing={refreshing}
 						onRefresh={onRefresh}
+						tintColor={primary}
+						progressBackgroundColor={background}
 					/>
 				}
 			/>

@@ -25,7 +25,7 @@ export default function MultipleChoiceQuestionHeader({
 			<Box
 				flexDirection='row'
 				marginBottom='xs'
-				marginTop='m'
+				marginTop='xl'
 				alignItems='center'
 				width='100%'
 				justifyContent='space-between'>

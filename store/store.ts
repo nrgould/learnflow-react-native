@@ -2,10 +2,12 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 import moduleReducer from './moduleSlice';
 import themeReducer from './themeSlice';
+import feedReducer from './feedSlice';
 
 export const store = configureStore({
 	reducer: {
 		module: moduleReducer,
+		feed: feedReducer,
 		theme: themeReducer,
 	},
 });

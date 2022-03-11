@@ -23,7 +23,7 @@ export default function BottomTabsNavigator() {
 	return (
 		<NavigationContainer>
 			<BottomTabs.Navigator
-				initialRouteName='Notifications'
+				initialRouteName='Feed'
 				screenOptions={{
 					headerShown: false,
 					tabBarShowLabel: false,
