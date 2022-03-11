@@ -10,6 +10,7 @@ import DiscoverStackScreen from './DiscoverStackScreen';
 import Notifications from '../screens/Notifications';
 import Profile from '../screens/Profile';
 import LearningStackScreen from './LearningStackScreen';
+import Question from '../screens/Question';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ export default function BottomTabsNavigator() {
 	return (
 		<NavigationContainer>
 			<BottomTabs.Navigator
-				initialRouteName='Feed'
+				initialRouteName='Notifications'
 				screenOptions={{
 					headerShown: false,
 					tabBarShowLabel: false,
@@ -98,7 +99,7 @@ export default function BottomTabsNavigator() {
 						),
 					}}
 					name='Notifications'
-					component={Notifications}
+					component={Question}
 				/>
 				<BottomTabs.Screen
 					options={{

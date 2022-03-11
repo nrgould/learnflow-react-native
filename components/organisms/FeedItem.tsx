@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FeedItemContent from '../molecules/FeedItemContent';
 import { NavigationTypes, ParticleType } from '../../types';
 import Animated from 'react-native-reanimated';
@@ -23,9 +23,7 @@ export default function FeedItem({
 }: Props) {
 	const [liked, setLiked] = useState(false);
 
-	const { options, text } = particle.question;
-
-	const shuffledOptions = shuffle(options);
+	const { text, options } = particle.question;
 
 	return (
 		<React.Fragment>
@@ -36,7 +34,7 @@ export default function FeedItem({
 				currentVisibleIndex={currentVisibleIndex}
 				index={index}
 			/>
-			<MultipleChoiceQuestion options={shuffledOptions} question={text} />
+			<MultipleChoiceQuestion options={options} question={text} />
 		</React.Fragment>
 	);
 }

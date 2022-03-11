@@ -1,7 +1,8 @@
 import { Dimensions } from 'react-native';
 import theme from './theme';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
+	Dimensions.get('window');
 
 export const isSmallDevice = SCREEN_HEIGHT < theme.breakpoints.smallDevice;
 const bottomTabHeight = isSmallDevice

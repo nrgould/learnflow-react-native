@@ -1,9 +1,10 @@
 import { useTheme } from '@shopify/restyle';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Theme } from '../../theme/theme';
 import { Option } from '../../types';
 import { errorHaptic, successHaptic } from '../../util/hapticFeedback';
+import { shuffle } from '../../util/shuffle';
 import Box from '../atoms/Box';
 import MultipleChoiceOptions from './MultipleChoiceOptions';
 import MultipleChoiceQuestionHeader from './MultipleChoiceQuestionHeader';
@@ -16,11 +17,22 @@ interface Props {
 export default function MultipleChoiceQuestion({ question, options }: Props) {
 	const theme = useTheme<Theme>();
 	const [disabled, setDisabled] = useState(false);
+	const [opts, setOpts] = useState(options);
 	const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 	const [attempts, setAttempts] = useState(3);
 	const [statusMessage, setStatusMessage] = useState('');
 	const [statusColor, setStatusColor] = useState(theme.colors.primaryText);
 	const height = useItemHeight();
+
+	useEffect(() => {
+		const shuffledOptions = shuffle(options);
+		setOpts(shuffledOptions);
+	}, []);
+
+	const MemoizedMultipleChoiceOptions = useMemo(
+		() => MultipleChoiceOptions,
+		[]
+	);
 
 	const onAnswer = (id: string) => {
 		const answer = options.find((option: Option) => option.id === id);
@@ -57,10 +69,10 @@ export default function MultipleChoiceQuestion({ question, options }: Props) {
 					statusMessage={statusMessage}
 					statusColor={statusColor}
 				/>
-				<MultipleChoiceOptions
+				<MemoizedMultipleChoiceOptions
 					disabled={disabled}
 					onAnswer={onAnswer}
-					options={options}
+					options={opts}
 					selectedOptions={selectedOptions}
 				/>
 			</Box>

@@ -37,11 +37,10 @@ export default function DiscoverModule({ navigation, module, color }: Props) {
 						justifyContent='space-evenly'>
 						<Icon
 							name='bookmark-outline'
-							size={24}
+							size={28}
 							color={icon}
 							style={{ marginRight: theme.spacing.xs }}
 						/>
-						<Icon name='bulb' size={24} color={color} />
 					</Box>
 				</Box>
 				<Text
