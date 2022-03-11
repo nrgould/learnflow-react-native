@@ -33,7 +33,6 @@ export default function Feed({ navigation }: NavigationTypes) {
 	const theme = useTheme<Theme>();
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
-
 	const dispatch = useAppDispatch();
 	const { feed } = useAppSelector((state) => state.feed);
 	const status = useAppSelector((state) => state.feed.status);

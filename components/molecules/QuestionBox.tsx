@@ -141,14 +141,14 @@ export default function QuestionBox({
 				snapPointsY
 			);
 
-			// translateX.value = withSpring(snapPointX, {
-			// 	damping: springDamping,
-			// 	velocity: event.velocityX,
-			// });
-			// translateY.value = withSpring(snapPointY, {
-			// 	damping: springDamping,
-			// 	velocity: event.velocityY,
-			// });
+			translateX.value = withSpring(snapPointX, {
+				damping: springDamping,
+				velocity: event.velocityX,
+			});
+			translateY.value = withSpring(snapPointY, {
+				damping: springDamping,
+				velocity: event.velocityY,
+			});
 			isGestureActive.value = false;
 			runOnJS(successHaptic)();
 		});

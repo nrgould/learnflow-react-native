@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Box from '../atoms/Box';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Video } from 'expo-av';
@@ -46,16 +46,14 @@ export default function FeedItemContent({
 	const [videoPos, setVideoPos] = useState<number>(0);
 	const [status, setStatus] = React.useState<any>({});
 	const theme = useTheme<Theme>();
-	const { primary, border, whiteBtn, error } = theme.colors;
+	const { whiteBtn, error } = theme.colors;
 	const position = useVector();
 
 	const scale = useSharedValue(0);
-	const iconScale = useSharedValue(0);
+	const iconScale = useSharedValue(1);
 
-	console.log(status.positionMillis);
 	const progressInc = width / status.durationMillis;
 	const progressWidth = Math.floor(status.positionMillis * progressInc);
-	// console.log(progressWidth);
 
 	const tapStyle = useAnimatedStyle(() => {
 		return {
@@ -71,6 +69,21 @@ export default function FeedItemContent({
 		};
 	});
 
+	const onLiked = useCallback(() => {
+		if (liked) {
+			setLiked(false);
+		} else if (!liked) {
+			setLiked(true);
+			iconScale.value = withSpring(1.2, { damping: 5 }, (isFinished) => {
+				if (isFinished) {
+					iconScale.value = withSpring(1);
+				}
+			});
+		}
+
+		lightHaptic();
+	}, [liked]);
+
 	function handlePlay() {
 		video.current.playAsync();
 	}
@@ -85,7 +98,7 @@ export default function FeedItemContent({
 			runOnJS(setLiked)(true);
 			iconScale.value = withSpring(1, { damping: 5 }, (isFinished) => {
 				if (isFinished) {
-					iconScale.value = withDelay(200, withSpring(0));
+					iconScale.value = withDelay(100, withSpring(0));
 				}
 			});
 		});
@@ -156,23 +169,25 @@ export default function FeedItemContent({
 					justifyContent='center'
 					position='absolute'
 					right={20}
-					bottom={120}>
+					bottom={100}>
 					<AnimatedIcon
 						size={42}
 						name={liked ? 'heart' : 'heart-outline'}
 						color={liked ? error : whiteBtn}
-						style={[iconStyle, { marginBottom: 10 }]}
-						onPress={() => {
-							setLiked(!liked);
-							lightHaptic();
-						}}
+						style={[iconStyle, { marginBottom: 15 }]}
+						onPress={onLiked}
 					/>
 					<Icon
 						size={32}
-						name='refresh-outline'
+						name='arrow-redo'
 						color={whiteBtn}
-						style={{ marginBottom: 10 }}
-						onPress={() => setVideoPos(0)}
+						style={{ marginBottom: 15 }}
+					/>
+					<Icon
+						size={32}
+						name='ellipsis-horizontal'
+						color={whiteBtn}
+						style={{ marginBottom: 20 }}
 					/>
 				</Box>
 				<Box

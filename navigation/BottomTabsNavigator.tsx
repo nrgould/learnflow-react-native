@@ -32,7 +32,7 @@ export default function BottomTabsNavigator() {
 							? theme.constants.bottomTabHeightSmall
 							: theme.constants.bottomTabHeightLarge,
 						backgroundColor: background,
-						borderTopColor: border,
+						borderTopColor: background,
 					},
 					tabBarActiveTintColor: activeIcon,
 					tabBarInactiveTintColor: iconColor,
