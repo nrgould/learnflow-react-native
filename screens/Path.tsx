@@ -10,6 +10,7 @@ import RestyledScrollView from '../components/atoms/RestyledScrollView';
 import Text from '../components/atoms/Text';
 import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
 import PathModule from '../components/molecules/PathModule';
+import PathModulePlaceholder from '../components/Placeholders/PathModulePlaceholder';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { fetchModulesAsync } from '../store/moduleSlice';
 import { Theme } from '../theme/theme';
@@ -37,17 +38,24 @@ export default function Path({ navigation }: Props) {
 		dispatch(fetchModulesAsync());
 	}, [dispatch]);
 
-	if (status === 'loading') {
-		return (
-			<Box
-				flex={1}
-				alignItems='center'
-				justifyContent='center'
-				backgroundColor='background'>
-				<Text variant='header'>Loading...</Text>
+	const LoadingPlaceholder = () => (
+		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
+			<Box height='100%' backgroundColor='background'>
+				<Box marginTop='s' marginHorizontal='l'>
+					<Text variant='header'>My Learning</Text>
+					<PathModulePlaceholder />
+					<PathModulePlaceholder />
+					<PathModulePlaceholder />
+					<PathModulePlaceholder />
+				</Box>
 			</Box>
-		);
+		</RestyledSafeAreaView>
+	);
+
+	if (status === 'loading') {
+		return <LoadingPlaceholder />;
 	}
+
 	return (
 		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
 			<AnimatedScrollHeader title='My Learning' translateY={translateY} />

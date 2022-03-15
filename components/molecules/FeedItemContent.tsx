@@ -2,7 +2,6 @@ import React, { useCallback, useRef, useState } from 'react';
 import Box from '../atoms/Box';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Video } from 'expo-av';
-import Slider from '@react-native-community/slider';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
 import { NavigationTypes } from '../../types';
@@ -46,11 +45,12 @@ export default function FeedItemContent({
 	const [videoPos, setVideoPos] = useState<number>(0);
 	const [status, setStatus] = React.useState<any>({});
 	const theme = useTheme<Theme>();
-	const { whiteBtn, error } = theme.colors;
 	const position = useVector();
 
 	const scale = useSharedValue(0);
 	const iconScale = useSharedValue(1);
+
+	const { whiteBtn, error } = theme.colors;
 
 	const progressInc = width / status.durationMillis;
 	const progressWidth = Math.floor(status.positionMillis * progressInc);
@@ -84,13 +84,13 @@ export default function FeedItemContent({
 		lightHaptic();
 	}, [liked]);
 
-	function handlePlay() {
+	const handlePlay = useCallback(() => {
 		video.current.playAsync();
-	}
+	}, []);
 
-	function handlePause() {
+	const handlePause = useCallback(() => {
 		video.current.pauseAsync();
-	}
+	}, []);
 
 	const doubleTap = Gesture.Tap()
 		.numberOfTaps(2)

@@ -10,13 +10,11 @@ import Animated, {
 	useSharedValue,
 	withTiming,
 } from 'react-native-reanimated';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { ModuleType, NavigationTypes } from '../../types';
+import { isSmallDevice, SCREEN_HEIGHT } from '../../theme/layout';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
-
-const { height } = Dimensions.get('window');
-const isSmallDevice = height < 700;
 
 const CIRCLE_LENGTH = isSmallDevice ? 190 : 210;
 const R = isSmallDevice ? 35 : CIRCLE_LENGTH / (2 * Math.PI);
@@ -38,7 +36,7 @@ export default function PathModule({
 	const progress = useSharedValue(0);
 	const progressVal = completedContent / totalContent;
 
-	const cardHeight = height / 8;
+	const cardHeight = SCREEN_HEIGHT / 8;
 
 	function onPress() {
 		navigation.navigate('ModuleDetails', { title: module.title });

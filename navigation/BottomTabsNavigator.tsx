@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../theme/theme';
-import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Feed from '../screens/Feed';
 import DiscoverStackScreen from './DiscoverStackScreen';
@@ -11,6 +10,7 @@ import Notifications from '../screens/Notifications';
 import Profile from '../screens/Profile';
 import LearningStackScreen from './LearningStackScreen';
 import Question from '../screens/Question';
+import { isSmallDevice } from '../theme/layout';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -18,8 +18,6 @@ export default function BottomTabsNavigator() {
 	const theme = useTheme<Theme>();
 
 	const { icon: iconColor, activeIcon, background, border } = theme.colors;
-
-	const isSmallDevice = Dimensions.get('window').height < 700;
 	return (
 		<NavigationContainer>
 			<BottomTabs.Navigator
@@ -32,7 +30,7 @@ export default function BottomTabsNavigator() {
 							? theme.constants.bottomTabHeightSmall
 							: theme.constants.bottomTabHeightLarge,
 						backgroundColor: background,
-						borderTopColor: background,
+						borderTopColor: border,
 					},
 					tabBarActiveTintColor: activeIcon,
 					tabBarInactiveTintColor: iconColor,
@@ -40,6 +38,13 @@ export default function BottomTabsNavigator() {
 				<BottomTabs.Screen
 					name='Feed'
 					options={{
+						tabBarStyle: {
+							height: isSmallDevice
+								? theme.constants.bottomTabHeightSmall
+								: theme.constants.bottomTabHeightLarge,
+							backgroundColor: background,
+							borderTopColor: background,
+						},
 						tabBarIcon: ({ color, size, focused }: any) => (
 							<Ionicons
 								name={focused ? 'ios-home' : 'ios-home-outline'}

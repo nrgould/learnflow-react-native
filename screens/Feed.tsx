@@ -15,6 +15,7 @@ import { fetchFeedAsync } from '../store/feedSlice';
 import Text from '../components/atoms/Text';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../theme/theme';
+import LottieView from 'lottie-react-native';
 
 interface RenderItemProps {
 	item: any;
@@ -36,6 +37,12 @@ export default function Feed({ navigation }: NavigationTypes) {
 	const dispatch = useAppDispatch();
 	const { feed } = useAppSelector((state) => state.feed);
 	const status = useAppSelector((state) => state.feed.status);
+
+	const refreshingHeight = 100;
+	let progress = 0;
+	if (translateY.value <= 0) {
+		progress = -translateY.value / refreshingHeight;
+	}
 
 	useEffect(() => {
 		dispatch(fetchFeedAsync());
@@ -94,6 +101,20 @@ export default function Feed({ navigation }: NavigationTypes) {
 	return (
 		<Box backgroundColor='background'>
 			<StatusBar style={'light'} />
+			<LottieView
+				source={require('../assets/lottie/pull_to_refresh_animation.json')}
+				autoPlay
+				loop
+				progress={progress}
+				style={{
+					height: 100,
+					alignSelf: 'center',
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					right: 0,
+				}}
+			/>
 			<AnimatedFlatList
 				data={feed}
 				initialNumToRender={3}
