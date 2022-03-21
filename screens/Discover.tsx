@@ -20,10 +20,12 @@ import { fetchModulesAsync } from '../store/moduleSlice';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../theme/theme';
 import Icon from '../components/atoms/Icon';
+import { useItemHeight } from '../hooks/useItemHeight';
 
 export default function Discover({ navigation }: NavigationTypes) {
 	const theme = useTheme<Theme>();
 	const [searchFocused, setSearchFocused] = useState(false);
+	const itemHeight = useItemHeight();
 
 	const { primary, secondary, tertiary, secondaryText } = theme.colors;
 
@@ -66,7 +68,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 			<RestyledSafeAreaView>
 				<Box
 					marginHorizontal='l'
-					marginBottom='s'
+					flex={1}
 					flexDirection='row'
 					alignItems='center'
 					justifyContent='space-between'>
@@ -103,6 +105,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 			<AnimatedScrollView
 				onScroll={scrollHandler}
 				scrollEventThrottle={16}
+				style={{ height: itemHeight }}
 				marginTop='s'
 				backgroundColor='background'>
 				<Box marginHorizontal='l' marginBottom='s'>

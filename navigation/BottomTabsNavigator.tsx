@@ -11,6 +11,8 @@ import Profile from '../screens/Profile';
 import LearningStackScreen from './LearningStackScreen';
 import Question from '../screens/Question';
 import { isSmallDevice } from '../theme/layout';
+import Signup from '../screens/auth/Signup';
+import Login from '../screens/auth/Login';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -104,7 +106,7 @@ export default function BottomTabsNavigator() {
 						),
 					}}
 					name='Notifications'
-					component={Question}
+					component={Login}
 				/>
 				<BottomTabs.Screen
 					options={{

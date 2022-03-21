@@ -8,7 +8,6 @@ import Animated, {
 	useAnimatedScrollHandler,
 	useSharedValue,
 } from 'react-native-reanimated';
-import { mediumHaptic } from '../util/hapticFeedback';
 import { FlatList, RefreshControl } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { fetchFeedAsync } from '../store/feedSlice';
@@ -118,8 +117,9 @@ export default function Feed({ navigation }: NavigationTypes) {
 			<AnimatedFlatList
 				data={feed}
 				initialNumToRender={3}
-				maxToRenderPerBatch={3}
+				maxToRenderPerBatch={2}
 				windowSize={5}
+				showsVerticalScrollIndicator={false}
 				removeClippedSubviews={true}
 				onViewableItemsChanged={onViewableItemsChangedRef.current}
 				snapToInterval={itemHeight}
@@ -128,7 +128,6 @@ export default function Feed({ navigation }: NavigationTypes) {
 				snapToAlignment='center'
 				pagingEnabled={true}
 				scrollEventThrottle={16}
-				onScrollEndDrag={mediumHaptic}
 				decelerationRate='fast'
 				viewabilityConfig={viewConfigRef.current}
 				refreshControl={

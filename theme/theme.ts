@@ -318,7 +318,7 @@ const theme = createTheme({
 			borderRadius: 'xs',
 		},
 		link: {
-			background: 'none',
+			// backgroundColor: 'none',
 			marginBottom: 's',
 		},
 	},
