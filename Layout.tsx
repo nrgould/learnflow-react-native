@@ -5,30 +5,18 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import BottomTabsNavigator from './navigation/BottomTabsNavigator';
 import { useAppSelector } from './hooks/reduxHooks';
 import theme, { darkTheme } from './theme/theme';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { app } from './firebase/config';
 import AuthStack from './navigation/AuthStack';
-
-const auth = getAuth(app);
+import useAuthentication from './hooks/useAuthentication';
 
 export default function Layout() {
-	const [authenticated, setAuthenticated] = useState(false);
 	const darkMode = useAppSelector((state) => state.theme.darkMode);
-
-	onAuthStateChanged(auth, (user) => {
-		if (user !== null) {
-			console.log('AUTH: Authenticated.');
-			setAuthenticated(true);
-		} else {
-			setAuthenticated(false);
-		}
-	});
+	const { user } = useAuthentication();
 
 	return (
 		<ThemeProvider theme={darkMode ? darkTheme : theme}>
 			<StatusBar style={darkMode ? 'light' : 'dark'} />
 			<SafeAreaProvider>
-				{authenticated ? <BottomTabsNavigator /> : <AuthStack />}
+				{user ? <BottomTabsNavigator /> : <AuthStack />}
 			</SafeAreaProvider>
 		</ThemeProvider>
 	);
