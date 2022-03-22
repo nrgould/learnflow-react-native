@@ -5,7 +5,7 @@ import Button from '../../components/atoms/Button';
 import Text from '../../components/atoms/Text';
 import * as Yup from 'yup';
 import LoginForm from '../../components/organisms/LoginForm';
-// import { signInWithEmail } from '../../firestore/authService';
+import { signInWithEmail } from '../../firestore/authService';
 
 interface Props {
 	navigation: any;
@@ -41,9 +41,10 @@ export default function Login({ navigation }: Props) {
 					{ setSubmitting, setErrors, resetForm }
 				) => {
 					try {
-						console.log(values);
-						resetForm();
-						navigation.navigate('Feed');
+						await signInWithEmail(values).then(() => {
+							resetForm();
+							navigation.navigate('Feed');
+						});
 					} catch (error) {
 						setErrors(error as FormValues);
 						console.log(error);

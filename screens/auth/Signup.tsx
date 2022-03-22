@@ -5,6 +5,7 @@ import Button from '../../components/atoms/Button';
 import Text from '../../components/atoms/Text';
 import * as Yup from 'yup';
 import SignupForm from '../../components/organisms/SignupForm';
+import { registerInFirebase } from '../../firestore/authService';
 
 interface Props {
 	navigation: any;
@@ -38,11 +39,15 @@ export default function Signup({ navigation }: Props) {
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
-				onSubmit={(values, { setSubmitting, setErrors, resetForm }) => {
+				onSubmit={async (
+					values,
+					{ setSubmitting, setErrors, resetForm }
+				) => {
 					try {
+						await registerInFirebase(values);
 						console.log(values);
 						resetForm();
-						navigation.navigate('Home');
+						navigation.navigate('Feed');
 					} catch (error) {
 						setErrors(error as FormValues);
 					} finally {

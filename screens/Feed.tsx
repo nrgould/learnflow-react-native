@@ -47,8 +47,6 @@ export default function Feed({ navigation }: NavigationTypes) {
 		dispatch(fetchFeedAsync());
 	}, [dispatch]);
 
-	console.log('refreshing:', refreshing);
-
 	const { primary, background } = theme.colors;
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {

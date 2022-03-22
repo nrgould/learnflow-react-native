@@ -1,6 +1,7 @@
 import {
 	createUserWithEmailAndPassword,
 	getAuth,
+	onAuthStateChanged,
 	signInWithEmailAndPassword,
 	signOut,
 	updateProfile,
@@ -9,6 +10,14 @@ import { app } from '../firebase/config';
 import { setUserProfileData } from './profileService';
 
 const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+	if (user !== null) {
+		console.log('AUTH: Authenticated.');
+	} else {
+		console.log('AUTH: Not Authenticated.');
+	}
+});
 
 interface SignInProps {
 	email: string;
