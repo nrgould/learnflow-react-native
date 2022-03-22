@@ -1,15 +1,21 @@
 import {
 	createUserWithEmailAndPassword,
 	getAuth,
+	initializeAuth,
 	onAuthStateChanged,
 	signInWithEmailAndPassword,
 	signOut,
 	updateProfile,
 } from 'firebase/auth';
+import { getReactNativePersistence } from 'firebase/auth/react-native';
 import { app } from '../firebase/config';
 import { setUserProfileData } from './profileService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const auth = getAuth(app);
+// Provide it to initializeAuth.
+export const auth = initializeAuth(app, {
+	persistence: getReactNativePersistence(AsyncStorage),
+});
 
 onAuthStateChanged(auth, (user) => {
 	if (user !== null) {

@@ -14,7 +14,6 @@ export async function getUserProfile(userId: string) {
 	const docSnap = await getDoc(docRef);
 
 	if (docSnap.exists()) {
-		// console.log('data: ', docSnap.data());
 		return docSnap.data();
 	} else {
 		console.log("document doesn't exist!");
