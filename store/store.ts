@@ -3,12 +3,16 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import moduleReducer from './moduleSlice';
 import themeReducer from './themeSlice';
 import feedReducer from './feedSlice';
+import profileReducer from './profileSlice';
+import authReducer from './authSlice';
 
 export const store = configureStore({
 	reducer: {
 		module: moduleReducer,
 		feed: feedReducer,
 		theme: themeReducer,
+		profile: profileReducer,
+		auth: authReducer,
 	},
 });
 

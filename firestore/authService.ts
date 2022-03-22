@@ -51,6 +51,7 @@ export async function registerInFirebase(creds: RegisterProps) {
 			creds.email,
 			creds.password
 		);
+		console.log(result);
 		updateProfile(result.user, { displayName: creds.name });
 		setUserProfileData(result.user);
 	} catch (error: any) {

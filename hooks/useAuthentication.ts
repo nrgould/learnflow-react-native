@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { useAppDispatch } from './reduxHooks';
+import { setUserId } from '../store/authSlice';
 
 const auth = getAuth();
 
 export default function useAuthentication() {
-	const [user, setUser] = useState<User>();
+	const [curUser, setCurUser] = useState<User>();
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		return onAuthStateChanged(auth, (user) => {
 			if (user) {
-				setUser(user);
+				setCurUser(user);
+				dispatch(setUserId(user.uid));
 			} else {
-				setUser(undefined);
+				setCurUser(undefined);
 			}
 		});
 	}, []);
 
 	return {
-		user,
+		user: curUser,
 	};
 }

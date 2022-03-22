@@ -8,7 +8,7 @@ import { Theme } from '../../theme/theme';
 
 const CIRCLE_LENGTH = isSmallDevice ? 190 : 210;
 const R = isSmallDevice ? 35 : CIRCLE_LENGTH / (2 * Math.PI);
-const STROKE_WIDTH = 6;
+const STROKE_WIDTH = 9;
 
 export default function PathModulePlaceholder() {
 	const theme = useTheme<Theme>();
@@ -33,13 +33,13 @@ export default function PathModulePlaceholder() {
 					justifyContent='space-around'>
 					<Box
 						width={100}
-						height={16}
+						height={14}
 						backgroundColor='border'
 						borderRadius='xs'
 					/>
 					<Box
-						width={200}
-						height={14}
+						width={180}
+						height={12}
 						backgroundColor='border'
 						borderRadius='xs'
 					/>
@@ -54,7 +54,7 @@ export default function PathModulePlaceholder() {
 							cy='50'
 							r={R}
 							stroke={border}
-							strokeWidth={STROKE_WIDTH + 4}
+							strokeWidth={STROKE_WIDTH}
 						/>
 					</Svg>
 				</Box>

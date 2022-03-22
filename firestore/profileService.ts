@@ -5,17 +5,20 @@ import {
 	setDoc,
 	Timestamp,
 } from 'firebase/firestore/lite';
+import { app } from '../firebase/config';
 
-const db = getFirestore();
+const db = getFirestore(app);
 
-export async function getUserProfile(userId: any) {
-	const docRef = doc(db, 'users', 'xRLwyUYhbg3jGuZ25aYK');
+export async function getUserProfile(userId: string) {
+	const docRef = doc(db, 'users', userId);
 	const docSnap = await getDoc(docRef);
 
 	if (docSnap.exists()) {
+		// console.log('data: ', docSnap.data());
 		return docSnap.data();
 	} else {
 		console.log("document doesn't exist!");
+		return null;
 	}
 }
 

@@ -43,6 +43,12 @@ export type ParticleType = {
 	id: string;
 };
 
+export type ProfileType = {
+	displayName: string;
+	email: string;
+	karma: number;
+};
+
 export type Offset = SharedValues<{
 	order: number;
 	width: number;
