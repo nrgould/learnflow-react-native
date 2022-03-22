@@ -35,7 +35,7 @@ export default function Signup({ navigation }: Props) {
 			alignItems='center'
 			justifyContent='center'
 			backgroundColor='background'>
-			<Text variant='header'>Create Account</Text>
+			<Text variant='header'>Signup</Text>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
@@ -45,13 +45,11 @@ export default function Signup({ navigation }: Props) {
 				) => {
 					try {
 						await registerInFirebase(values);
-						console.log(values);
-						resetForm();
-						navigation.navigate('Feed');
 					} catch (error) {
 						setErrors(error as FormValues);
 					} finally {
 						setSubmitting(false);
+						resetForm();
 					}
 				}}>
 				{({
@@ -85,7 +83,7 @@ export default function Signup({ navigation }: Props) {
 				label='Sign In'
 				variant='link'
 				margin='none'
-				onPress={() => console.log('signin')}
+				onPress={() => navigation.push('Login')}
 			/>
 		</Box>
 	);

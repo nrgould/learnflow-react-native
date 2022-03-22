@@ -32,7 +32,7 @@ export default function Login({ navigation }: Props) {
 			alignItems='center'
 			justifyContent='center'
 			backgroundColor='background'>
-			<Text variant='header'>Sign In</Text>
+			<Text variant='header'>Login</Text>
 			<Formik
 				validationSchema={validationSchema}
 				initialValues={initialValues}
@@ -41,15 +41,13 @@ export default function Login({ navigation }: Props) {
 					{ setSubmitting, setErrors, resetForm }
 				) => {
 					try {
-						await signInWithEmail(values).then(() => {
-							resetForm();
-							navigation.navigate('Feed');
-						});
+						await signInWithEmail(values);
 					} catch (error) {
 						setErrors(error as FormValues);
 						console.log(error);
 					} finally {
 						setSubmitting(false);
+						resetForm();
 					}
 				}}>
 				{({
@@ -83,7 +81,7 @@ export default function Login({ navigation }: Props) {
 				label='Sign Up'
 				variant='link'
 				margin='s'
-				onPress={() => navigation.navigate('Signup')}
+				onPress={() => navigation.push('Signup')}
 			/>
 		</Box>
 	);

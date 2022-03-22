@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore/lite';
-import { Constants } from 'expo-constants';
+import Constants from 'expo-constants';
 
 const firebaseConfig = {
 	apiKey: Constants.manifest.extra.apiKey,
