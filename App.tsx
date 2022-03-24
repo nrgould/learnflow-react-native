@@ -1,35 +1,23 @@
-import { useState } from 'react';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
 import Layout from './Layout';
+import LoadAssets from './components/LoadAssets';
 
-const fetchFonts = () => {
-	return Font.loadAsync({
-		'poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
-		'poppins-medium': require('./assets/fonts/Poppins-Medium.ttf'),
-		'poppins-semibold': require('./assets/fonts/Poppins-SemiBold.ttf'),
-		'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
-	});
+const fonts = {
+	'poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
+	'poppins-medium': require('./assets/fonts/Poppins-Medium.ttf'),
+	'poppins-semibold': require('./assets/fonts/Poppins-SemiBold.ttf'),
+	'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
+	'merriweather-bold': require('./assets/fonts/Merriweather-Bold.ttf'),
+	'merriweather-regular': require('./assets/fonts/Merriweather-Regular.ttf'),
 };
 
 export default function App() {
-	const [dataLoaded, setDataLoaded] = useState(false);
-
-	if (!dataLoaded) {
-		return (
-			<AppLoading
-				startAsync={fetchFonts}
-				onFinish={() => setDataLoaded(true)}
-				onError={(error: any) => console.log(error)}
-			/>
-		);
-	}
-
 	return (
 		<Provider store={store}>
-			<Layout />
+			<LoadAssets fonts={fonts}>
+				<Layout />
+			</LoadAssets>
 		</Provider>
 	);
 }

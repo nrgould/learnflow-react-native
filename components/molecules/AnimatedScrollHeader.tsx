@@ -48,7 +48,7 @@ export default function AnimatedScrollHeader({ translateY, title }: Props) {
 	});
 	return (
 		<AnimatedBox
-			backgroundColor='background'
+			backgroundColor='bottomTabBackground'
 			style={[styles.header, rHeaderStyle]}>
 			<AnimatedText
 				variant='headerTitle'

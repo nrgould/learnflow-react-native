@@ -1,4 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import { Switch } from 'react-native-gesture-handler';
 import Box from '../components/atoms/Box';
 import Button from '../components/atoms/Button';
@@ -10,16 +16,32 @@ import { useItemHeight } from '../hooks/useItemHeight';
 import { signOut } from '../store/authSlice';
 import { clearCurrentUser, fetchCurrentUserAsync } from '../store/profileSlice';
 import { setDark, setLight } from '../store/themeSlice';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { useTheme } from '@shopify/restyle';
+import { Theme } from '../theme/theme';
+import Icon from '../components/atoms/Icon';
 
 export default function Profile() {
+	const [bottomSheetActive, setBottomSheetActive] = useState(false);
 	const dispatch = useAppDispatch();
 	const darkMode = useAppSelector((state) => state.theme.darkMode);
 	const itemHeight = useItemHeight();
 	const profile = useAppSelector((state) => state.profile.currentUser);
 	const userId = useAppSelector((state) => state.auth.userId);
 	const status = useAppSelector((state) => state.profile.status);
+	const theme = useTheme<Theme>();
+	const { foreground, bottomSheetBackground, activeIcon } = theme.colors;
 
-	console.log(profile);
+	const bottomSheetRef = useRef<BottomSheet>(null);
+
+	const snapPoints = useMemo(() => ['50%', '75%', '90%'], []);
+
+	const handleSheetChanges = useCallback((index: number) => {
+		console.log('handleSheetChanges', index);
+		if (index === -1) {
+			setBottomSheetActive(false);
+		}
+	}, []);
 
 	useEffect(() => {
 		dispatch(fetchCurrentUserAsync(userId!));
@@ -54,8 +76,20 @@ export default function Profile() {
 			<Box
 				height={itemHeight}
 				marginTop='s'
-				marginHorizontal='l'
+				marginHorizontal='m'
 				backgroundColor='background'>
+				<Box
+					flexDirection='row'
+					width='100%'
+					alignItems='center'
+					justifyContent='flex-end'>
+					<Icon
+						onPress={() => setBottomSheetActive(!bottomSheetActive)}
+						name='settings-sharp'
+						color={activeIcon}
+						size={32}
+					/>
+				</Box>
 				<Card
 					height={itemHeight * 0.2}
 					variant='primary'
@@ -86,8 +120,28 @@ export default function Profile() {
 						onValueChange={handleSetDarkMode}
 					/>
 				</Card>
-				<Button label='Sign Out' onPress={() => dispatch(signOut())} />
 			</Box>
+			<BottomSheet
+				ref={bottomSheetRef}
+				handleIndicatorStyle={{ backgroundColor: foreground }}
+				handleStyle={{
+					paddingVertical: 16,
+				}}
+				style={{ zIndex: 10 }}
+				backgroundStyle={{
+					backgroundColor: bottomSheetBackground,
+				}}
+				index={bottomSheetActive ? 1 : -1}
+				snapPoints={snapPoints}
+				enablePanDownToClose
+				onChange={handleSheetChanges}>
+				<Box marginHorizontal='m'>
+					<Button
+						label='Sign Out'
+						onPress={() => dispatch(signOut())}
+					/>
+				</Box>
+			</BottomSheet>
 		</RestyledSafeAreaView>
 	);
 }

@@ -18,7 +18,6 @@ function fetchFeed() {
 	);
 }
 
-//fetch single module
 export const fetchFeedAsync = createAsyncThunk(
 	'feed/fetchFeed',
 	async function () {

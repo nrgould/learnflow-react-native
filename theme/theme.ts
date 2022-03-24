@@ -15,23 +15,23 @@ const palette = {
 
 	gray: '#E1dfe9',
 	lightGray: '#dbdbdb',
-	blueGray: '#b4bdd7',
 	dimGray: '#666666',
+	charcoal: '#3C474B',
 
-	black: '#161314',
+	smokyBlack: '#161314',
+	richBlack: '#0B090A',
 	offBlack: '#211C1E',
 	pureBlack: '#000',
 
 	white: '#fff',
 	offWhite: '#f9f9f9',
+
 	darkLiver: '#4D4246',
+	lightPeriwinkle: '#b4bdd7',
 
 	secondaryText: '#9da4ba',
 	secondaryTextSoft: '#e7e9ee',
 	primaryTextSoft: '#d1d1d1',
-
-	gradientStart: '#eeeff3',
-	gradientEnd: '#e6e6ee',
 
 	green: '#37bc64',
 	lightGreen: '#E2f8E9',
@@ -50,9 +50,9 @@ const theme = createTheme({
 	colors: {
 		//text
 		primaryText: palette.offBlack,
-		secondaryText: palette.darkLiver,
+		secondaryText: palette.charcoal,
 		buttonText: palette.white,
-		buttonTextBlack: palette.black,
+		buttonTextBlack: palette.smokyBlack,
 		whiteText: palette.white,
 
 		//primary / secondary
@@ -78,13 +78,16 @@ const theme = createTheme({
 		//component colors
 		activeIcon: palette.offBlack,
 		background: palette.offWhite,
-		foreground: palette.black,
+		foreground: palette.smokyBlack,
+		bottomSheetBackground: palette.white,
+		bottomTabBackground: palette.offWhite,
 		inputBackground: palette.white,
+
 		primaryCardBackground: palette.white,
 		secondaryCardBackground: palette.offBlack,
 		border: palette.lightGray,
-		shadow: palette.black,
-		icon: palette.blueGray,
+		shadow: palette.smokyBlack,
+		icon: palette.charcoal,
 	},
 	spacing: {
 		none: 0,
@@ -140,52 +143,52 @@ const theme = createTheme({
 		},
 		button_primary: {
 			color: 'buttonText',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_secondary: {
 			color: 'buttonText',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_tertiary: {
 			color: 'buttonText',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_success: {
 			color: 'buttonText',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_successSecondary: {
 			color: 'success',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_warning: {
 			color: 'buttonText',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_warningSecondary: {
 			color: 'warning',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_error: {
 			color: 'buttonText',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_errorSecondary: {
 			color: 'error',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		button_link: {
 			color: 'secondaryText',
-			fontFamily: 'poppins-medium',
+			fontFamily: 'poppins-semibold',
 			fontSize: 16,
 		},
 		questionButtonText: {
@@ -256,22 +259,22 @@ const theme = createTheme({
 			fontFamily: 'Poppins',
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
-			borderRadius: 'xs',
+			borderRadius: 's',
 			shadowOpacity: 0.1,
 			shadowRadius: 6,
 			elevation: 5,
 		},
 		secondary: {
 			backgroundColor: 'secondary',
-			borderRadius: 'xs',
+			borderRadius: 's',
 		},
 		tertiary: {
 			backgroundColor: 'grayBtn',
-			borderRadius: 'xs',
+			borderRadius: 's',
 		},
 		disabled: {
 			backgroundColor: 'disabled',
-			borderRadius: 'xs',
+			borderRadius: 's',
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
 			shadowOpacity: 0.1,
@@ -280,7 +283,7 @@ const theme = createTheme({
 		},
 		success: {
 			backgroundColor: 'success',
-			borderRadius: 'xs',
+			borderRadius: 's',
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
 			shadowOpacity: 0.2,
@@ -289,11 +292,11 @@ const theme = createTheme({
 		},
 		successSecondary: {
 			backgroundColor: 'successSoft',
-			borderRadius: 'xs',
+			borderRadius: 's',
 		},
 		warning: {
 			backgroundColor: 'warning',
-			borderRadius: 'xs',
+			borderRadius: 's',
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
 			shadowOpacity: 0.2,
@@ -302,11 +305,11 @@ const theme = createTheme({
 		},
 		warningSecondary: {
 			backgroundColor: 'warningSoft',
-			borderRadius: 'xs',
+			borderRadius: 's',
 		},
 		error: {
 			backgroundColor: 'error',
-			borderRadius: 'xs',
+			borderRadius: 's',
 			shadowColor: 'shadow',
 			shadowOffset: { width: 1, height: 2 },
 			shadowOpacity: 0.2,
@@ -315,7 +318,7 @@ const theme = createTheme({
 		},
 		errorSecondary: {
 			backgroundColor: 'errorSoft',
-			borderRadius: 'xs',
+			borderRadius: 's',
 		},
 		link: {
 			// backgroundColor: 'none',
@@ -381,13 +384,15 @@ export const darkTheme = createTheme({
 		...theme.colors,
 		primaryText: palette.offWhite,
 		secondaryText: palette.primaryTextSoft,
-		background: palette.black,
-		foreground: palette.white,
+		background: palette.smokyBlack,
+		foreground: palette.gray,
 		inputBackground: palette.offBlack,
 		icon: palette.dimGray,
 		activeIcon: palette.gray,
 		primaryCardBackground: palette.offBlack,
 		secondaryCardBackground: palette.offWhite,
+		bottomTabBackground: palette.richBlack,
+		bottomSheetBackground: palette.richBlack,
 		border: palette.dimGray,
 	},
 });

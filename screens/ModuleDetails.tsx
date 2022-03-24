@@ -14,6 +14,8 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 	const { selectedModule } = useAppSelector((state) => state.module);
 	const status = useAppSelector((state) => state.module.status);
 
+	console.log(selectedModule?.content);
+
 	useEffect(() => {
 		dispatch(fetchModuleAsync());
 		navigation.setOptions({
@@ -52,13 +54,16 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 							{selectedModule?.description}
 						</Text>
 					</Box>
-					{selectedModule?.content.map((content, i) => {
-						return (
-							<Card padding='xl' key={i} variant='primary'>
-								<Text variant='subheader'>{content.title}</Text>
-							</Card>
-						);
-					})}
+					{selectedModule &&
+						selectedModule?.content.map((content, i) => {
+							return (
+								<Card padding='xl' key={i} variant='primary'>
+									<Text variant='subheader'>
+										{content.title}
+									</Text>
+								</Card>
+							);
+						})}
 				</Box>
 			</RestyledScrollView>
 		</RestyledSafeAreaView>

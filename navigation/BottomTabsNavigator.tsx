@@ -17,7 +17,13 @@ const BottomTabs = createBottomTabNavigator();
 export default function BottomTabsNavigator() {
 	const theme = useTheme<Theme>();
 
-	const { icon: iconColor, activeIcon, background, border } = theme.colors;
+	const {
+		icon: iconColor,
+		activeIcon,
+		background,
+		border,
+		bottomTabBackground,
+	} = theme.colors;
 	return (
 		<NavigationContainer>
 			<BottomTabs.Navigator
@@ -29,7 +35,7 @@ export default function BottomTabsNavigator() {
 						height: isSmallDevice
 							? theme.constants.bottomTabHeightSmall
 							: theme.constants.bottomTabHeightLarge,
-						backgroundColor: background,
+						backgroundColor: bottomTabBackground,
 						borderTopColor: border,
 					},
 					tabBarActiveTintColor: activeIcon,
@@ -42,7 +48,7 @@ export default function BottomTabsNavigator() {
 							height: isSmallDevice
 								? theme.constants.bottomTabHeightSmall
 								: theme.constants.bottomTabHeightLarge,
-							backgroundColor: background,
+							backgroundColor: bottomTabBackground,
 							borderTopColor: background,
 						},
 						tabBarIcon: ({ color, size, focused }: any) => (

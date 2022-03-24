@@ -43,9 +43,9 @@ export default function Feed({ navigation }: NavigationTypes) {
 		progress = -translateY.value / refreshingHeight;
 	}
 
-	useEffect(() => {
-		dispatch(fetchFeedAsync());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(fetchFeedAsync());
+	// }, [dispatch]);
 
 	const { primary, background } = theme.colors;
 

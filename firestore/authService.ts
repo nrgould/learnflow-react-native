@@ -1,11 +1,11 @@
 import {
 	createUserWithEmailAndPassword,
-	getAuth,
 	initializeAuth,
 	onAuthStateChanged,
 	signInWithEmailAndPassword,
 	signOut,
 	updateProfile,
+	User,
 } from 'firebase/auth';
 import { getReactNativePersistence } from 'firebase/auth/react-native';
 import { app } from '../firebase/config';
@@ -17,13 +17,11 @@ export const auth = initializeAuth(app, {
 	persistence: getReactNativePersistence(AsyncStorage),
 });
 
-onAuthStateChanged(auth, (user) => {
-	if (user !== null) {
-		console.log('AUTH: Authenticated.');
-	} else {
-		console.log('AUTH: Not Authenticated.');
-	}
-});
+export async function fetchUser() {
+	onAuthStateChanged(auth, (user) => {
+		return user;
+	});
+}
 
 interface SignInProps {
 	email: string;

@@ -21,7 +21,7 @@ export const fetchCurrentUserAsync = createAsyncThunk(
 );
 
 export const profileSlice = createSlice({
-	name: 'feed',
+	name: 'profile',
 	initialState,
 	reducers: {
 		setCurrentUser: (state, action) => {

@@ -7,7 +7,7 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
