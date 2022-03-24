@@ -8,8 +8,11 @@ const fonts = {
 	'poppins-medium': require('./assets/fonts/Poppins-Medium.ttf'),
 	'poppins-semibold': require('./assets/fonts/Poppins-SemiBold.ttf'),
 	'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
-	'merriweather-bold': require('./assets/fonts/Merriweather-Bold.ttf'),
-	'merriweather-regular': require('./assets/fonts/Merriweather-Regular.ttf'),
+	'sora-regular': require('./assets/fonts/Sora-Regular.ttf'),
+	'sora-medium': require('./assets/fonts/Sora-Medium.ttf'),
+	'sora-semibold': require('./assets/fonts/Sora-SemiBold.ttf'),
+	'sora-bold': require('./assets/fonts/Sora-Bold.ttf'),
+
 };
 
 export default function App() {

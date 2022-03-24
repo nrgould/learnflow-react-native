@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import { Switch } from 'react-native-gesture-handler';
 import Box from '../components/atoms/Box';
-import Button from '../components/atoms/Button';
 import Card from '../components/atoms/Card';
 import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
 import Text from '../components/atoms/Text';
@@ -20,6 +19,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../theme/theme';
 import Icon from '../components/atoms/Icon';
+import SettingsComponent from '../components/molecules/SettingsComponent';
 
 export default function Profile() {
 	const [bottomSheetActive, setBottomSheetActive] = useState(false);
@@ -111,15 +111,7 @@ export default function Profile() {
 				<Card
 					height={itemHeight * 0.5}
 					variant='primary'
-					marginBottom='m'>
-					<Text variant='subheader' marginBottom='s'>
-						Set Dark Mode
-					</Text>
-					<Switch
-						value={darkMode}
-						onValueChange={handleSetDarkMode}
-					/>
-				</Card>
+					marginBottom='m'></Card>
 			</Box>
 			<BottomSheet
 				ref={bottomSheetRef}
@@ -135,10 +127,33 @@ export default function Profile() {
 				snapPoints={snapPoints}
 				enablePanDownToClose
 				onChange={handleSheetChanges}>
-				<Box marginHorizontal='m'>
-					<Button
-						label='Sign Out'
+				<Box marginHorizontal='m' marginTop={'l'}>
+					<SettingsComponent
+						onPress={() => console.log(' view saved')}
+						name='bookmark-outline'
+						label='Saved'
+					/>
+					<SettingsComponent
+						onPress={() => console.log('view account')}
+						name='person-circle-outline'
+						label='Account'
+					/>
+					<SettingsComponent
+						onPress={() => console.log('Dark Mode')}
+						name='moon-outline'
+						label='Dark Mode'
+						switchAction={handleSetDarkMode}
+						switchValue={darkMode}
+					/>
+					<SettingsComponent
+						onPress={() => console.log('view help')}
+						name='help-buoy-sharp'
+						label='Help'
+					/>
+					<SettingsComponent
 						onPress={() => dispatch(signOut())}
+						name='log-out-outline'
+						label='Sign Out'
 					/>
 				</Box>
 			</BottomSheet>
