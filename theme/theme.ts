@@ -205,7 +205,7 @@ const theme = createTheme({
 		},
 		settingText: {
 			fontFamily: 'sora-semibold',
-			fontSize: 20,
+			fontSize: 18,
 			color: 'primaryText',
 		},
 	},

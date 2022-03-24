@@ -1,3 +1,4 @@
+import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { ReactElement, useState } from 'react';
@@ -28,7 +29,7 @@ const LoadAssets = ({ fonts, children }: LoadAssetsProps) => {
 			/>
 		);
 	}
-	return <>{children}</>;
+	return <NavigationContainer>{children}</NavigationContainer>;
 };
 
 export default LoadAssets;

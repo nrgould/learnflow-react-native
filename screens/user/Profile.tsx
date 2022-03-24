@@ -6,22 +6,26 @@ import React, {
 	useState,
 } from 'react';
 import { Switch } from 'react-native-gesture-handler';
-import Box from '../components/atoms/Box';
-import Card from '../components/atoms/Card';
-import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
-import Text from '../components/atoms/Text';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { useItemHeight } from '../hooks/useItemHeight';
-import { signOut } from '../store/authSlice';
-import { clearCurrentUser, fetchCurrentUserAsync } from '../store/profileSlice';
-import { setDark, setLight } from '../store/themeSlice';
+import Box from '../../components/atoms/Box';
+import Card from '../../components/atoms/Card';
+import RestyledSafeAreaView from '../../components/atoms/RestyledSafeAreaView';
+import Text from '../../components/atoms/Text';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { useItemHeight } from '../../hooks/useItemHeight';
+import { signOut } from '../../store/authSlice';
+import {
+	clearCurrentUser,
+	fetchCurrentUserAsync,
+} from '../../store/profileSlice';
+import { setDark, setLight } from '../../store/themeSlice';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useTheme } from '@shopify/restyle';
-import { Theme } from '../theme/theme';
-import Icon from '../components/atoms/Icon';
-import SettingsComponent from '../components/molecules/SettingsComponent';
+import { Theme } from '../../theme/theme';
+import Icon from '../../components/atoms/Icon';
+import SettingsComponent from '../../components/molecules/SettingsComponent';
+import { NavigationTypes } from '../../types';
 
-export default function Profile() {
+export default function Profile({ navigation }: NavigationTypes) {
 	const [bottomSheetActive, setBottomSheetActive] = useState(false);
 	const dispatch = useAppDispatch();
 	const darkMode = useAppSelector((state) => state.theme.darkMode);
@@ -34,7 +38,7 @@ export default function Profile() {
 
 	const bottomSheetRef = useRef<BottomSheet>(null);
 
-	const snapPoints = useMemo(() => ['50%', '75%', '90%'], []);
+	const snapPoints = useMemo(() => ['50%', '75%'], []);
 
 	const handleSheetChanges = useCallback((index: number) => {
 		console.log('handleSheetChanges', index);
@@ -85,7 +89,7 @@ export default function Profile() {
 					justifyContent='flex-end'>
 					<Icon
 						onPress={() => setBottomSheetActive(!bottomSheetActive)}
-						name='settings-sharp'
+						name='cog-outline'
 						color={activeIcon}
 						size={32}
 					/>
@@ -134,12 +138,11 @@ export default function Profile() {
 						label='Saved'
 					/>
 					<SettingsComponent
-						onPress={() => console.log('view account')}
+						onPress={() => navigation.navigate('Account')}
 						name='person-circle-outline'
 						label='Account'
 					/>
 					<SettingsComponent
-						onPress={() => console.log('Dark Mode')}
 						name='moon-outline'
 						label='Dark Mode'
 						switchAction={handleSetDarkMode}

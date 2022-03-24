@@ -5,15 +5,15 @@ import ModuleDetails from '../screens/ModuleDetails';
 import Path from '../screens/Path';
 import { Theme } from '../theme/theme';
 
-const LearningStack = createNativeStackNavigator();
+const LearningStackScreen = createNativeStackNavigator();
 
-export default function LearningStackScreen() {
+export default function LearningStack() {
 	const theme = useTheme<Theme>();
 
 	const { background, primaryText } = theme.colors;
 
 	return (
-		<LearningStack.Navigator
+		<LearningStackScreen.Navigator
 			screenOptions={{
 				headerShown: false,
 				headerTintColor: primaryText,
@@ -22,11 +22,11 @@ export default function LearningStackScreen() {
 				},
 				headerBackTitleVisible: false,
 			}}>
-			<LearningStack.Screen name='MyLearning' component={Path} />
-			<LearningStack.Screen
+			<LearningStackScreen.Screen name='MyLearning' component={Path} />
+			<LearningStackScreen.Screen
 				name='ModuleDetails'
 				component={ModuleDetails}
 			/>
-		</LearningStack.Navigator>
+		</LearningStackScreen.Navigator>
 	);
 }

@@ -24,7 +24,7 @@ export default function SettingsComponent({
 	const theme = useTheme<Theme>();
 	const { activeIcon } = theme.colors;
 	return (
-		<TouchableOpacity onPress={onPress}>
+		<TouchableOpacity disabled={!onPress} onPress={onPress}>
 			<Box
 				marginBottom='l'
 				width='100%'

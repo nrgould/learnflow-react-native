@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { clearModule, fetchModuleAsync } from '../store/moduleSlice';
 import Card from '../components/atoms/Card';
 import RestyledScrollView from '../components/atoms/RestyledScrollView';
+import PageHeaderBack from '../components/molecules/PageHeaderBack';
 
 export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 	const title: string = route.params.title;
@@ -35,7 +36,7 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 				alignItems='center'
 				justifyContent='center'
 				backgroundColor='background'>
-				<Text variant='header'>Loading...</Text>
+				<Text variant='subheader'>Loading...</Text>
 			</Box>
 		);
 	}
@@ -48,8 +49,11 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 					marginHorizontal='l'
 					height='100%'
 					backgroundColor='background'>
+					<PageHeaderBack
+						navigation={navigation}
+						title={selectedModule!.title}
+					/>
 					<Box marginVertical='m'>
-						<Text variant='header'>{selectedModule?.title}</Text>
 						<Text variant='body' numberOfLines={4}>
 							{selectedModule?.description}
 						</Text>

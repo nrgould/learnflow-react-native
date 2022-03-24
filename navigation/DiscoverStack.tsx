@@ -1,19 +1,20 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
 
-const DiscoverStack = createNativeStackNavigator();
 import React from 'react';
 import Discover from '../screens/Discover';
 import ModuleDetails from '../screens/ModuleDetails';
 import { Theme } from '../theme/theme';
 
-export default function DiscoverStackScreen() {
+const DiscoverStackScreen = createNativeStackNavigator();
+
+export default function DiscoverStack() {
 	const theme = useTheme<Theme>();
 
 	const { background, primaryText } = theme.colors;
 
 	return (
-		<DiscoverStack.Navigator
+		<DiscoverStackScreen.Navigator
 			screenOptions={{
 				headerShown: false,
 				headerTintColor: primaryText,
@@ -22,11 +23,11 @@ export default function DiscoverStackScreen() {
 				},
 				headerBackTitleVisible: false,
 			}}>
-			<DiscoverStack.Screen name='Discover' component={Discover} />
-			<DiscoverStack.Screen
+			<DiscoverStackScreen.Screen name='Discover' component={Discover} />
+			<DiscoverStackScreen.Screen
 				name='ModuleDetails'
 				component={ModuleDetails}
 			/>
-		</DiscoverStack.Navigator>
+		</DiscoverStackScreen.Navigator>
 	);
 }
