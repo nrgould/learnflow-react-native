@@ -2,8 +2,6 @@ import { Switch, TouchableOpacity } from 'react-native';
 import React from 'react';
 import Box from '../atoms/Box';
 import Icon from '../atoms/Icon';
-import { useTheme } from '@shopify/restyle';
-import { Theme } from '../../theme/theme';
 import Text from '../atoms/Text';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -21,8 +19,6 @@ export default function SettingsComponent({
 	switchValue,
 	...props
 }: Props) {
-	const theme = useTheme<Theme>();
-	const { activeIcon } = theme.colors;
 	return (
 		<TouchableOpacity disabled={!onPress} onPress={onPress}>
 			<Box
@@ -37,7 +33,7 @@ export default function SettingsComponent({
 					justifyContent='flex-start'>
 					<Icon
 						{...props}
-						color={activeIcon}
+						color='activeIcon'
 						size={32}
 						style={{ marginRight: 12 }}
 					/>
@@ -48,9 +44,8 @@ export default function SettingsComponent({
 				) : (
 					<Icon
 						name='chevron-forward-outline'
-						color={activeIcon}
+						color='activeIcon'
 						size={32}
-						style={{ marginRight: 12 }}
 					/>
 				)}
 			</Box>

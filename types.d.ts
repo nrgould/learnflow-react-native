@@ -30,17 +30,18 @@ export type ModuleType = {
 	totalContent: number;
 };
 
-export type QuestionType = {
-	text: string;
-	options: Option[4];
-};
-
 export type ParticleType = {
 	title: string;
 	videoUrl?: string;
 	creatorId: string;
 	question: QuestionType;
 	id: string;
+	completed: boolean;
+};
+
+export type QuestionType = {
+	text: string;
+	options: Option[4];
 };
 
 export type ProfileType = {

@@ -1,7 +1,5 @@
-import { useTheme } from '@shopify/restyle';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Theme } from '../../theme/theme';
 import { NavigationTypes } from '../../types';
 import Box from '../atoms/Box';
 import Icon from '../atoms/Icon';
@@ -12,9 +10,6 @@ interface Props extends NavigationTypes {
 }
 
 export default function PageHeaderBack({ title, navigation }: Props) {
-	const theme = useTheme<Theme>();
-	const { primaryText } = theme.colors;
-
 	return (
 		<Box
 			width='100%'
@@ -25,13 +20,15 @@ export default function PageHeaderBack({ title, navigation }: Props) {
 			<TouchableOpacity>
 				<Icon
 					name='chevron-back-outline'
-					color={primaryText}
+					color='activeIcon'
 					size={36}
 					style={{ marginRight: 12 }}
 					onPress={() => navigation.goBack()}
 				/>
 			</TouchableOpacity>
-			<Text variant='header'>{title}</Text>
+			<Text variant='header' fontSize={28}>
+				{title}
+			</Text>
 		</Box>
 	);
 }

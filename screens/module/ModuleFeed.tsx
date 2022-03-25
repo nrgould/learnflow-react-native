@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import Box from '../components/atoms/Box';
-import FeedItem from '../components/organisms/FeedItem';
-import { useItemHeight } from '../hooks/useItemHeight';
-import { NavigationTypes } from '../types';
 import Animated, {
 	useAnimatedScrollHandler,
 	useSharedValue,
 } from 'react-native-reanimated';
 import { FlatList, RefreshControl } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { fetchFeedAsync } from '../store/feedSlice';
-import Text from '../components/atoms/Text';
 import { useTheme } from '@shopify/restyle';
-import { Theme } from '../theme/theme';
+import { Theme } from '../../theme/theme';
+import { NavigationTypes } from '../../types';
+import { useItemHeight } from '../../hooks/useItemHeight';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { fetchFeedAsync } from '../../store/feedSlice';
+import FeedItem from '../../components/organisms/FeedItem';
+import Box from '../../components/atoms/Box';
+import Text from '../../components/atoms/Text';
 
 interface RenderItemProps {
 	item: any;
@@ -25,7 +25,7 @@ const wait = (timeout: any) => {
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default function Feed({ navigation }: NavigationTypes) {
+export default function ModuleFeed({ navigation }: NavigationTypes) {
 	const [refreshing, setRefreshing] = useState(false);
 	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
 	const theme = useTheme<Theme>();

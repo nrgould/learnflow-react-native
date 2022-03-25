@@ -29,42 +29,48 @@ export const PARTICLES = [
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[0],
-		'01'
+		'01',
+		true
 	),
 	new Particle(
 		'Chain Rule',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[1],
-		'02'
+		'02',
+		true
 	),
 	new Particle(
 		'Anti-Derivatives',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[2],
-		'03'
+		'03',
+		true
 	),
 	new Particle(
 		'Limits',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[3],
-		'04'
+		'04',
+		false
 	),
 	new Particle(
 		'Integrals',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[4],
-		'05'
+		'05',
+		false
 	),
 	new Particle(
 		'Min/Max',
 		require('../assets/video/sampleTikTok.mov'),
 		'1',
 		QUESTIONS[5],
-		'06'
+		'06',
+		true
 	),
 ];
 

@@ -5,7 +5,6 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { Switch } from 'react-native-gesture-handler';
 import Box from '../../components/atoms/Box';
 import Card from '../../components/atoms/Card';
 import RestyledSafeAreaView from '../../components/atoms/RestyledSafeAreaView';
@@ -86,11 +85,14 @@ export default function Profile({ navigation }: NavigationTypes) {
 					flexDirection='row'
 					width='100%'
 					alignItems='center'
-					justifyContent='flex-end'>
+					justifyContent='space-between'>
+					<Text variant='header' fontSize={28}>
+						{profile?.displayName}
+					</Text>
 					<Icon
 						onPress={() => setBottomSheetActive(!bottomSheetActive)}
 						name='cog-outline'
-						color={activeIcon}
+						color='activeIcon'
 						size={32}
 					/>
 				</Box>
@@ -98,9 +100,6 @@ export default function Profile({ navigation }: NavigationTypes) {
 					height={itemHeight * 0.2}
 					variant='primary'
 					marginBottom='m'>
-					<Text variant='subheader' marginBottom='s'>
-						{profile?.displayName}
-					</Text>
 					<Text variant='body' marginBottom='s'>
 						{profile?.email}
 					</Text>

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import FeedItemContent from '../molecules/FeedItemContent';
 import { NavigationTypes, ParticleType } from '../../types';
 import Animated from 'react-native-reanimated';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
-import { useItemHeight } from '../../hooks/useItemHeight';
-import { shuffle } from '../../util/shuffle';
 
 interface Props extends NavigationTypes {
 	index: number;

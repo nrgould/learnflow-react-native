@@ -3,7 +3,7 @@ import { useTheme } from '@shopify/restyle';
 
 import React from 'react';
 import Discover from '../screens/Discover';
-import ModuleDetails from '../screens/ModuleDetails';
+import ModuleDetails from '../screens/module/ModuleDetails';
 import { Theme } from '../theme/theme';
 
 const DiscoverStackScreen = createNativeStackNavigator();

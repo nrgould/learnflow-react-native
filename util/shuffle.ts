@@ -1,4 +1,7 @@
-export function shuffle(array: any[]) {
+import { Option } from '../types';
+
+export function shuffle(array: Option[]) {
+	let shuffledArr = [...array];
 	let currentIndex = array.length,
 		randomIndex;
 
@@ -9,11 +12,11 @@ export function shuffle(array: any[]) {
 		currentIndex--;
 
 		// And swap it with the current element.
-		[array[currentIndex], array[randomIndex]] = [
-			array[randomIndex],
-			array[currentIndex],
+		[shuffledArr[currentIndex], shuffledArr[randomIndex]] = [
+			shuffledArr[randomIndex],
+			shuffledArr[currentIndex],
 		];
 	}
 
-	return array;
+	return shuffledArr;
 }

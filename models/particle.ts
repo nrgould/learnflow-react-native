@@ -6,17 +6,20 @@ export class Particle implements ParticleType {
 	creatorId: string;
 	question: QuestionType;
 	id: string;
+	completed: boolean;
 	constructor(
 		title: string,
 		videoUrl: string,
 		creatorId: string,
 		question: QuestionType,
-		id: string
+		id: string,
+		completed: boolean
 	) {
 		this.title = title;
 		this.videoUrl = videoUrl;
 		this.creatorId = creatorId;
 		this.question = question;
 		this.id = id;
+		this.completed = completed;
 	}
 }

@@ -1,6 +1,7 @@
 import { useTheme } from '@shopify/restyle';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useItemHeight } from '../../hooks/useItemHeight';
+import { MAX_ATTEMPTS } from '../../theme/constants';
 import { Theme } from '../../theme/theme';
 import { Option } from '../../types';
 import { errorHaptic, successHaptic } from '../../util/hapticFeedback';
@@ -19,7 +20,7 @@ export default function MultipleChoiceQuestion({ question, options }: Props) {
 	const [disabled, setDisabled] = useState(false);
 	const [opts, setOpts] = useState(options);
 	const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
-	const [attempts, setAttempts] = useState(3);
+	const [attempts, setAttempts] = useState(MAX_ATTEMPTS);
 	const [statusMessage, setStatusMessage] = useState('');
 	const [statusColor, setStatusColor] = useState(theme.colors.primaryText);
 	const height = useItemHeight();
@@ -29,6 +30,7 @@ export default function MultipleChoiceQuestion({ question, options }: Props) {
 		setOpts(shuffledOptions);
 	}, []);
 
+	//memoized so order doesn't reshuffle on re-render
 	const MemoizedMultipleChoiceOptions = useMemo(
 		() => MultipleChoiceOptions,
 		[]

@@ -16,7 +16,6 @@ import Animated, {
 import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { lightHaptic } from '../../util/hapticFeedback';
-import Text from '../atoms/Text';
 import Icon from '../atoms/Icon';
 import { useVector } from 'react-native-redash';
 
@@ -50,7 +49,7 @@ export default function FeedItemContent({
 	const scale = useSharedValue(0);
 	const iconScale = useSharedValue(1);
 
-	const { whiteBtn, error } = theme.colors;
+	const { whiteBtn } = theme.colors;
 
 	const progressInc = width / status.durationMillis;
 	const progressWidth = Math.floor(status.positionMillis * progressInc);
@@ -92,6 +91,15 @@ export default function FeedItemContent({
 		video.current.pauseAsync();
 	}, []);
 
+	const onGoBackSeconds = useCallback(() => {
+		console.log('go back');
+		if (status.positionMillis > 2000) {
+			setVideoPos(status.positionMillis - 2000);
+		} else {
+			setVideoPos(0);
+		}
+	}, [status]);
+
 	const doubleTap = Gesture.Tap()
 		.numberOfTaps(2)
 		.onEnd(() => {
@@ -129,14 +137,6 @@ export default function FeedItemContent({
 			justifyContent='center'
 			height={height}
 			width='100%'>
-			<Box
-				width={width}
-				height={100}
-				position='absolute'
-				style={{ top: 0, left: 0 }}
-				backgroundColor='background'>
-				<Text>header</Text>
-			</Box>
 			<GestureDetector gesture={taps}>
 				<Video
 					ref={video}
@@ -149,7 +149,6 @@ export default function FeedItemContent({
 					useNativeControls={false}
 					onPlaybackStatusUpdate={setStatus}
 					progressUpdateIntervalMillis={200}
-					volume={10}
 					shouldPlay={index === currentVisibleIndex}
 				/>
 			</GestureDetector>
@@ -173,21 +172,28 @@ export default function FeedItemContent({
 					<AnimatedIcon
 						size={42}
 						name={liked ? 'heart' : 'heart-outline'}
-						color={liked ? error : whiteBtn}
+						color={liked ? 'error' : 'white'}
 						style={[iconStyle, { marginBottom: 15 }]}
 						onPress={onLiked}
 					/>
 					<Icon
 						size={32}
 						name='arrow-redo'
-						color={whiteBtn}
+						color='white'
 						style={{ marginBottom: 15 }}
 					/>
 					<Icon
 						size={32}
 						name='ellipsis-horizontal'
-						color={whiteBtn}
+						color='white'
 						style={{ marginBottom: 20 }}
+					/>
+					<Icon
+						size={32}
+						name='play-skip-back'
+						color='white'
+						style={{ marginBottom: 20 }}
+						onPress={onGoBackSeconds}
 					/>
 				</Box>
 				<Box
@@ -206,17 +212,6 @@ export default function FeedItemContent({
 					height={10}
 					backgroundColor='primary'
 				/>
-				{/* <Slider
-					style={{ width: '100%' }}
-					minimumValue={0}
-					maximumValue={status.durationMillis}
-					value={status.positionMillis}
-					onValueChange={setVideoPos}
-					maximumTrackTintColor={border}
-					minimumTrackTintColor={primary}
-					thumbTintColor={whiteBtn}
-					step={200}
-				/> */}
 			</Box>
 			<AnimatedIcon
 				size={42}

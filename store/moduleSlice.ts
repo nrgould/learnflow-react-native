@@ -31,7 +31,6 @@ export const fetchModuleAsync = createAsyncThunk(
 	'module/fetchModule',
 	async function () {
 		const response = await fetchModule(0);
-		console.log(response.data);
 		return response.data;
 	}
 );

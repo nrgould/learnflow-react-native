@@ -1,21 +1,19 @@
 import { useEffect } from 'react';
-import { NavigationTypes } from '../types';
-import Box from '../components/atoms/Box';
-import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
-import Text from '../components/atoms/Text';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { clearModule, fetchModuleAsync } from '../store/moduleSlice';
-import Card from '../components/atoms/Card';
-import RestyledScrollView from '../components/atoms/RestyledScrollView';
-import PageHeaderBack from '../components/molecules/PageHeaderBack';
+import { NavigationTypes } from '../../types';
+import Box from '../../components/atoms/Box';
+import RestyledSafeAreaView from '../../components/atoms/RestyledSafeAreaView';
+import Text from '../../components/atoms/Text';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { clearModule, fetchModuleAsync } from '../../store/moduleSlice';
+import RestyledScrollView from '../../components/atoms/RestyledScrollView';
+import PageHeaderBack from '../../components/molecules/PageHeaderBack';
+import ModuleContentItem from '../../components/molecules/ModuleContentItem';
 
 export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 	const title: string = route.params.title;
 	const dispatch = useAppDispatch();
 	const { selectedModule } = useAppSelector((state) => state.module);
 	const status = useAppSelector((state) => state.module.status);
-
-	console.log(selectedModule?.content);
 
 	useEffect(() => {
 		dispatch(fetchModuleAsync());
@@ -40,6 +38,21 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 			</Box>
 		);
 	}
+
+	if (status === 'failed') {
+		return (
+			<Box
+				flex={1}
+				alignItems='center'
+				justifyContent='center'
+				backgroundColor='background'>
+				<Text variant='subheader' color='error'>
+					Can't find this module!
+				</Text>
+			</Box>
+		);
+	}
+
 	return (
 		<RestyledSafeAreaView edges={['top', 'left', 'right']}>
 			<RestyledScrollView
@@ -49,25 +62,21 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 					marginHorizontal='l'
 					height='100%'
 					backgroundColor='background'>
-					<PageHeaderBack
-						navigation={navigation}
-						title={selectedModule!.title}
-					/>
+					<PageHeaderBack navigation={navigation} title={title} />
 					<Box marginVertical='m'>
 						<Text variant='body' numberOfLines={4}>
 							{selectedModule?.description}
 						</Text>
 					</Box>
-					{selectedModule &&
-						selectedModule?.content.map((content, i) => {
-							return (
-								<Card padding='xl' key={i} variant='primary'>
-									<Text variant='subheader'>
-										{content.title}
-									</Text>
-								</Card>
-							);
-						})}
+					{selectedModule?.content.map((particle, i) => {
+						return (
+							<ModuleContentItem
+								key={i}
+								particle={particle}
+								navigation={navigation}
+							/>
+						);
+					})}
 				</Box>
 			</RestyledScrollView>
 		</RestyledSafeAreaView>
