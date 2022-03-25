@@ -3,7 +3,6 @@ import Box from '../components/atoms/Box';
 import Text from '../components/atoms/Text';
 import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
 import Tag from '../components/atoms/Tag';
-import { NavigationTypes } from '../types';
 import DiscoverModule from '../components/molecules/DiscoverModule';
 import SearchInput from '../components/atoms/SearchInput';
 import RestyledScrollView from '../components/atoms/RestyledScrollView';
@@ -22,12 +21,12 @@ import { Theme } from '../theme/theme';
 import Icon from '../components/atoms/Icon';
 import { useItemHeight } from '../hooks/useItemHeight';
 
-export default function Discover({ navigation }: NavigationTypes) {
+export default function Discover() {
 	const theme = useTheme<Theme>();
 	const [searchFocused, setSearchFocused] = useState(false);
 	const itemHeight = useItemHeight();
 
-	const { primary, secondary, tertiary, secondaryText } = theme.colors;
+	const { primary, secondary, tertiary } = theme.colors;
 
 	const translateY = useSharedValue(0);
 
@@ -126,13 +125,13 @@ export default function Discover({ navigation }: NavigationTypes) {
 					marginVertical='s'
 					flexDirection='row'
 					flexWrap={'wrap'}>
-					<Tag navigation={navigation} text='Algebra' />
-					<Tag navigation={navigation} text='Calculus I' />
-					<Tag navigation={navigation} text='Astronomy' />
-					<Tag navigation={navigation} text='English' />
-					<Tag navigation={navigation} text='Programming' />
-					<Tag navigation={navigation} text='Java' />
-					<Tag navigation={navigation} text='Python' />
+					<Tag text='Algebra' />
+					<Tag text='Calculus I' />
+					<Tag text='Astronomy' />
+					<Tag text='English' />
+					<Tag text='Programming' />
+					<Tag text='Java' />
+					<Tag text='Python' />
 				</Box>
 				<Box marginHorizontal='l'>
 					<Box
@@ -143,7 +142,7 @@ export default function Discover({ navigation }: NavigationTypes) {
 						<Icon
 							name='bulb'
 							size={24}
-							color={secondaryText}
+							color='secondaryText'
 							style={{ marginRight: theme.spacing.s }}
 						/>
 						<Text
@@ -167,7 +166,6 @@ export default function Discover({ navigation }: NavigationTypes) {
 								color={color}
 								key={index}
 								module={module}
-								navigation={navigation}
 							/>
 						);
 					})}

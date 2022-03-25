@@ -4,14 +4,27 @@ import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
 
 interface Props extends React.ComponentProps<typeof Ionicons> {
-	color?: 'success' | 'error' | 'warning' | 'activeIcon' | 'white';
+	color?:
+		| 'success'
+		| 'error'
+		| 'warning'
+		| 'activeIcon'
+		| 'white'
+		| 'secondaryText';
 }
 
 export default function Icon({ color, ...props }: Props) {
 	const theme = useTheme<Theme>();
-	const { success, warning, error, icon, activeIcon, whiteBtn } =
-		theme.colors;
-		
+	const {
+		success,
+		warning,
+		error,
+		icon,
+		activeIcon,
+		whiteBtn,
+		secondaryText,
+	} = theme.colors;
+
 	let iconColor;
 
 	switch (color) {
@@ -29,6 +42,9 @@ export default function Icon({ color, ...props }: Props) {
 			break;
 		case 'white':
 			iconColor = whiteBtn;
+			break;
+		case 'secondaryText':
+			iconColor = secondaryText;
 			break;
 		default:
 			iconColor = icon;

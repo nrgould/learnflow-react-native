@@ -6,17 +6,15 @@ import Text from '../../components/atoms/Text';
 import * as Yup from 'yup';
 import LoginForm from '../../components/organisms/LoginForm';
 import { signInWithEmail } from '../../firestore/authService';
-
-interface Props {
-	navigation: any;
-}
+import { useNavigation } from '@react-navigation/native';
 
 interface FormValues {
 	email: string;
 	password: string;
 }
 
-export default function Login({ navigation }: Props) {
+export default function Login() {
+	const navigation = useNavigation<any>();
 	const initialValues: FormValues = {
 		email: '',
 		password: '',

@@ -1,15 +1,17 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { NavigationTypes, ParticleType } from '../../types';
+import { ParticleType } from '../../types';
 import Card from '../atoms/Card';
 import Icon from '../atoms/Icon';
 import Text from '../atoms/Text';
 
-interface Props extends NavigationTypes {
+interface Props {
 	particle: ParticleType;
 }
 
-export default function ModuleContentItem({ particle, navigation }: Props) {
+export default function ModuleContentItem({ particle }: Props) {
+	const navigation = useNavigation<any>();
 	return (
 		<TouchableOpacity
 			onPress={() =>

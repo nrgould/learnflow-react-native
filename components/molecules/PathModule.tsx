@@ -11,8 +11,9 @@ import Animated, {
 	withTiming,
 } from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native';
-import { ModuleType, NavigationTypes } from '../../types';
+import { ModuleType } from '../../types';
 import { isSmallDevice, SCREEN_HEIGHT } from '../../theme/layout';
+import { useNavigation } from '@react-navigation/native';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -20,19 +21,18 @@ const CIRCLE_LENGTH = isSmallDevice ? 190 : 210;
 const R = isSmallDevice ? 35 : CIRCLE_LENGTH / (2 * Math.PI);
 const STROKE_WIDTH = 8;
 
-interface Props extends NavigationTypes {
+interface Props {
 	progressColor: string;
 	module: ModuleType;
 }
 
-export default function PathModule({
-	progressColor,
-	navigation,
-	module,
-}: Props) {
+export default function PathModule({ progressColor, module }: Props) {
 	const theme = useTheme<Theme>();
+	const navigation = useNavigation<any>();
+
 	const { background } = theme.colors;
 	const { completedContent, totalContent } = module;
+
 	const progress = useSharedValue(0);
 	const progressVal = completedContent / totalContent;
 
@@ -107,7 +107,6 @@ export default function PathModule({
 								left: isSmallDevice
 									? cardHeight / 2.9
 									: cardHeight / 2.95,
-								// transform: [{ translateX: -7 }, { translateY: -5 }],
 								fontSize: isSmallDevice ? 14 : 18,
 							}}>
 							{Math.ceil(progressVal * 100)}%

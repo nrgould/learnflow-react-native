@@ -79,7 +79,6 @@ export default function Path({ navigation }: Props) {
 							return (
 								<PathModule
 									progressColor={progressColor}
-									navigation={navigation}
 									module={module}
 									key={i}
 								/>

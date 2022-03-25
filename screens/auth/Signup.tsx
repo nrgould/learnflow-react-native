@@ -6,10 +6,7 @@ import Text from '../../components/atoms/Text';
 import * as Yup from 'yup';
 import SignupForm from '../../components/organisms/SignupForm';
 import { registerInFirebase } from '../../firestore/authService';
-
-interface Props {
-	navigation: any;
-}
+import { useNavigation } from '@react-navigation/native';
 
 interface FormValues {
 	name: string;
@@ -17,7 +14,8 @@ interface FormValues {
 	password: string;
 }
 
-export default function Signup({ navigation }: Props) {
+export default function Signup() {
+	const navigation = useNavigation<any>();
 	const initialValues: FormValues = {
 		name: '',
 		email: '',

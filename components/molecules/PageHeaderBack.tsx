@@ -1,15 +1,16 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { NavigationTypes } from '../../types';
 import Box from '../atoms/Box';
 import Icon from '../atoms/Icon';
 import Text from '../atoms/Text';
 
-interface Props extends NavigationTypes {
+interface Props {
 	title: string;
 }
 
-export default function PageHeaderBack({ title, navigation }: Props) {
+export default function PageHeaderBack({ title }: Props) {
+	const navigation = useNavigation<any>();
 	return (
 		<Box
 			width='100%'

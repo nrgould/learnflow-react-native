@@ -22,9 +22,9 @@ import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
 import Icon from '../../components/atoms/Icon';
 import SettingsComponent from '../../components/molecules/SettingsComponent';
-import { NavigationTypes } from '../../types';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Profile({ navigation }: NavigationTypes) {
+export default function Profile() {
 	const [bottomSheetActive, setBottomSheetActive] = useState(false);
 	const dispatch = useAppDispatch();
 	const darkMode = useAppSelector((state) => state.theme.darkMode);
@@ -32,8 +32,9 @@ export default function Profile({ navigation }: NavigationTypes) {
 	const profile = useAppSelector((state) => state.profile.currentUser);
 	const userId = useAppSelector((state) => state.auth.userId);
 	const status = useAppSelector((state) => state.profile.status);
+	const navigation = useNavigation<any>();
 	const theme = useTheme<Theme>();
-	const { foreground, bottomSheetBackground, activeIcon } = theme.colors;
+	const { foreground, bottomSheetBackground } = theme.colors;
 
 	const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -49,9 +50,9 @@ export default function Profile({ navigation }: NavigationTypes) {
 	useEffect(() => {
 		dispatch(fetchCurrentUserAsync(userId!));
 
-		return () => {
-			dispatch(clearCurrentUser());
-		};
+		// return () => {
+		// 	dispatch(clearCurrentUser());
+		// };
 	}, [dispatch]);
 
 	function handleSetDarkMode() {

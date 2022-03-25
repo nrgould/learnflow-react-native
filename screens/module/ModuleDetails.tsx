@@ -8,12 +8,14 @@ import { clearModule, fetchModuleAsync } from '../../store/moduleSlice';
 import RestyledScrollView from '../../components/atoms/RestyledScrollView';
 import PageHeaderBack from '../../components/molecules/PageHeaderBack';
 import ModuleContentItem from '../../components/molecules/ModuleContentItem';
+import { useNavigation } from '@react-navigation/native';
 
-export default function ModuleDetails({ navigation, route }: NavigationTypes) {
+export default function ModuleDetails({ route }: NavigationTypes) {
 	const title: string = route.params.title;
 	const dispatch = useAppDispatch();
 	const { selectedModule } = useAppSelector((state) => state.module);
 	const status = useAppSelector((state) => state.module.status);
+	const navigation = useNavigation();
 
 	useEffect(() => {
 		dispatch(fetchModuleAsync());
@@ -25,7 +27,7 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 		return () => {
 			dispatch(clearModule());
 		};
-	}, [dispatch]);
+	}, [dispatch, navigation]);
 
 	if (status === 'loading') {
 		return (
@@ -70,11 +72,7 @@ export default function ModuleDetails({ navigation, route }: NavigationTypes) {
 					</Box>
 					{selectedModule?.content.map((particle, i) => {
 						return (
-							<ModuleContentItem
-								key={i}
-								particle={particle}
-								navigation={navigation}
-							/>
+							<ModuleContentItem key={i} particle={particle} />
 						);
 					})}
 				</Box>

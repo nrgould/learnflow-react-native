@@ -6,13 +6,13 @@ import Animated, {
 import { FlatList, RefreshControl } from 'react-native';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
-import { NavigationTypes } from '../../types';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { fetchFeedAsync } from '../../store/feedSlice';
 import FeedItem from '../../components/organisms/FeedItem';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
+import { useNavigation } from '@react-navigation/native';
 
 interface RenderItemProps {
 	item: any;
@@ -25,7 +25,7 @@ const wait = (timeout: any) => {
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default function ModuleFeed({ navigation }: NavigationTypes) {
+export default function ModuleFeed() {
 	const [refreshing, setRefreshing] = useState(false);
 	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
 	const theme = useTheme<Theme>();
@@ -34,6 +34,7 @@ export default function ModuleFeed({ navigation }: NavigationTypes) {
 	const dispatch = useAppDispatch();
 	const { feed } = useAppSelector((state) => state.feed);
 	const status = useAppSelector((state) => state.feed.status);
+	const navigation = useNavigation<any>();
 
 	useEffect(() => {
 		dispatch(fetchFeedAsync());
