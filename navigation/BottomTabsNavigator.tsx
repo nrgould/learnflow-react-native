@@ -34,7 +34,7 @@ export default function BottomTabsNavigator() {
 						? theme.constants.bottomTabHeightSmall
 						: theme.constants.bottomTabHeightLarge,
 					backgroundColor: bottomTabBackground,
-					borderTopColor: border,
+					borderTopWidth: 0,
 				},
 				tabBarActiveTintColor: activeIcon,
 				tabBarInactiveTintColor: iconColor,
@@ -47,7 +47,8 @@ export default function BottomTabsNavigator() {
 							? theme.constants.bottomTabHeightSmall
 							: theme.constants.bottomTabHeightLarge,
 						backgroundColor: bottomTabBackground,
-						borderTopColor: background,
+						// borderTopColor: background,
+						borderTopWidth: 0,
 					},
 					tabBarIcon: ({ color, size, focused }: any) => (
 						<Ionicons

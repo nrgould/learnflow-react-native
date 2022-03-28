@@ -1,4 +1,3 @@
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
 import React from 'react';
@@ -14,19 +13,17 @@ export default function AuthStack() {
 	const { background, primaryText } = theme.colors;
 
 	return (
-		<NavigationContainer>
-			<AuthStackScreen.Navigator
-				screenOptions={{
-					headerShown: false,
-					headerTintColor: primaryText,
-					headerStyle: {
-						backgroundColor: background,
-					},
-					headerBackTitleVisible: false,
-				}}>
-				<AuthStackScreen.Screen name='Login' component={Login} />
-				<AuthStackScreen.Screen name='Signup' component={Signup} />
-			</AuthStackScreen.Navigator>
-		</NavigationContainer>
+		<AuthStackScreen.Navigator
+			screenOptions={{
+				headerShown: false,
+				headerTintColor: primaryText,
+				headerStyle: {
+					backgroundColor: background,
+				},
+				headerBackTitleVisible: false,
+			}}>
+			<AuthStackScreen.Screen name='Login' component={Login} />
+			<AuthStackScreen.Screen name='Signup' component={Signup} />
+		</AuthStackScreen.Navigator>
 	);
 }

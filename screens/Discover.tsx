@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Box from '../components/atoms/Box';
 import Text from '../components/atoms/Text';
 import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
-import Tag from '../components/atoms/Tag';
 import DiscoverModule from '../components/molecules/DiscoverModule';
 import SearchInput from '../components/atoms/SearchInput';
 import RestyledScrollView from '../components/atoms/RestyledScrollView';
@@ -18,7 +17,6 @@ import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { fetchModulesAsync } from '../store/moduleSlice';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../theme/theme';
-import Icon from '../components/atoms/Icon';
 import { useItemHeight } from '../hooks/useItemHeight';
 
 export default function Discover() {
@@ -120,38 +118,7 @@ export default function Discover() {
 						handleSearchFocus={handleSearchFocus}
 					/>
 				</Box>
-				<Box
-					marginHorizontal='l'
-					marginVertical='s'
-					flexDirection='row'
-					flexWrap={'wrap'}>
-					<Tag text='Algebra' />
-					<Tag text='Calculus I' />
-					<Tag text='Astronomy' />
-					<Tag text='English' />
-					<Tag text='Programming' />
-					<Tag text='Java' />
-					<Tag text='Python' />
-				</Box>
 				<Box marginHorizontal='l'>
-					<Box
-						flexDirection='row'
-						marginTop='m'
-						alignItems='center'
-						justifyContent='flex-start'>
-						<Icon
-							name='bulb'
-							size={24}
-							color='secondaryText'
-							style={{ marginRight: theme.spacing.s }}
-						/>
-						<Text
-							variant='subheader'
-							color='secondaryText'
-							fontSize={18}>
-							We think you'd like these
-						</Text>
-					</Box>
 					{modules?.map((module, index) => {
 						let color: string;
 						if (index % 3 === 0) {

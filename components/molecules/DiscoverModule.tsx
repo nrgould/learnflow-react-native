@@ -31,7 +31,7 @@ export default function DiscoverModule({ module }: Props) {
 					justifyContent='space-between'
 					alignItems='flex-start'>
 					<Text variant='cardHeader'>{title}</Text>
-					<Box
+					{/* <Box
 						flexDirection='row'
 						alignItems='center'
 						justifyContent='space-evenly'>
@@ -40,7 +40,7 @@ export default function DiscoverModule({ module }: Props) {
 							size={28}
 							style={{ marginRight: theme.spacing.xs }}
 						/>
-					</Box>
+					</Box> */}
 				</Box>
 				<Text
 					marginTop='s'

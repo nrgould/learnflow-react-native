@@ -49,7 +49,7 @@ export default function FeedItemContent({
 	const scale = useSharedValue(0);
 	const iconScale = useSharedValue(1);
 
-	const { whiteBtn } = theme.colors;
+	const { whiteBtn, error } = theme.colors;
 
 	const progressInc = width / status.durationMillis;
 	const progressWidth = Math.floor(status.positionMillis * progressInc);
@@ -92,7 +92,6 @@ export default function FeedItemContent({
 	}, []);
 
 	const onGoBackSeconds = useCallback(() => {
-		console.log('go back');
 		if (status.positionMillis > 2000) {
 			setVideoPos(status.positionMillis - 2000);
 		} else {
@@ -100,18 +99,7 @@ export default function FeedItemContent({
 		}
 	}, [status]);
 
-	const doubleTap = Gesture.Tap()
-		.numberOfTaps(2)
-		.onEnd(() => {
-			runOnJS(setLiked)(true);
-			iconScale.value = withSpring(1, { damping: 5 }, (isFinished) => {
-				if (isFinished) {
-					iconScale.value = withDelay(100, withSpring(0));
-				}
-			});
-		});
-
-	const singleTap = Gesture.Tap().onEnd((event) => {
+	const onSingleTap = Gesture.Tap().onEnd((event) => {
 		runOnJS(lightHaptic)();
 		if (status.isPlaying) {
 			runOnJS(handlePause)();
@@ -129,7 +117,18 @@ export default function FeedItemContent({
 		});
 	});
 
-	const taps = Gesture.Exclusive(doubleTap, singleTap);
+	const onDoubleTap = Gesture.Tap()
+		.numberOfTaps(2)
+		.onEnd(() => {
+			runOnJS(setLiked)(true);
+			iconScale.value = withSpring(1, { damping: 5 }, (isFinished) => {
+				if (isFinished) {
+					iconScale.value = withDelay(100, withSpring(0));
+				}
+			});
+		});
+
+	const taps = Gesture.Exclusive(onDoubleTap, onSingleTap);
 
 	return (
 		<Box
@@ -172,7 +171,7 @@ export default function FeedItemContent({
 					<AnimatedIcon
 						size={42}
 						name={liked ? 'heart' : 'heart-outline'}
-						color={liked ? 'error' : 'white'}
+						color={liked ? error : 'white'}
 						style={[iconStyle, { marginBottom: 15 }]}
 						onPress={onLiked}
 					/>

@@ -79,10 +79,9 @@ const theme = createTheme({
 		activeIcon: palette.offBlack,
 		background: palette.offWhite,
 		foreground: palette.smokyBlack,
-		bottomSheetBackground: palette.white,
+		bottomSheetBackground: palette.offWhite,
 		bottomTabBackground: palette.offWhite,
 		inputBackground: palette.white,
-
 		primaryCardBackground: palette.white,
 		secondaryCardBackground: palette.offBlack,
 		border: palette.lightGray,
