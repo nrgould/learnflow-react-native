@@ -25,6 +25,8 @@ interface Props extends NavigationTypes {
 	setLiked: React.Dispatch<React.SetStateAction<boolean>>;
 	currentVisibleIndex: number;
 	index: number;
+	videoPaused: boolean;
+	setVideoPaused: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const { width } = Dimensions.get('window');
@@ -38,6 +40,8 @@ export default function FeedItemContent({
 	videoURL = require('../../assets/video/sampleTikTok.mov'),
 	currentVisibleIndex,
 	index,
+	videoPaused,
+	setVideoPaused,
 }: Props) {
 	const height = useItemHeight();
 	const video = useRef<any>(null);
@@ -71,7 +75,7 @@ export default function FeedItemContent({
 	const onLiked = useCallback(() => {
 		if (liked) {
 			setLiked(false);
-		} else if (!liked) {
+		} else {
 			setLiked(true);
 			iconScale.value = withSpring(1.2, { damping: 5 }, (isFinished) => {
 				if (isFinished) {
@@ -84,10 +88,12 @@ export default function FeedItemContent({
 	}, [liked]);
 
 	const handlePlay = useCallback(() => {
+		setVideoPaused(false);
 		video.current.playAsync();
 	}, []);
 
 	const handlePause = useCallback(() => {
+		setVideoPaused(true);
 		video.current.pauseAsync();
 	}, []);
 
@@ -147,8 +153,7 @@ export default function FeedItemContent({
 					isMuted={false}
 					useNativeControls={false}
 					onPlaybackStatusUpdate={setStatus}
-					progressUpdateIntervalMillis={200}
-					shouldPlay={index === currentVisibleIndex}
+					shouldPlay={index === currentVisibleIndex && !videoPaused}
 				/>
 			</GestureDetector>
 			<Box
@@ -186,6 +191,7 @@ export default function FeedItemContent({
 						name='ellipsis-horizontal'
 						color='white'
 						style={{ marginBottom: 20 }}
+						onPress={() => setVideoPaused(!videoPaused)}
 					/>
 					<Icon
 						size={32}

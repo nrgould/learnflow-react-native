@@ -14,7 +14,6 @@ export default function PageHeaderBack({ title }: Props) {
 	return (
 		<Box
 			width='100%'
-			marginHorizontal='s'
 			flexDirection='row'
 			alignItems='center'
 			justifyContent='flex-start'>

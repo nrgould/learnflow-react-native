@@ -28,6 +28,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 export default function Feed({ navigation }: NavigationTypes) {
 	const [refreshing, setRefreshing] = useState(false);
 	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
+	const [videoPaused, setVideoPaused] = useState(false);
 	const theme = useTheme<Theme>();
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
@@ -37,7 +38,12 @@ export default function Feed({ navigation }: NavigationTypes) {
 
 	useEffect(() => {
 		dispatch(fetchFeedAsync());
+		return () => {
+			setVideoPaused(true);
+		};
 	}, [dispatch]);
+
+	console.log('paused: ', videoPaused);
 
 	const { primary, background } = theme.colors;
 
@@ -64,6 +70,8 @@ export default function Feed({ navigation }: NavigationTypes) {
 		return (
 			<FeedItem
 				particle={item}
+				videoPaused={videoPaused}
+				setVideoPaused={setVideoPaused}
 				index={index}
 				currentVisibleIndex={currentVisibleIndex}
 				key={item.id}
@@ -73,7 +81,10 @@ export default function Feed({ navigation }: NavigationTypes) {
 		);
 	};
 
-	const memoizedRenderItem = useMemo(() => renderItem, [currentVisibleIndex]);
+	const memoizedRenderItem = useMemo(
+		() => renderItem,
+		[currentVisibleIndex, videoPaused]
+	);
 
 	if (status === 'loading') {
 		return (

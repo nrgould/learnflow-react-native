@@ -3,6 +3,7 @@ import { useTheme } from '@shopify/restyle';
 import React from 'react';
 import Account from '../screens/user/Account';
 import Profile from '../screens/user/Profile';
+import UploadVideo from '../screens/user/UploadVideo';
 import { Theme } from '../theme/theme';
 
 const ProfileStackScreen = createNativeStackNavigator();
@@ -24,6 +25,10 @@ export default function ProfileStack() {
 			}}>
 			<ProfileStackScreen.Screen name='Profile' component={Profile} />
 			<ProfileStackScreen.Screen name='Account' component={Account} />
+			<ProfileStackScreen.Screen
+				name='UploadContent'
+				component={UploadVideo}
+			/>
 		</ProfileStackScreen.Navigator>
 	);
 }

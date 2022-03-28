@@ -11,6 +11,8 @@ interface Props extends NavigationTypes {
 	setAnswered?: React.Dispatch<React.SetStateAction<boolean>>;
 	particle: ParticleType;
 	currentVisibleIndex: number;
+	videoPaused: boolean;
+	setVideoPaused: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function FeedItem({
@@ -18,6 +20,8 @@ export default function FeedItem({
 	index,
 	particle,
 	currentVisibleIndex,
+	videoPaused,
+	setVideoPaused,
 }: Props) {
 	const [liked, setLiked] = useState(false);
 
@@ -26,6 +30,8 @@ export default function FeedItem({
 	return (
 		<React.Fragment>
 			<FeedItemContent
+				videoPaused={videoPaused}
+				setVideoPaused={setVideoPaused}
 				liked={liked}
 				setLiked={setLiked}
 				navigation={navigation}

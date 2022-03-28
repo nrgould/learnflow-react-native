@@ -133,9 +133,9 @@ export default function Profile() {
 				onChange={handleSheetChanges}>
 				<Box marginHorizontal='m' marginTop={'l'}>
 					<SettingsComponent
-						onPress={() => console.log(' view saved')}
-						name='bookmark-outline'
-						label='Saved'
+						onPress={() => navigation.navigate('UploadContent')}
+						name='film-outline'
+						label='Upload Video'
 					/>
 					<SettingsComponent
 						onPress={() => navigation.navigate('Account')}
