@@ -27,7 +27,7 @@ export default function ModuleDetails({ route }: NavigationTypes) {
 		return () => {
 			dispatch(clearModule());
 		};
-	}, [dispatch, navigation]);
+	}, [dispatch]);
 
 	if (status === 'loading') {
 		return (
@@ -64,7 +64,7 @@ export default function ModuleDetails({ route }: NavigationTypes) {
 					marginHorizontal='l'
 					height='100%'
 					backgroundColor='background'>
-					<PageHeaderBack navigation={navigation} title={title} />
+					<PageHeaderBack title={title} />
 					<Box marginVertical='m'>
 						<Text variant='body' numberOfLines={4}>
 							{selectedModule?.description}

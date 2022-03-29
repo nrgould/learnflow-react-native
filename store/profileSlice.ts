@@ -14,7 +14,7 @@ const initialState: ProfileState = {
 
 //fetch current user profile
 export const fetchCurrentUserAsync = createAsyncThunk(
-	'module/fetchModule',
+	'profile/fetchProfile',
 	async (userId: string) => {
 		return getUserProfile(userId);
 	}

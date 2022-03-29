@@ -88,12 +88,10 @@ export default function FeedItemContent({
 	}, [liked]);
 
 	const handlePlay = useCallback(() => {
-		setVideoPaused(false);
 		video.current.playAsync();
 	}, []);
 
 	const handlePause = useCallback(() => {
-		setVideoPaused(true);
 		video.current.pauseAsync();
 	}, []);
 

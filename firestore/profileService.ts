@@ -10,6 +10,7 @@ import { app } from '../firebase/config';
 const db = getFirestore(app);
 
 export async function getUserProfile(userId: string) {
+	console.log('getting user profile');
 	const docRef = doc(db, 'users', userId);
 	const docSnap = await getDoc(docRef);
 

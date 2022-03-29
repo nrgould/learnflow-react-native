@@ -37,7 +37,6 @@ export default function Profile() {
 	const { foreground, bottomSheetBackground } = theme.colors;
 
 	const bottomSheetRef = useRef<BottomSheet>(null);
-
 	const snapPoints = useMemo(() => ['50%', '75%'], []);
 
 	const handleSheetChanges = useCallback((index: number) => {
@@ -49,10 +48,9 @@ export default function Profile() {
 
 	useEffect(() => {
 		dispatch(fetchCurrentUserAsync(userId!));
-
-		// return () => {
-		// 	dispatch(clearCurrentUser());
-		// };
+		navigation.setOptions({
+			headerShown: false,
+		});
 	}, [dispatch]);
 
 	function handleSetDarkMode() {

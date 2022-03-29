@@ -28,6 +28,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 export default function ModuleFeed() {
 	const [refreshing, setRefreshing] = useState(false);
 	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
+	const [videoPaused, setVideoPaused] = useState(false);
 	const theme = useTheme<Theme>();
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
@@ -64,6 +65,8 @@ export default function ModuleFeed() {
 	const renderItem = ({ item, index }: RenderItemProps) => {
 		return (
 			<FeedItem
+				videoPaused={videoPaused}
+				setVideoPaused={setVideoPaused}
 				particle={item}
 				index={index}
 				currentVisibleIndex={currentVisibleIndex}

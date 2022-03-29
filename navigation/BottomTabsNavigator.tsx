@@ -9,6 +9,7 @@ import Notifications from '../screens/Notifications';
 import LearningStack from './LearningStack';
 import { isSmallDevice } from '../theme/layout';
 import ProfileStack from './ProfileStack';
+import Profile from '../screens/user/Profile';
 
 const BottomTabs = createBottomTabNavigator();
 
