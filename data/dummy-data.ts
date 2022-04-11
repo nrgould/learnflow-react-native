@@ -80,28 +80,63 @@ const MODULES = [
 		'Calculus 1',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
 		40,
-		107
+		107,
+		'#8451d4',
+		'calculus'
 	),
 	new Module(
 		[...PARTICLES],
 		'Calculus 2',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
 		97,
-		135
+		135,
+		'#8cc0e8',
+		'calculus'
 	),
 	new Module(
 		[...PARTICLES],
 		'Calculus 3',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
 		67,
-		112
+		112,
+		'#782461',
+		'calculus'
 	),
 	new Module(
 		[...PARTICLES],
 		'Linear Algebra',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
 		53,
-		87
+		87,
+		'#7dbc65',
+		'algebra'
+	),
+	new Module(
+		[...PARTICLES],
+		'Differential Equations',
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
+		23,
+		94,
+		'#7dbc65',
+		'calculus'
+	),
+	new Module(
+		[...PARTICLES],
+		'Algebra 1',
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
+		13,
+		46,
+		'#db9b3e',
+		'algebra'
+	),
+	new Module(
+		[...PARTICLES],
+		'Algebra 2',
+		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
+		22,
+		53,
+		'#7a68aa',
+		'algebra'
 	),
 ];
 

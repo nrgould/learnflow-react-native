@@ -28,6 +28,8 @@ export type ModuleType = {
 	description: string;
 	completedContent: number;
 	totalContent: number;
+	color: string;
+	category: string;
 };
 
 export type ParticleType = {

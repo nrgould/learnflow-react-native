@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@shopify/restyle';
-import React from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Theme } from '../../theme/theme';
 import { ModuleType } from '../../types';
@@ -11,45 +11,49 @@ import Text from '../atoms/Text';
 
 interface Props {
 	module: ModuleType;
-	color: string;
 }
 
 export default function DiscoverModule({ module }: Props) {
+	const [followed, setFollowed] = useState(false);
 	const navigation = useNavigation<any>();
-	const theme = useTheme<Theme>();
-	const { title, description } = module;
+	const { title, description, color } = module;
 
 	function navigationHandler() {
 		navigation.navigate('ModuleDetails', { title: title });
 	}
 
 	return (
-		<TouchableOpacity onPress={navigationHandler}>
-			<Card variant='primary' style={{ width: '100%' }}>
-				<Box
-					flexDirection='row'
-					justifyContent='space-between'
-					alignItems='flex-start'>
-					<Text variant='cardHeader'>{title}</Text>
-					{/* <Box
+		<Box marginRight='l'>
+			<TouchableOpacity onPress={navigationHandler}>
+				<Card
+					maxWidth={280}
+					width={280}
+					variant='secondary'
+					style={{ backgroundColor: color }}>
+					<Box
 						flexDirection='row'
-						alignItems='center'
-						justifyContent='space-evenly'>
-						<Icon
-							name='bookmark-outline'
-							size={28}
-							style={{ marginRight: theme.spacing.xs }}
-						/>
-					</Box> */}
-				</Box>
-				<Text
-					marginTop='s'
-					variant='body'
-					numberOfLines={2}
-					color='secondaryText'>
-					{description}
-				</Text>
-			</Card>
-		</TouchableOpacity>
+						justifyContent='space-between'
+						alignItems='flex-start'>
+						<Text variant='cardHeader'>{title}</Text>
+					</Box>
+					<Text
+						marginTop='s'
+						variant='body'
+						style={{ maxWidth: 200 }}
+						numberOfLines={2}
+						color='secondaryText'>
+						{description}
+					</Text>
+				</Card>
+			</TouchableOpacity>
+			<Box position='absolute' zIndex={100} bottom={5} right={5}>
+				<Icon
+					color='white'
+					name={followed ? 'checkmark-circle' : 'add-circle'}
+					size={42}
+					onPress={() => setFollowed(!followed)}
+				/>
+			</Box>
+		</Box>
 	);
 }

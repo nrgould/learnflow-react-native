@@ -224,11 +224,12 @@ const theme = createTheme({
 		secondary: {
 			backgroundColor: 'secondaryCardBackground',
 			shadowOpacity: 0.1,
-			borderRadius: 'm',
-			marginTop: 'xl',
-			alignItems: 'center',
+			borderRadius: 's',
+			marginTop: 'm',
+			// alignItems: 'center',
 			justifyContent: 'center',
 			padding: 'm',
+			paddingVertical: 'xl',
 		},
 		questionBox: {
 			backgroundColor: 'secondary',

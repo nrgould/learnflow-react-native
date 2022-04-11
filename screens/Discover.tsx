@@ -23,8 +23,17 @@ export default function Discover() {
 	const theme = useTheme<Theme>();
 	const [searchFocused, setSearchFocused] = useState(false);
 	const itemHeight = useItemHeight();
+	const modules = useAppSelector((state) => state.module.modules);
+	const status = useAppSelector((state) => state.module.status);
+	const dispatch = useAppDispatch();
 
-	const { primary, secondary, tertiary } = theme.colors;
+	const algebraModules = modules?.filter(
+		(module) => module.category === 'algebra'
+	);
+
+	const calculusModules = modules?.filter(
+		(module) => module.category === 'calculus'
+	);
 
 	const translateY = useSharedValue(0);
 
@@ -38,11 +47,6 @@ export default function Discover() {
 
 	const AnimatedScrollView =
 		Animated.createAnimatedComponent(RestyledScrollView);
-
-	const modules = useAppSelector((state) => state.module.modules);
-	const status = useAppSelector((state) => state.module.status);
-
-	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		dispatch(fetchModulesAsync());
@@ -118,24 +122,32 @@ export default function Discover() {
 						handleSearchFocus={handleSearchFocus}
 					/>
 				</Box>
-				<Box marginHorizontal='l'>
-					{modules?.map((module, index) => {
-						let color: string;
-						if (index % 3 === 0) {
-							color = primary;
-						} else if (index % 3 === 2) {
-							color = secondary;
-						} else {
-							color = tertiary;
-						}
-						return (
-							<DiscoverModule
-								color={color}
-								key={index}
-								module={module}
-							/>
-						);
-					})}
+				<Box margin='l'>
+					<Text variant='cardHeader'>Algebra</Text>
+					<AnimatedScrollView
+						onScroll={scrollHandler}
+						horizontal
+						backgroundColor='background'>
+						{algebraModules?.map((module, index) => {
+							return (
+								<DiscoverModule key={index} module={module} />
+							);
+						})}
+					</AnimatedScrollView>
+				</Box>
+				<Box margin='l'>
+					<Text variant='cardHeader'>Calculus</Text>
+					<AnimatedScrollView
+						onScroll={scrollHandler}
+						scrollEventThrottle={16}
+						horizontal
+						backgroundColor='background'>
+						{calculusModules?.map((module, index) => {
+							return (
+								<DiscoverModule key={index} module={module} />
+							);
+						})}
+					</AnimatedScrollView>
 				</Box>
 			</AnimatedScrollView>
 		</RestyledSafeAreaView>
