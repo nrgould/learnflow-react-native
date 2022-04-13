@@ -76,6 +76,7 @@ export const PARTICLES = [
 
 const MODULES = [
 	new Module(
+		'MODULE01',
 		[...PARTICLES],
 		'Calculus 1',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
@@ -85,6 +86,7 @@ const MODULES = [
 		'calculus'
 	),
 	new Module(
+		'MODULE01',
 		[...PARTICLES],
 		'Calculus 2',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
@@ -94,6 +96,7 @@ const MODULES = [
 		'calculus'
 	),
 	new Module(
+		'MODULE02',
 		[...PARTICLES],
 		'Calculus 3',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
@@ -103,6 +106,7 @@ const MODULES = [
 		'calculus'
 	),
 	new Module(
+		'MODULE03',
 		[...PARTICLES],
 		'Linear Algebra',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
@@ -112,6 +116,7 @@ const MODULES = [
 		'algebra'
 	),
 	new Module(
+		'MODULE04',
 		[...PARTICLES],
 		'Differential Equations',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
@@ -121,6 +126,7 @@ const MODULES = [
 		'calculus'
 	),
 	new Module(
+		'MODULE05',
 		[...PARTICLES],
 		'Algebra 1',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',
@@ -130,6 +136,7 @@ const MODULES = [
 		'algebra'
 	),
 	new Module(
+		'MODULE06',
 		[...PARTICLES],
 		'Algebra 2',
 		'Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet quibusdam molestias beatae fugiat aspernatur consequuntur possimus dolore, aperiam vel voluptas magni minima unde necessitatibus nesciunt alias nobis recusandae repudiandae excepturi aut. Molestiae laudantium quam dolorem quo nulla, magni commodi!',

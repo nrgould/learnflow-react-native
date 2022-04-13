@@ -22,16 +22,15 @@ const R = isSmallDevice ? 35 : CIRCLE_LENGTH / (2 * Math.PI);
 const STROKE_WIDTH = 8;
 
 interface Props {
-	progressColor: string;
 	module: ModuleType;
 }
 
-export default function PathModule({ progressColor, module }: Props) {
+export default function PathModule({ module }: Props) {
 	const theme = useTheme<Theme>();
 	const navigation = useNavigation<any>();
 
 	const { background } = theme.colors;
-	const { completedContent, totalContent } = module;
+	const { completedContent, totalContent, color } = module;
 
 	const progress = useSharedValue(0);
 	const progressVal = completedContent / totalContent;
@@ -89,7 +88,7 @@ export default function PathModule({ progressColor, module }: Props) {
 								cx='50'
 								cy='50'
 								r={R}
-								stroke={progressColor}
+								stroke={color}
 								strokeWidth={STROKE_WIDTH}
 								strokeLinecap='round'
 								strokeDasharray={CIRCLE_LENGTH}
@@ -99,7 +98,7 @@ export default function PathModule({ progressColor, module }: Props) {
 						<CustomText
 							variant='stat'
 							style={{
-								color: progressColor,
+								color: color,
 								position: 'absolute',
 								top: isSmallDevice
 									? cardHeight / 2.7

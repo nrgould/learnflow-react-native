@@ -15,12 +15,9 @@ import Animated, {
 import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { fetchModulesAsync } from '../store/moduleSlice';
-import { useTheme } from '@shopify/restyle';
-import { Theme } from '../theme/theme';
 import { useItemHeight } from '../hooks/useItemHeight';
 
 export default function Discover() {
-	const theme = useTheme<Theme>();
 	const [searchFocused, setSearchFocused] = useState(false);
 	const itemHeight = useItemHeight();
 	const modules = useAppSelector((state) => state.module.modules);

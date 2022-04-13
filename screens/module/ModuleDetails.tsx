@@ -9,16 +9,19 @@ import RestyledScrollView from '../../components/atoms/RestyledScrollView';
 import PageHeaderBack from '../../components/molecules/PageHeaderBack';
 import ModuleContentItem from '../../components/molecules/ModuleContentItem';
 import { useNavigation } from '@react-navigation/native';
+import { useSharedValue } from 'react-native-reanimated';
 
 export default function ModuleDetails({ route }: NavigationTypes) {
 	const title: string = route.params.title;
+	const id: string = route.params.id;
 	const dispatch = useAppDispatch();
-	const { selectedModule } = useAppSelector((state) => state.module);
+	const module = useAppSelector((state) => state.module.selectedModule);
 	const status = useAppSelector((state) => state.module.status);
 	const navigation = useNavigation();
+	const translateY = useSharedValue(0);
 
 	useEffect(() => {
-		dispatch(fetchModuleAsync());
+		dispatch(fetchModuleAsync(id));
 		navigation.setOptions({
 			headerShown: false,
 			headerTitle: title,
@@ -56,21 +59,24 @@ export default function ModuleDetails({ route }: NavigationTypes) {
 	}
 
 	return (
-		<RestyledSafeAreaView edges={['top', 'left', 'right']}>
+		<RestyledSafeAreaView
+			bgColor={module?.color}
+			edges={['top', 'left', 'right']}>
 			<RestyledScrollView
 				style={{ minHeight: '100%' }}
 				backgroundColor='background'>
 				<Box
-					marginHorizontal='l'
-					height='100%'
-					backgroundColor='background'>
+					paddingHorizontal='l'
+					style={{ backgroundColor: module?.color }}>
 					<PageHeaderBack title={title} />
 					<Box marginVertical='m'>
 						<Text variant='body' numberOfLines={4}>
-							{selectedModule?.description}
+							{module?.description}
 						</Text>
 					</Box>
-					{selectedModule?.content.map((particle, i) => {
+				</Box>
+				<Box marginHorizontal='l' height='100%'>
+					{module?.content.map((particle, i) => {
 						return (
 							<ModuleContentItem key={i} particle={particle} />
 						);

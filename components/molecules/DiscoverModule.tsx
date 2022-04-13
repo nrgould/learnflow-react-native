@@ -16,10 +16,10 @@ interface Props {
 export default function DiscoverModule({ module }: Props) {
 	const [followed, setFollowed] = useState(false);
 	const navigation = useNavigation<any>();
-	const { title, description, color } = module;
+	const { title, description, color, id } = module;
 
 	function navigationHandler() {
-		navigation.navigate('ModuleDetails', { title: title });
+		navigation.navigate('ModuleDetails', { title, id });
 	}
 
 	return (

@@ -14,9 +14,17 @@ const initialState: ModuleState = {
 	modules: null,
 };
 
-function fetchModule(id: number) {
-	return new Promise<{ data: any }>((resolve) =>
-		setTimeout(() => resolve({ data: serializedModules[id] }), 500)
+function fetchModule(id: string) {
+	return new Promise<{ data: ModuleType }>((resolve) =>
+		setTimeout(
+			() =>
+				resolve({
+					data: serializedModules[
+						Math.floor(Math.min(Math.random() * 10, 5))
+					],
+				}),
+			500
+		)
 	);
 }
 
@@ -29,8 +37,8 @@ function fetchModules() {
 //fetch single module
 export const fetchModuleAsync = createAsyncThunk(
 	'module/fetchModule',
-	async function () {
-		const response = await fetchModule(0);
+	async (id: string) => {
+		const response = await fetchModule(id);
 		return response.data;
 	}
 );

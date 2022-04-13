@@ -1,4 +1,3 @@
-import { useTheme } from '@shopify/restyle';
 import React, { useEffect } from 'react';
 import Animated, {
 	useAnimatedScrollHandler,
@@ -13,16 +12,10 @@ import PathModule from '../components/molecules/PathModule';
 import PathModulePlaceholder from '../components/Placeholders/PathModulePlaceholder';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { fetchModulesAsync } from '../store/moduleSlice';
-import { Theme } from '../theme/theme';
-import { NavigationTypes } from '../types';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(RestyledScrollView);
 
-interface Props extends NavigationTypes {}
-
-export default function Path({ navigation }: Props) {
-	const theme = useTheme<Theme>();
-	const { primary, secondary, tertiary } = theme.colors;
+export default function Path() {
 	const modules = useAppSelector((state) => state.module.modules);
 	const status = useAppSelector((state) => state.module.status);
 
@@ -68,21 +61,7 @@ export default function Path({ navigation }: Props) {
 					<Box marginTop='s' marginHorizontal='l'>
 						<Text variant='header'>My Learning</Text>
 						{modules?.map((module, i) => {
-							let progressColor: string;
-							if (i % 3 === 0) {
-								progressColor = primary;
-							} else if (i % 3 === 2) {
-								progressColor = secondary;
-							} else {
-								progressColor = tertiary;
-							}
-							return (
-								<PathModule
-									progressColor={progressColor}
-									module={module}
-									key={i}
-								/>
-							);
+							return <PathModule module={module} key={i} />;
 						})}
 					</Box>
 				</Box>

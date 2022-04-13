@@ -20,6 +20,7 @@ export default function ModuleContentItem({ particle }: Props) {
 			<Card
 				padding='xl'
 				variant='primary'
+				height={100}
 				flexDirection='row'
 				justifyContent='space-between'
 				alignItems='center'>

@@ -23,6 +23,7 @@ export type ActionTypes = {
 };
 
 export type ModuleType = {
+	id: string;
 	content: ParticleType[];
 	title: string;
 	description: string;
