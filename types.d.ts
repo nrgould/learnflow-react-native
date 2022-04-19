@@ -47,6 +47,12 @@ export type QuestionType = {
 	options: Option[4];
 };
 
+export type Option = {
+	content: string;
+	isAnswer: boolean;
+	id: string;
+};
+
 export type ProfileType = {
 	displayName: string;
 	email: string;
@@ -63,8 +69,4 @@ export type Offset = SharedValues<{
 	originalY: number;
 }>;
 
-export type Option = {
-	content: string;
-	isAnswer: boolean;
-	id: string;
-};
+

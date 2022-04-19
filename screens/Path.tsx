@@ -11,7 +11,10 @@ import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
 import PathModule from '../components/molecules/PathModule';
 import PathModulePlaceholder from '../components/Placeholders/PathModulePlaceholder';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { fetchModulesAsync } from '../store/moduleSlice';
+import {
+	fetchCurrentUserCoursesAsync,
+	fetchModulesAsync,
+} from '../store/moduleSlice';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(RestyledScrollView);
 
@@ -22,13 +25,14 @@ export default function Path() {
 	const dispatch = useAppDispatch();
 
 	const translateY = useSharedValue(0);
+	const userId = useAppSelector((state) => state.auth.userId);
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		translateY.value = event.contentOffset.y;
 	});
 
 	useEffect(() => {
-		dispatch(fetchModulesAsync());
+		dispatch(fetchCurrentUserCoursesAsync(userId!));
 	}, [dispatch]);
 
 	const LoadingPlaceholder = () => (

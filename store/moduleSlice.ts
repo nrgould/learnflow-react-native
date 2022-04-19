@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { serializedModules } from '../data/dummy-data';
+import { getUserCourses } from '../firestore/moduleService';
 import { ModuleType } from '../types';
 
 export interface ModuleState {
@@ -13,6 +14,13 @@ const initialState: ModuleState = {
 	status: 'idle',
 	modules: null,
 };
+
+export const fetchCurrentUserCoursesAsync = createAsyncThunk(
+	'module/fetchCourses',
+	async (userId: string) => {
+		return getUserCourses(userId);
+	}
+);
 
 function fetchModule(id: string) {
 	return new Promise<{ data: ModuleType }>((resolve) =>
