@@ -1,8 +1,8 @@
 import { FormikFormProps } from 'formik';
 import React from 'react';
-import Button from '../atoms/Button';
-import Card from '../atoms/Card';
-import FormTextInput from '../atoms/FormTextInput';
+import Button from '../../atoms/Button';
+import Card from '../../atoms/Card';
+import FormTextInput from '../../atoms/FormTextInput';
 
 interface Props extends FormikFormProps {
 	handleChange: any;
@@ -16,7 +16,7 @@ interface Props extends FormikFormProps {
 	setFieldTouched: any;
 }
 
-export default function LoginForm({
+export default function SignupForm({
 	handleChange,
 	setFieldTouched,
 	isValid,
@@ -30,17 +30,28 @@ export default function LoginForm({
 	return (
 		<Card paddingTop='s' padding='l' variant='primary' width='90%'>
 			<FormTextInput
+				label='Name'
+				textContentType='givenName'
+				onChangeText={handleChange('name')}
+				onBlur={() => setFieldTouched('name')}
+				variant='underline'
+				placeholder='Enter Full Name'
+				marginBottom='xs'
+				value={values.name}
+				error={errors.name && touched.name ? errors.name : null}
+			/>
+			<FormTextInput
 				label='Email'
 				textContentType='emailAddress'
 				onChangeText={handleChange('email')}
 				onBlur={() => setFieldTouched('email')}
 				variant='underline'
 				placeholder='john@school.edu'
-				marginBottom='m'
-				autoCapitalize='none'
-				spellCheck={false}
+				marginBottom='xs'
 				value={values.email}
+				autoCapitalize='none'
 				error={errors.email && touched.email ? errors.email : null}
+				spellCheck={false}
 			/>
 			<FormTextInput
 				textContentType='password'
@@ -48,17 +59,17 @@ export default function LoginForm({
 				onChangeText={handleChange('password')}
 				onBlur={() => setFieldTouched('password')}
 				variant='underline'
-				placeholder='Enter Password...'
-				marginBottom='m'
+				placeholder='Enter Password'
+				marginBottom='xs'
 				value={values.password}
+				secureTextEntry={true}
 				error={
 					errors.password && touched.password ? errors.password : null
 				}
-				secureTextEntry={true}
 			/>
 			<Button
 				disabled={isSubmitting || !dirty || !isValid}
-				label='Sign In'
+				label='Create Account'
 				onPress={handleSubmit}
 				variant='primary'
 				loading={isSubmitting}

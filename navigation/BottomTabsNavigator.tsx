@@ -10,19 +10,14 @@ import LearningStack from './LearningStack';
 import { isSmallDevice } from '../theme/layout';
 import ProfileStack from './ProfileStack';
 import Profile from '../screens/user/Profile';
+import Create from '../screens/Create';
 
 const BottomTabs = createBottomTabNavigator();
 
 export default function BottomTabsNavigator() {
 	const theme = useTheme<Theme>();
 
-	const {
-		icon: iconColor,
-		activeIcon,
-		background,
-		border,
-		bottomTabBackground,
-	} = theme.colors;
+	const { icon: iconColor, activeIcon, bottomTabBackground } = theme.colors;
 	return (
 		//navigation container is in LoadAssets for future state persistence
 		<BottomTabs.Navigator
@@ -78,6 +73,19 @@ export default function BottomTabsNavigator() {
 				options={{
 					tabBarIcon: ({ color, size, focused }: any) => (
 						<Ionicons
+							name={focused ? 'add-circle' : 'add-circle-outline'}
+							size={size}
+							color={color}
+						/>
+					),
+				}}
+				name='Create'
+				component={Create}
+			/>
+			<BottomTabs.Screen
+				options={{
+					tabBarIcon: ({ color, size, focused }: any) => (
+						<Ionicons
 							name={
 								focused
 									? 'ios-analytics'
@@ -91,23 +99,7 @@ export default function BottomTabsNavigator() {
 				name='LearningStack'
 				component={LearningStack}
 			/>
-			<BottomTabs.Screen
-				options={{
-					tabBarIcon: ({ color, size, focused }: any) => (
-						<Ionicons
-							name={
-								focused
-									? 'ios-notifications'
-									: 'ios-notifications-outline'
-							}
-							size={size}
-							color={color}
-						/>
-					),
-				}}
-				name='Notifications'
-				component={Notifications}
-			/>
+
 			<BottomTabs.Screen
 				options={{
 					tabBarIcon: ({ color, size, focused }: any) => (

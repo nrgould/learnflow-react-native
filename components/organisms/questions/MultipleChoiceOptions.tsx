@@ -1,9 +1,9 @@
 import React from 'react';
-import { OPTIONS_HEIGHT } from '../../theme/layout';
-import { Option } from '../../types';
-import Box from '../atoms/Box';
-import Text from '../atoms/Text';
-import MultipleChoiceOption from '../molecules/MultipleChoiceOption';
+import { OPTIONS_HEIGHT } from '../../../theme/layout';
+import { Option } from '../../../types';
+import Box from '../../atoms/Box';
+import Text from '../../atoms/Text';
+import MultipleChoiceOption from '../../molecules/MultipleChoiceOption';
 
 interface Props {
 	options: Option[];

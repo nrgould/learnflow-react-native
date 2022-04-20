@@ -1,8 +1,8 @@
 import React from 'react';
-import { ANSWER_HEIGHT } from '../../theme/layout';
-import Box from '../atoms/Box';
-import Card from '../atoms/Card';
-import Text from '../atoms/Text';
+import { ANSWER_HEIGHT } from '../../../theme/layout';
+import Box from '../../atoms/Box';
+import Card from '../../atoms/Card';
+import Text from '../../atoms/Text';
 
 interface Props {
 	question: string;

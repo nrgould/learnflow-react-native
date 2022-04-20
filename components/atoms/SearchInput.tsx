@@ -75,7 +75,7 @@ export default function SearchInput({
 	searchFocused,
 	handleSearchFocus,
 	autoFocus,
-	variant = 'primary',
+	variant = 'search',
 	...rest
 }: Props) {
 	const props = useRestyle(restyleFunctions, rest);

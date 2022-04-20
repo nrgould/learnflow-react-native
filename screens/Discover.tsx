@@ -110,14 +110,14 @@ export default function Discover() {
 					<Text variant='header' marginBottom='s'>
 						Discover
 					</Text>
-					<SearchInput
+					{/* <SearchInput
 						placeholder='What do you want to learn?'
-						variant={'search'}
+						variant='search'
 						style={{ minWidth: '100%' }}
 						marginBottom='m'
 						searchFocused={searchFocused}
 						handleSearchFocus={handleSearchFocus}
-					/>
+					/> */}
 				</Box>
 				<Box margin='l'>
 					<Text variant='cardHeader'>Algebra</Text>

@@ -1,4 +1,10 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from 'react';
 import Box from '../atoms/Box';
 import { useItemHeight } from '../../hooks/useItemHeight';
 import { Video } from 'expo-av';
@@ -19,7 +25,7 @@ import { lightHaptic } from '../../util/hapticFeedback';
 import Icon from '../atoms/Icon';
 import { useVector } from 'react-native-redash';
 
-interface Props extends NavigationTypes {
+interface Props {
 	videoURL?: any;
 	liked: boolean;
 	setLiked: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,6 +33,7 @@ interface Props extends NavigationTypes {
 	index: number;
 	videoPaused: boolean;
 	setVideoPaused: React.Dispatch<React.SetStateAction<boolean>>;
+	parentRef: any;
 }
 
 const { width } = Dimensions.get('window');
@@ -42,6 +49,7 @@ export default function FeedItemContent({
 	index,
 	videoPaused,
 	setVideoPaused,
+	parentRef,
 }: Props) {
 	const height = useItemHeight();
 	const video = useRef<any>(null);
@@ -49,14 +57,22 @@ export default function FeedItemContent({
 	const [status, setStatus] = React.useState<any>({});
 	const theme = useTheme<Theme>();
 	const position = useVector();
-
 	const scale = useSharedValue(0);
 	const iconScale = useSharedValue(1);
-
 	const { whiteBtn, error } = theme.colors;
 
 	const progressInc = width / status.durationMillis;
 	const progressWidth = Math.floor(status.positionMillis * progressInc);
+
+	useEffect(() => {
+		return () => unload();
+	}, []);
+
+	useImperativeHandle(parentRef, () => ({
+		play,
+		unload,
+		stop,
+	}));
 
 	const tapStyle = useAnimatedStyle(() => {
 		return {
@@ -87,13 +103,52 @@ export default function FeedItemContent({
 		lightHaptic();
 	}, [liked]);
 
-	const handlePlay = useCallback(() => {
-		video.current.playAsync();
-	}, []);
+	const play = async () => {
+		if (video.current == null) {
+			return;
+		}
 
-	const handlePause = useCallback(() => {
-		video.current.pauseAsync();
-	}, []);
+		// if video is already playing return
+		const vidStatus = await video.current.getStatusAsync();
+		if (vidStatus?.isPlaying) {
+			return;
+		}
+		try {
+			await video.current.playAsync();
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	const stop = async () => {
+		if (video.current == null) {
+			return;
+		}
+
+		// if video is already stopped return
+		const vidStatus = await video.current.getStatusAsync();
+		if (!vidStatus?.isPlaying) {
+			return;
+		}
+		try {
+			await video.current.pauseAsync();
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	const unload = async () => {
+		if (video.current == null) {
+			return;
+		}
+
+		// if video is already stopped return
+		try {
+			await video.current.unloadAsync();
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	const onGoBackSeconds = useCallback(() => {
 		if (status.positionMillis > 2000) {
@@ -106,9 +161,9 @@ export default function FeedItemContent({
 	const onSingleTap = Gesture.Tap().onEnd((event) => {
 		runOnJS(lightHaptic)();
 		if (status.isPlaying) {
-			runOnJS(handlePause)();
+			runOnJS(stop)();
 		} else {
-			runOnJS(handlePlay)();
+			runOnJS(play)();
 		}
 
 		position.x.value = event.x;

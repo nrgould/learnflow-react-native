@@ -4,7 +4,7 @@ import Box from '../../components/atoms/Box';
 import Button from '../../components/atoms/Button';
 import Text from '../../components/atoms/Text';
 import * as Yup from 'yup';
-import SignupForm from '../../components/organisms/SignupForm';
+import SignupForm from '../../components/organisms/auth/SignupForm';
 import { registerInFirebase } from '../../firestore/authService';
 import { useNavigation } from '@react-navigation/native';
 

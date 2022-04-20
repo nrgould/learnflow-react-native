@@ -4,7 +4,7 @@ import Box from '../../components/atoms/Box';
 import Button from '../../components/atoms/Button';
 import Text from '../../components/atoms/Text';
 import * as Yup from 'yup';
-import LoginForm from '../../components/organisms/LoginForm';
+import LoginForm from '../../components/organisms/auth/LoginForm';
 import { signInWithEmail } from '../../firestore/authService';
 import { useNavigation } from '@react-navigation/native';
 

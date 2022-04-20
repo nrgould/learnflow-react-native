@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import Box from '../components/atoms/Box';
 import FeedItem from '../components/organisms/FeedItem';
 import { useItemHeight } from '../hooks/useItemHeight';
@@ -28,43 +34,56 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 export default function Feed({ navigation }: NavigationTypes) {
 	const [refreshing, setRefreshing] = useState(false);
 	const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
+	const [prevVisibleIndex, setPrevVisibleIndex] = useState(0);
 	const [videoPaused, setVideoPaused] = useState(false);
 	const theme = useTheme<Theme>();
 	const translateY = useSharedValue(0);
 	const itemHeight = useItemHeight();
+	const mediaRefs = useRef<any>([]);
 	const dispatch = useAppDispatch();
 	const { feed } = useAppSelector((state) => state.feed);
 	const status = useAppSelector((state) => state.feed.status);
+	const { primary, background } = theme.colors;
 
 	useEffect(() => {
 		dispatch(fetchFeedAsync());
-		return () => {
-			setVideoPaused(true);
-		};
 	}, [dispatch]);
 
-	console.log('paused: ', videoPaused);
-
-	const { primary, background } = theme.colors;
+	// console.log('paused: ', videoPaused);
+	// console.log('index: ', currentVisibleIndex);
+	// console.log('prev index: ', prevVisibleIndex);
 
 	const scrollHandler = useAnimatedScrollHandler((event) => {
 		translateY.value = event.contentOffset.y;
 	});
 
-	const onRefresh = React.useCallback(() => {
+	const onRefresh = useCallback(() => {
 		setRefreshing(true);
 		wait(2000).then(() => setRefreshing(false));
 	}, []);
+
+	const shouldPlay = useCallback(() => {
+		const isQuestion = prevVisibleIndex === currentVisibleIndex;
+		if (isQuestion) {
+			setVideoPaused(true);
+		} else {
+			setVideoPaused(false);
+		}
+		setPrevVisibleIndex(currentVisibleIndex);
+	}, [currentVisibleIndex, prevVisibleIndex]);
 
 	const viewConfigRef = useRef({
 		viewAreaCoveragePercentThreshold: 90,
 	});
 
-	const onViewableItemsChangedRef = useRef(({ viewableItems }: any) => {
-		if (viewableItems && viewableItems.length > 0) {
-			setCurrentVisibleIndex(viewableItems[0].index);
+	const onViewableItemsChangedRef = useRef(
+		({ viewableItems, changed }: any) => {
+			console.log(changed);
+			if (viewableItems && viewableItems.length > 0) {
+				setCurrentVisibleIndex(viewableItems[0].index);
+			}
 		}
-	});
+	);
 
 	const renderItem = ({ item, index }: RenderItemProps) => {
 		return (
@@ -76,7 +95,9 @@ export default function Feed({ navigation }: NavigationTypes) {
 				currentVisibleIndex={currentVisibleIndex}
 				key={item.id}
 				translateY={translateY}
-				navigation={navigation}
+				ref={(PostSingleRef: any) =>
+					(mediaRefs.current[item.id] = PostSingleRef)
+				}
 			/>
 		);
 	};
@@ -102,11 +123,13 @@ export default function Feed({ navigation }: NavigationTypes) {
 		<Box backgroundColor='background'>
 			<AnimatedFlatList
 				data={feed}
-				initialNumToRender={3}
+				initialNumToRender={0}
 				maxToRenderPerBatch={2}
-				windowSize={5}
+				windowSize={4} //set back to 5
 				showsVerticalScrollIndicator={false}
 				removeClippedSubviews={true}
+				onScrollBeginDrag={() => setVideoPaused(true)}
+				onMomentumScrollEnd={shouldPlay}
 				onViewableItemsChanged={onViewableItemsChangedRef.current}
 				snapToInterval={itemHeight}
 				renderItem={memoizedRenderItem}

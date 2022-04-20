@@ -1,12 +1,12 @@
 import { useTheme } from '@shopify/restyle';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useItemHeight } from '../../hooks/useItemHeight';
-import { MAX_ATTEMPTS } from '../../theme/constants';
-import { Theme } from '../../theme/theme';
-import { Option } from '../../types';
-import { errorHaptic, successHaptic } from '../../util/hapticFeedback';
-import { shuffle } from '../../util/shuffle';
-import Box from '../atoms/Box';
+import { useItemHeight } from '../../../hooks/useItemHeight';
+import { MAX_ATTEMPTS } from '../../../theme/constants';
+import { Theme } from '../../../theme/theme';
+import { Option } from '../../../types';
+import { errorHaptic, successHaptic } from '../../../util/hapticFeedback';
+import { shuffle } from '../../../util/shuffle';
+import Box from '../../atoms/Box';
 import MultipleChoiceOptions from './MultipleChoiceOptions';
 import MultipleChoiceQuestionHeader from './MultipleChoiceQuestionHeader';
 

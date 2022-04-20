@@ -15,13 +15,6 @@ const initialState: ModuleState = {
 	modules: null,
 };
 
-export const fetchCurrentUserCoursesAsync = createAsyncThunk(
-	'module/fetchCourses',
-	async (userId: string) => {
-		return getUserCourses(userId);
-	}
-);
-
 function fetchModule(id: string) {
 	return new Promise<{ data: ModuleType }>((resolve) =>
 		setTimeout(
@@ -41,6 +34,13 @@ function fetchModules() {
 		setTimeout(() => resolve({ data: serializedModules }), 500)
 	);
 }
+
+export const fetchCurrentUserCoursesAsync = createAsyncThunk(
+	'module/fetchCourses',
+	async (userId: string) => {
+		return getUserCourses(userId);
+	}
+);
 
 //fetch single module
 export const fetchModuleAsync = createAsyncThunk(

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import QuestionBox from '../molecules/QuestionBox';
+import QuestionBox from '../../molecules/QuestionBox';
 import {
 	ANSWER_BOX_HEIGHT,
 	ANSWER_BOX_WIDTH,
@@ -8,10 +8,10 @@ import {
 	MARGIN,
 	OPTIONS_HEIGHT,
 	SCREEN_HEIGHT,
-} from '../../theme/layout';
-import Box from '../atoms/Box';
-import Card from '../atoms/Card';
-import Text from '../atoms/Text';
+} from '../../../theme/layout';
+import Box from '../../atoms/Box';
+import Card from '../../atoms/Card';
+import Text from '../../atoms/Text';
 
 export interface Answer {
 	content: string;

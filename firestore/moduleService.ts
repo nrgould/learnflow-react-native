@@ -8,5 +8,5 @@ export async function getUserCourses(userId: string) {
 	const colRef = collection(db, 'users', userId, 'courses');
 	const snap = await getDocs(colRef);
 
-	snap.docs.map((doc) => console.log(doc.data()));
+	snap.docs.forEach((doc) => console.log(doc.data().course));
 }
