@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
 import PageHeaderDropdown from '../components/molecules/PageHeaderDropdown';
-import CreateCourse from '../components/organisms/create/createCourse';
-import CreateVideo from '../components/organisms/create/createVideo';
+import CreateCourse from '../components/organisms/create/CreateCourse';
+import CreateVideo from '../components/organisms/create/CreateVideo';
 
 const MENUS = ['Create Course', 'Create Video', 'Create Question'];
 

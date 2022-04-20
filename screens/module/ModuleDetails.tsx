@@ -10,6 +10,8 @@ import PageHeaderBack from '../../components/molecules/PageHeaderBack';
 import ModuleContentItem from '../../components/molecules/ModuleContentItem';
 import { useNavigation } from '@react-navigation/native';
 import { useSharedValue } from 'react-native-reanimated';
+import Button from '../../components/atoms/Button';
+import CircularProgressBar from '../../components/atoms/CircularProgressBar';
 
 export default function ModuleDetails({ route }: NavigationTypes) {
 	const title: string = route.params.title;
@@ -17,7 +19,7 @@ export default function ModuleDetails({ route }: NavigationTypes) {
 	const dispatch = useAppDispatch();
 	const module = useAppSelector((state) => state.module.selectedModule);
 	const status = useAppSelector((state) => state.module.status);
-	const navigation = useNavigation();
+	const navigation = useNavigation<any>();
 	const translateY = useSharedValue(0);
 
 	useEffect(() => {
@@ -59,21 +61,36 @@ export default function ModuleDetails({ route }: NavigationTypes) {
 	}
 
 	return (
-		<RestyledSafeAreaView
-			bgColor={module?.color}
-			edges={['top', 'left', 'right']}>
+		<RestyledSafeAreaView edges={['top', 'left', 'right']}>
 			<RestyledScrollView
 				style={{ minHeight: '100%' }}
 				backgroundColor='background'>
-				<Box
-					paddingHorizontal='l'
-					style={{ backgroundColor: module?.color }}>
+				<Box paddingHorizontal='l'>
 					<PageHeaderBack title={title} />
-					<Box marginVertical='m'>
-						<Text variant='body' numberOfLines={4}>
+					<Box
+						marginVertical='m'
+						flexDirection='row'
+						alignItems='center'
+						justifyContent='space-between'>
+						<Text
+							style={{ maxWidth: 240 }}
+							variant='body'
+							numberOfLines={4}>
 							{module?.description}
 						</Text>
+						<CircularProgressBar
+							completedContent={5}
+							totalContent={12}
+							color={module?.color}
+						/>
 					</Box>
+				</Box>
+				<Box paddingHorizontal='l'>
+					<Button
+						variant='primary'
+						label='Start Learning'
+						onPress={() => navigation.navigate('ModuleFeed')}
+					/>
 				</Box>
 				<Box marginHorizontal='l' height='100%'>
 					{module?.content.map((particle, i) => {

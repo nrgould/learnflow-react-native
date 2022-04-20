@@ -18,9 +18,8 @@ export default function ModuleContentItem({ particle }: Props) {
 				navigation.navigate('ModuleFeed', { id: particle.id })
 			}>
 			<Card
-				padding='xl'
+				padding='l'
 				variant='primary'
-				height={100}
 				flexDirection='row'
 				justifyContent='space-between'
 				alignItems='center'>
