@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import Box from '../../atoms/Box';
+import Text from '../../atoms/Text';
 
-export default function createVideo() {
-  return (
-    <View>
-      <Text>createVideo</Text>
-    </View>
-  )
+export default function CreateVideo() {
+	return (
+		<Box height='100%' zIndex={1}>
+			<Text>Create Video</Text>
+		</Box>
+	);
 }

@@ -98,6 +98,11 @@ const theme = createTheme({
 		xxl: 60,
 	},
 	textVariants: {
+		defaults: {
+			fontSize: 16,
+			color: 'primaryText',
+			fontFamily: 'sora-regular',
+		},
 		header: {
 			fontSize: 36,
 			color: 'primaryText',

@@ -3,11 +3,11 @@ import React from 'react';
 import RestyledSafeAreaView from '../atoms/RestyledSafeAreaView';
 
 interface Props {
-	children?: JSX.Element | JSX.Element[];
+	children?: React.ReactNode;
 }
 
 export default function Layout({ children }: Props) {
-	return (
+	return (RestyledSafeAreaView
 		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
 			{children}
 		</RestyledSafeAreaView>

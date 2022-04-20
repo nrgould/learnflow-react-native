@@ -5,11 +5,9 @@ import { Theme } from '../theme/theme';
 import { Ionicons } from '@expo/vector-icons';
 import Feed from '../screens/Feed';
 import DiscoverStack from './DiscoverStack';
-import Notifications from '../screens/Notifications';
 import LearningStack from './LearningStack';
 import { isSmallDevice } from '../theme/layout';
 import ProfileStack from './ProfileStack';
-import Profile from '../screens/user/Profile';
 import Create from '../screens/Create';
 
 const BottomTabs = createBottomTabNavigator();
