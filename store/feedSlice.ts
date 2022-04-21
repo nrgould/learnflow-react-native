@@ -18,12 +18,6 @@ const initialState: FeedState = {
 	status: 'idle',
 };
 
-function fetchFeed() {
-	return new Promise<{ data: any }>((resolve) =>
-		setTimeout(() => resolve({ data: serializedParticles }), 500)
-	);
-}
-
 /**
  * Fetches modules for the feed from firestore
  * @param {courseId} the id of the course to fetch modules from
@@ -38,14 +32,14 @@ export const fetchFeedAsync = createAsyncThunk(
 
 		return snap.docs.map((doc) => {
 			const data = doc.data();
-			console.log(data);
-			const id = doc.id;
-			const videoUrl = data.video_url;
-			const likeCount = data.like_count;
-			const creatorId = data.creatorId;
-			const question = data.question;
-			const title = data.title;
-			return { id, videoUrl, title, likeCount, creatorId, question };
+			return {
+				id: doc.id,
+				videoUrl: data.video_url,
+				title: data.title,
+				likeCount: data.like_count,
+				creatorId: data.creatorId,
+				question: data.question,
+			};
 		});
 	}
 );

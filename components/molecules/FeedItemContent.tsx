@@ -33,7 +33,7 @@ interface Props {
 	index: number;
 	videoPaused: boolean;
 	setVideoPaused: React.Dispatch<React.SetStateAction<boolean>>;
-	parentRef: any;
+	parentRef?: any;
 }
 
 const { width } = Dimensions.get('window');
@@ -137,11 +137,19 @@ export default function FeedItemContent({
 		}
 	};
 
-	const unload = async () => {
+	/**
+	 * Unloads the video in the component if the ref
+	 * of the video is not null.
+	 *
+	 * This will make sure unnecessary video instances are
+	 * not in memory at all times
+	 *
+	 * @returns {void}
+	 */
+	const unload = async (): Promise<void> => {
 		if (video.current == null) {
 			return;
 		}
-
 		// if video is already stopped return
 		try {
 			await video.current.unloadAsync();

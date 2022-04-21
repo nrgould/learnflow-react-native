@@ -8,10 +8,10 @@ import {
 	clearCourse,
 	fetchCourseAsync,
 	followCourseAsync,
+	unfollowCourseAsync,
 } from '../../store/courseSlice';
 import RestyledScrollView from '../../components/atoms/RestyledScrollView';
 import PageHeaderBack from '../../components/molecules/PageHeaderBack';
-import ModuleContentItem from '../../components/molecules/CourseContentItem';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/atoms/Button';
 import CircularProgressBar from '../../components/atoms/CircularProgressBar';
@@ -26,13 +26,16 @@ export default function CourseDetails({ route }: NavigationTypes) {
 	const dispatch = useAppDispatch();
 	const course = useAppSelector((state) => state.course.selectedCourse);
 	const status = useAppSelector((state) => state.course.status);
+	const followingStatus = useAppSelector(
+		(state) => state.course.followingStatus
+	);
 	const navigation = useNavigation<any>();
 	const isFollowing = course?.followers.some(
 		(follower) => follower.id === user!.uid
 	);
 	const [following, setFollowing] = useState(false);
 
-	console.log('isFollowing', isFollowing);
+	console.log('STATUS:', followingStatus);
 
 	useEffect(() => {
 		dispatch(fetchCourseAsync('i4wTZ9ioTEj7dte4O9Zb'));
@@ -47,9 +50,11 @@ export default function CourseDetails({ route }: NavigationTypes) {
 	}, [dispatch]);
 
 	const onFollow = useCallback(() => {
-		// setFollowing(!following);
-		dispatch(followCourseAsync(course?.id!));
-	}, [following]);
+		dispatch(
+			followCourseAsync({ courseId: 'i4wTZ9ioTEj7dte4O9Zb', isFollowing })
+		);
+		setFollowing(!following);
+	}, [isFollowing, dispatch]);
 
 	if (status === 'loading') {
 		return (
@@ -114,6 +119,7 @@ export default function CourseDetails({ route }: NavigationTypes) {
 						label={isFollowing ? 'Unfollow' : 'Follow'}
 						onPress={onFollow}
 						width={SCREEN_WIDTH * 0.42}
+						loading={followingStatus === 'loading'}
 					/>
 					<Button
 						variant='primary'

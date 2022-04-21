@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { ReactElement, useState } from 'react';
+import { auth, fetchUser } from '../firestore/authService';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { fetchFeedAsync } from '../store/feedSlice';
 
@@ -15,8 +16,14 @@ const LoadAssets = ({ fonts, children }: LoadAssetsProps) => {
 	const [dataLoaded, setDataLoaded] = useState(false);
 	const dispatch = useAppDispatch();
 
+	const user = auth.currentUser;
+
 	const fetchData = async () => {
-		await dispatch(fetchFeedAsync());
+		if (user) {
+			await dispatch(fetchFeedAsync(user.uid));
+		} else {
+			console.log('no user');
+		}
 		return Font.loadAsync(fonts);
 	};
 

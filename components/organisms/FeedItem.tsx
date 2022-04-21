@@ -14,7 +14,6 @@ interface Props {
 	currentVisibleIndex: number;
 	videoPaused: boolean;
 	setVideoPaused: React.Dispatch<React.SetStateAction<boolean>>;
-	ref: any;
 }
 
 export default function FeedItem({
@@ -23,17 +22,14 @@ export default function FeedItem({
 	currentVisibleIndex,
 	videoPaused,
 	setVideoPaused,
-	ref,
 }: Props) {
 	const [liked, setLiked] = useState(false);
 
 	const { question_text, question_options } = module.question;
-	console.log(question_options);
 
 	return (
 		<React.Fragment>
 			<FeedItemContent
-				parentRef={ref}
 				videoPaused={videoPaused}
 				setVideoPaused={setVideoPaused}
 				liked={liked}

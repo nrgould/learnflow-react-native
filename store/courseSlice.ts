@@ -13,7 +13,7 @@ import { serializedModules } from '../data/dummy-data';
 import { app } from '../firebase/config';
 import { auth } from '../firestore/authService';
 import { getUserCourses } from '../firestore/moduleService';
-import { CourseType, CourseUserType } from '../types';
+import { CourseType } from '../types';
 
 const db = getFirestore(app);
 const user = auth.currentUser;
@@ -21,6 +21,7 @@ const user = auth.currentUser;
 export interface CourseState {
 	selectedCourse: CourseType | null;
 	status: 'idle' | 'loading' | 'failed';
+	followingStatus: 'idle' | 'loading' | 'failed';
 	courses: CourseType[] | [];
 }
 
@@ -28,21 +29,8 @@ const initialState: CourseState = {
 	selectedCourse: null,
 	status: 'idle',
 	courses: [],
+	followingStatus: 'idle',
 };
-
-function fetchCourse() {
-	return new Promise<{ data: CourseType }>((resolve) =>
-		setTimeout(
-			() =>
-				resolve({
-					data: serializedModules[
-						Math.floor(Math.min(Math.random() * 10, 5))
-					],
-				}),
-			500
-		)
-	);
-}
 
 function fetchCourses() {
 	return new Promise<{ data: any }>((resolve) =>
@@ -71,7 +59,6 @@ export const fetchCourseAsync = createAsyncThunk(
 
 		if (courseSnap.exists()) {
 			const course = courseSnap.data();
-			console.log(courseSnap.data());
 			const {
 				id,
 				title,
@@ -135,47 +122,95 @@ export const fetchCourseModulesAsync = createAsyncThunk(
 
 export const followCourseAsync = createAsyncThunk(
 	'course/followCourse',
-	async function (courseId: string) {
-		try {
-			if (!user) {
-				return Promise.reject('Must be signed in');
-			}
-
-			const courseRef = doc(db, 'courses', courseId);
-			const courseSnap = await getDoc(courseRef);
-			const userRef = doc(db, 'users', user.uid);
-
-			if (courseSnap.exists()) {
-				const course = courseSnap.data();
-				const isFollowing = course.followers.some(
-					(follower: CourseUserType) => follower.id === user.uid
-				);
-				const batch = writeBatch(db);
-
-				console.log(isFollowing);
-				if (isFollowing) {
-					batch.update(courseRef, {
-						followers: arrayRemove(user.uid),
-					});
-					batch.update(userRef, { courses: arrayRemove(courseId) });
-				} else {
-					batch.update(courseRef, {
-						followers: arrayUnion(user.uid),
-					});
-					batch.update(userRef, { courses: arrayUnion(courseId) });
-				}
-
-				await batch.commit();
-			} else {
-				return Promise.reject("document doesn't exist!");
-			}
-		} catch (error) {
-			throw error;
+	async function (data: any) {
+		const { courseId, isFollowing } = data;
+		console.log('following course');
+		console.log(user);
+		if (!user) {
+			console.log('NO USER');
 		}
 
-		//get if user is following the course
-		//if not following, add user id to list of students in course doc, and add course id to list of courses in user doc
-		//if following, remove user id from followers, and course id from user doc
+		const courseRef = doc(db, 'courses', courseId);
+		const courseSnap = await getDoc(courseRef);
+		const userRef = doc(db, 'users', user!.uid);
+
+		if (courseSnap.exists()) {
+			const course = courseSnap.data();
+			const batch = writeBatch(db);
+			console.log('creating batch');
+
+			const courseObj = {
+				id: courseId,
+				title: course.title,
+			};
+
+			const userObj = {
+				id: user!.uid,
+				displayName: user!.displayName,
+			};
+
+			console.log(isFollowing);
+			if (isFollowing) {
+				batch.update(courseRef, {
+					followers: arrayRemove(userObj),
+				});
+				batch.update(userRef, {
+					courses: arrayRemove(courseObj),
+				});
+			} else {
+				batch.update(courseRef, {
+					followers: arrayUnion(userObj),
+				});
+				batch.update(userRef, {
+					courses: arrayUnion(courseObj),
+				});
+			}
+
+			return batch.commit().then(() => console.log('batch created'));
+		} else {
+			return Promise.reject("Document doesn't exist!");
+		}
+	}
+);
+
+export const unfollowCourseAsync = createAsyncThunk(
+	'course/followCourse',
+	async function (courseId: string) {
+		console.log('unfollowing course');
+		if (!user) {
+			return;
+		}
+
+		console.log(courseId);
+
+		const courseRef = doc(db, 'courses', courseId);
+		const courseSnap = await getDoc(courseRef);
+		const userRef = doc(db, 'users', user.uid);
+
+		if (courseSnap.exists()) {
+			const course = courseSnap.data();
+			console.log(course);
+
+			const batch = writeBatch(db);
+			console.log('creating batch');
+
+			batch.update(courseRef, {
+				followers: arrayRemove({
+					id: user.uid,
+					displayName: user.displayName,
+				}),
+			});
+			batch.update(userRef, {
+				courses: arrayRemove({
+					id: courseId,
+					title: course.title,
+				}),
+			});
+
+			await batch.commit().then(() => console.log('batch created'));
+		} else {
+			return Promise.reject("Document doesn't exist!");
+		}
 	}
 );
 
@@ -217,7 +252,13 @@ export const courseSlice = createSlice({
 				state.courses = action.payload;
 			})
 			.addCase(followCourseAsync.fulfilled, (state) => {
-				state.status = 'idle';
+				state.followingStatus = 'idle';
+			})
+			.addCase(followCourseAsync.pending, (state) => {
+				state.followingStatus = 'loading';
+			})
+			.addCase(followCourseAsync.rejected, (state) => {
+				state.followingStatus = 'failed';
 			});
 	},
 });

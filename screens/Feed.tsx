@@ -53,7 +53,7 @@ export default function Feed({ course = false }) {
 	const status = useAppSelector((state) => state.feed.status);
 	const { primary, background } = theme.colors;
 
-	console.log(feed);
+	// console.log(feed);
 
 	useEffect(() => {
 		if (course) {
@@ -117,7 +117,6 @@ export default function Feed({ course = false }) {
 			}
 			changed.forEach((element: any) => {
 				const cell = mediaRefs.current[element.key];
-				console.log(element);
 				if (cell) {
 					if (element.isViewable) {
 						// if (!CourseState) {
@@ -151,9 +150,6 @@ export default function Feed({ course = false }) {
 				currentVisibleIndex={currentVisibleIndex}
 				key={item.id}
 				translateY={translateY}
-				ref={(PostSingleRef: any) =>
-					(mediaRefs.current[item.id] = PostSingleRef)
-				}
 			/>
 		);
 	};
