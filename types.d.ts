@@ -22,29 +22,41 @@ export type ActionTypes = {
 	payload?: any;
 };
 
-export type ModuleType = {
+export type CourseUserType = {
+	displayName: string;
 	id: string;
-	content: ParticleType[];
+};
+
+export type CourseModuleType = {
+	title: string;
+	id: string;
+};
+
+export type CourseType = {
+	id: string;
+	content: CourseModuleType[];
 	title: string;
 	description: string;
 	completedContent: number;
 	totalContent: number;
 	color: string;
 	category: string;
+	followers: CourseUserType[];
 };
 
-export type ParticleType = {
+export type ModuleType = {
 	title: string;
-	videoUrl?: string;
+	videoUrl: string;
 	creatorId: string;
 	question: QuestionType;
+	likeCount: number;
 	id: string;
-	completed: boolean;
+	completed?: boolean;
 };
 
 export type QuestionType = {
-	text: string;
-	options: Option[4];
+	question_text: string;
+	question_options: Option[4];
 };
 
 export type Option = {
@@ -68,5 +80,3 @@ export type Offset = SharedValues<{
 	originalX: number;
 	originalY: number;
 }>;
-
-

@@ -1,22 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '@shopify/restyle';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Theme } from '../../theme/theme';
-import { ModuleType } from '../../types';
+import { CourseType } from '../../types';
 import Box from '../atoms/Box';
 import Card from '../atoms/Card';
 import Icon from '../atoms/Icon';
 import Text from '../atoms/Text';
 
 interface Props {
-	module: ModuleType;
+	course: CourseType;
 }
 
-export default function DiscoverModule({ module }: Props) {
+export default function DiscoverCourseItem({ course }: Props) {
 	const [followed, setFollowed] = useState(false);
 	const navigation = useNavigation<any>();
-	const { title, description, color, id } = module;
+	const { title, description, color, id } = course;
 
 	function navigationHandler() {
 		navigation.navigate('ModuleDetails', { title, id });

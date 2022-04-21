@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Box from '../components/atoms/Box';
 import Text from '../components/atoms/Text';
 import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
-import DiscoverModule from '../components/molecules/DiscoverModule';
+import DiscoverCourseItem from '../components/molecules/DiscoverCourseItem';
 import SearchInput from '../components/atoms/SearchInput';
 import RestyledScrollView from '../components/atoms/RestyledScrollView';
 import { Ionicons } from '@expo/vector-icons';
@@ -14,22 +14,22 @@ import Animated, {
 } from 'react-native-reanimated';
 import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { fetchModulesAsync } from '../store/moduleSlice';
+import { fetchCoursesAsync } from '../store/courseSlice';
 import { useItemHeight } from '../hooks/useItemHeight';
 
 export default function Discover() {
 	const [searchFocused, setSearchFocused] = useState(false);
 	const itemHeight = useItemHeight();
-	const modules = useAppSelector((state) => state.module.modules);
-	const status = useAppSelector((state) => state.module.status);
+	const courses = useAppSelector((state) => state.course.courses);
+	const status = useAppSelector((state) => state.course.status);
 	const dispatch = useAppDispatch();
 
-	const algebraModules = modules?.filter(
-		(module) => module.category === 'algebra'
+	const algebraCourses = courses?.filter(
+		(course) => course.category === 'algebra'
 	);
 
-	const calculusModules = modules?.filter(
-		(module) => module.category === 'calculus'
+	const calculusCourses = courses?.filter(
+		(course) => course.category === 'calculus'
 	);
 
 	const translateY = useSharedValue(0);
@@ -46,7 +46,7 @@ export default function Discover() {
 		Animated.createAnimatedComponent(RestyledScrollView);
 
 	useEffect(() => {
-		dispatch(fetchModulesAsync());
+		dispatch(fetchCoursesAsync());
 	}, [dispatch]);
 
 	if (status === 'loading') {
@@ -125,9 +125,12 @@ export default function Discover() {
 						onScroll={scrollHandler}
 						horizontal
 						backgroundColor='background'>
-						{algebraModules?.map((module, index) => {
+						{algebraCourses?.map((course, index) => {
 							return (
-								<DiscoverModule key={index} module={module} />
+								<DiscoverCourseItem
+									key={index}
+									course={course}
+								/>
 							);
 						})}
 					</AnimatedScrollView>
@@ -139,9 +142,12 @@ export default function Discover() {
 						scrollEventThrottle={16}
 						horizontal
 						backgroundColor='background'>
-						{calculusModules?.map((module, index) => {
+						{calculusCourses?.map((course, index) => {
 							return (
-								<DiscoverModule key={index} module={module} />
+								<DiscoverCourseItem
+									key={index}
+									course={course}
+								/>
 							);
 						})}
 					</AnimatedScrollView>

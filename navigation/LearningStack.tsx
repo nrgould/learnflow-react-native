@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@shopify/restyle';
 import React from 'react';
-import ModuleDetails from '../screens/module/ModuleDetails';
-import ModuleFeed from '../screens/module/ModuleFeed';
+import Feed from '../screens/Feed';
 import Path from '../screens/Path';
 import { Theme } from '../theme/theme';
+import CourseDetails from '../screens/course/CourseDetails';
 
 const LearningStackScreen = createNativeStackNavigator();
 
@@ -25,13 +25,12 @@ export default function LearningStack() {
 			}}>
 			<LearningStackScreen.Screen name='MyLearning' component={Path} />
 			<LearningStackScreen.Screen
-				name='ModuleDetails'
-				component={ModuleDetails}
+				name='CourseDetails'
+				component={CourseDetails}
 			/>
-			<LearningStackScreen.Screen
-				name='ModuleFeed'
-				component={ModuleFeed}
-			/>
+			<LearningStackScreen.Screen name='CourseFeed'>
+				{() => <Feed course />}
+			</LearningStackScreen.Screen>
 		</LearningStackScreen.Navigator>
 	);
 }

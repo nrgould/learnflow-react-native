@@ -7,6 +7,8 @@ import {
 	composeRestyleFunctions,
 	createRestyleComponent,
 	createVariant,
+	layout,
+	LayoutProps,
 	spacing,
 	SpacingProps,
 	useRestyle,
@@ -22,12 +24,14 @@ const buttonVariant = createVariant({ themeKey: 'buttonVariants' });
 type Props = SpacingProps<typeof Theme> &
 	VariantProps<typeof Theme, 'buttonVariants'> &
 	BorderProps<typeof Theme> &
+	LayoutProps<typeof Theme> &
 	BackgroundColorProps<typeof Theme> & {
 		onPress: () => void;
 		label?: string;
 		outline?: boolean;
 		loading?: boolean;
 		disabled?: boolean;
+		style?: object;
 	};
 
 const ButtonContainer = createRestyleComponent<
@@ -40,6 +44,7 @@ const restyleFunctions = composeRestyleFunctions([
 	buttonVariant as any,
 	spacing,
 	border,
+	layout,
 	backgroundColor,
 ]);
 

@@ -208,7 +208,7 @@ const theme = createTheme({
 			color: 'primaryText',
 		},
 		settingText: {
-			fontFamily: 'sora-semibold',
+			fontFamily: 'poppins-semibold',
 			fontSize: 18,
 			color: 'primaryText',
 		},

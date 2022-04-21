@@ -21,8 +21,9 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
 import Icon from '../../components/atoms/Icon';
-import SettingsComponent from '../../components/molecules/SettingsComponent';
+import SettingsComponent from '../../components/atoms/SettingsComponent';
 import { useNavigation } from '@react-navigation/native';
+import SettingsList from '../../components/molecules/SettingsList';
 
 export default function Profile() {
 	const [bottomSheetActive, setBottomSheetActive] = useState(false);
@@ -110,10 +111,47 @@ export default function Profile() {
 						Study Karma: {profile?.karma}
 					</Text>
 				</Card>
-				<Card
-					height={itemHeight * 0.5}
-					variant='primary'
-					marginBottom='m'></Card>
+				<Box
+					flexDirection='column'
+					alignItems='center'
+					justifyContent='space-around'
+					marginVertical='l'>
+					<Box
+						flexDirection='row'
+						alignItems='center'
+						justifyContent='space-between'
+						width='100%'
+						marginBottom='l'>
+						<Text variant='body' fontFamily='poppins-semibold'>
+							Study Karma: {profile?.karma}
+						</Text>
+						<Text variant='body' fontFamily='poppins-semibold'>
+							499 Karma to Master
+						</Text>
+					</Box>
+					<Box position='relative' width='100%'>
+						<Box
+							backgroundColor='primary'
+							width={120}
+							height={18}
+							borderRadius='m'
+							position='absolute'
+							bottom={3}
+							left={3}
+							zIndex={10}
+						/>
+						<Box
+							backgroundColor='primaryCardBackground'
+							width='100%'
+							height={24}
+							borderRadius='m'
+							position='absolute'
+							bottom={0}
+							left={0}
+							zIndex={5}
+						/>
+					</Box>
+				</Box>
 			</Box>
 			<BottomSheet
 				ref={bottomSheetRef}
@@ -129,34 +167,10 @@ export default function Profile() {
 				snapPoints={snapPoints}
 				enablePanDownToClose
 				onChange={handleSheetChanges}>
-				<Box marginHorizontal='m' marginTop={'l'}>
-					<SettingsComponent
-						onPress={() => navigation.navigate('UploadContent')}
-						name='film-outline'
-						label='Upload Video'
-					/>
-					<SettingsComponent
-						onPress={() => navigation.navigate('Account')}
-						name='person-circle-outline'
-						label='Account'
-					/>
-					<SettingsComponent
-						name='moon-outline'
-						label='Dark Mode'
-						switchAction={handleSetDarkMode}
-						switchValue={darkMode}
-					/>
-					<SettingsComponent
-						onPress={() => console.log('view help')}
-						name='help-buoy-sharp'
-						label='Help'
-					/>
-					<SettingsComponent
-						onPress={() => dispatch(signOut())}
-						name='log-out-outline'
-						label='Sign Out'
-					/>
-				</Box>
+				<SettingsList
+					darkMode={darkMode}
+					handleSetDarkMode={handleSetDarkMode}
+				/>
 			</BottomSheet>
 		</RestyledSafeAreaView>
 	);

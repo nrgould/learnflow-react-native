@@ -1,8 +1,8 @@
 import { Switch, TouchableOpacity } from 'react-native';
 import React from 'react';
-import Box from '../atoms/Box';
-import Icon from '../atoms/Icon';
-import Text from '../atoms/Text';
+import Box from './Box';
+import Icon from './Icon';
+import Text from './Text';
 import { Ionicons } from '@expo/vector-icons';
 
 interface Props extends React.ComponentProps<typeof Ionicons> {

@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
-import moduleReducer from './moduleSlice';
+import courseReducer from './courseSlice';
 import themeReducer from './themeSlice';
 import feedReducer from './feedSlice';
 import profileReducer from './profileSlice';
@@ -8,7 +8,7 @@ import authReducer from './authSlice';
 
 export const store = configureStore({
 	reducer: {
-		module: moduleReducer,
+		course: courseReducer,
 		feed: feedReducer,
 		theme: themeReducer,
 		profile: profileReducer,

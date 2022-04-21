@@ -8,19 +8,19 @@ import RestyledSafeAreaView from '../components/atoms/RestyledSafeAreaView';
 import RestyledScrollView from '../components/atoms/RestyledScrollView';
 import Text from '../components/atoms/Text';
 import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
-import PathModule from '../components/molecules/PathModule';
+import PathCourseItem from '../components/molecules/PathCourseItem';
 import PathModulePlaceholder from '../components/Placeholders/PathModulePlaceholder';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import {
 	fetchCurrentUserCoursesAsync,
-	fetchModulesAsync,
-} from '../store/moduleSlice';
+	fetchCoursesAsync,
+} from '../store/courseSlice';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(RestyledScrollView);
 
 export default function Path() {
-	const modules = useAppSelector((state) => state.module.modules);
-	const status = useAppSelector((state) => state.module.status);
+	const courses = useAppSelector((state) => state.course.courses);
+	const status = useAppSelector((state) => state.course.status);
 
 	const dispatch = useAppDispatch();
 
@@ -64,8 +64,8 @@ export default function Path() {
 				<Box height='100%' backgroundColor='background'>
 					<Box marginTop='s' marginHorizontal='l'>
 						<Text variant='header'>My Learning</Text>
-						{modules?.map((module, i) => {
-							return <PathModule module={module} key={i} />;
+						{courses?.map((course, i) => {
+							return <PathCourseItem course={course} key={i} />;
 						})}
 					</Box>
 				</Box>

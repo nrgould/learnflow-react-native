@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FeedItemContent from '../molecules/FeedItemContent';
-import { ParticleType } from '../../types';
+import { ModuleType } from '../../types';
 import Animated from 'react-native-reanimated';
 import MultipleChoiceQuestion from './questions/MultipleChoiceQuestion';
 import { View } from 'react-native';
@@ -10,7 +10,7 @@ interface Props {
 	translateY?: Animated.SharedValue<number>;
 	answered?: boolean;
 	setAnswered?: React.Dispatch<React.SetStateAction<boolean>>;
-	particle: ParticleType;
+	module: ModuleType;
 	currentVisibleIndex: number;
 	videoPaused: boolean;
 	setVideoPaused: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,7 +19,7 @@ interface Props {
 
 export default function FeedItem({
 	index,
-	particle,
+	module,
 	currentVisibleIndex,
 	videoPaused,
 	setVideoPaused,
@@ -27,7 +27,8 @@ export default function FeedItem({
 }: Props) {
 	const [liked, setLiked] = useState(false);
 
-	const { text, options } = particle.question;
+	const { question_text, question_options } = module.question;
+	console.log(question_options);
 
 	return (
 		<React.Fragment>
@@ -40,7 +41,10 @@ export default function FeedItem({
 				currentVisibleIndex={currentVisibleIndex}
 				index={index}
 			/>
-			<MultipleChoiceQuestion options={options} question={text} />
+			<MultipleChoiceQuestion
+				options={question_options}
+				question={question_text}
+			/>
 		</React.Fragment>
 	);
 }

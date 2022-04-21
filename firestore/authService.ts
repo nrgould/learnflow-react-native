@@ -5,7 +5,6 @@ import {
 	signInWithEmailAndPassword,
 	signOut,
 	updateProfile,
-	User,
 } from 'firebase/auth';
 import { getReactNativePersistence } from 'firebase/auth/react-native';
 import { app } from '../firebase/config';

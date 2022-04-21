@@ -11,7 +11,7 @@ import Animated, {
 	withTiming,
 } from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native';
-import { ModuleType } from '../../types';
+import { CourseType } from '../../types';
 import { isSmallDevice, SCREEN_HEIGHT } from '../../theme/layout';
 import { useNavigation } from '@react-navigation/native';
 
@@ -22,15 +22,15 @@ const R = isSmallDevice ? 35 : CIRCLE_LENGTH / (2 * Math.PI);
 const STROKE_WIDTH = 8;
 
 interface Props {
-	module: ModuleType;
+	course: CourseType;
 }
 
-export default function PathModule({ module }: Props) {
+export default function PathCourseItem({ course }: Props) {
 	const theme = useTheme<Theme>();
 	const navigation = useNavigation<any>();
 
 	const { background } = theme.colors;
-	const { completedContent, totalContent, color } = module;
+	const { completedContent, totalContent, color } = course;
 
 	const progress = useSharedValue(0);
 	const progressVal = completedContent / totalContent;
@@ -38,7 +38,7 @@ export default function PathModule({ module }: Props) {
 	const cardHeight = SCREEN_HEIGHT / 8;
 
 	function onPress() {
-		navigation.navigate('ModuleDetails', { title: module.title });
+		navigation.navigate('CourseDetails', { title: course.title });
 	}
 
 	useEffect(() => {
@@ -66,7 +66,7 @@ export default function PathModule({ module }: Props) {
 						alignItems='flex-start'
 						justifyContent='space-around'>
 						<CustomText variant='cardHeader'>
-							{module.title}
+							{course.title}
 						</CustomText>
 						<CustomText variant='body'>
 							{completedContent} / {totalContent} Particles

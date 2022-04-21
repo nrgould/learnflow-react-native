@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import React, { useEffect } from 'react';
 import Box from './Box';
 import Svg, { Circle } from 'react-native-svg';
@@ -47,50 +46,41 @@ export default function CircularProgressBar({
 		strokeDashoffset: CIRCLE_LENGTH * (1 - progress.value),
 	}));
 	return (
-		<View>
-			<Box alignItems='center' justifyContent='center'>
-				<Svg
-					viewBox='0 0 100 100'
-					height={cardHeight}
-					width={cardHeight}>
-					<Circle
-						cx='50'
-						cy='50'
-						r={R}
-						stroke={
-							backgroundColor
-								? backgroundColor
-								: primaryCardBackground
-						}
-						strokeWidth={STROKE_WIDTH + 4}
-					/>
-					<AnimatedCircle
-						cx='50'
-						cy='50'
-						r={R}
-						stroke={color ? color : primary}
-						strokeWidth={STROKE_WIDTH}
-						strokeLinecap='round'
-						strokeDasharray={CIRCLE_LENGTH}
-						animatedProps={animatedProps}
-					/>
-				</Svg>
-				<Text
-					variant='stat'
-					style={{
-						color: color ? color : primary,
-						position: 'absolute',
-						top: isSmallDevice
-							? cardHeight / 2.7
-							: cardHeight / 2.6,
-						left: isSmallDevice
-							? cardHeight / 2.9
-							: cardHeight / 2.95,
-						fontSize: isSmallDevice ? 14 : 18,
-					}}>
-					{Math.ceil(progressVal * 100)}%
-				</Text>
-			</Box>
-		</View>
+		<Box alignItems='center' justifyContent='center'>
+			<Svg viewBox='0 0 100 100' height={cardHeight} width={cardHeight}>
+				<Circle
+					cx='50'
+					cy='50'
+					r={R}
+					stroke={
+						backgroundColor
+							? backgroundColor
+							: primaryCardBackground
+					}
+					strokeWidth={STROKE_WIDTH + 4}
+				/>
+				<AnimatedCircle
+					cx='50'
+					cy='50'
+					r={R}
+					stroke={color ? color : primary}
+					strokeWidth={STROKE_WIDTH}
+					strokeLinecap='round'
+					strokeDasharray={CIRCLE_LENGTH}
+					animatedProps={animatedProps}
+				/>
+			</Svg>
+			<Text
+				variant='stat'
+				style={{
+					color: color ? color : primary,
+					position: 'absolute',
+					top: isSmallDevice ? cardHeight / 2.7 : cardHeight / 2.6,
+					left: isSmallDevice ? cardHeight / 2.9 : cardHeight / 2.95,
+					fontSize: isSmallDevice ? 14 : 18,
+				}}>
+				{Math.ceil(progressVal * 100)}%
+			</Text>
+		</Box>
 	);
 }

@@ -1,21 +1,23 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { ParticleType } from '../../types';
+import { CourseModuleType } from '../../types';
 import Card from '../atoms/Card';
 import Icon from '../atoms/Icon';
 import Text from '../atoms/Text';
 
 interface Props {
-	particle: ParticleType;
+	module: CourseModuleType;
 }
 
-export default function ModuleContentItem({ particle }: Props) {
+export default function CourseContentItem({ module }: Props) {
 	const navigation = useNavigation<any>();
+
+	const completed = false;
 	return (
 		<TouchableOpacity
 			onPress={() =>
-				navigation.navigate('ModuleFeed', { id: particle.id })
+				navigation.navigate('CourseFeed', { id: module.id })
 			}>
 			<Card
 				padding='l'
@@ -23,8 +25,8 @@ export default function ModuleContentItem({ particle }: Props) {
 				flexDirection='row'
 				justifyContent='space-between'
 				alignItems='center'>
-				<Text variant='subheader'>{particle.title}</Text>
-				{particle.completed ? (
+				<Text variant='subheader'>{module.title}</Text>
+				{completed ? (
 					<Icon size={32} name='checkmark-sharp' color='success' />
 				) : (
 					<Icon
