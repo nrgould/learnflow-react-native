@@ -2,7 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { ReactElement, useState } from 'react';
-import { useAppSelector } from '../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { fetchDarkModeAsync } from '../store/themeSlice';
 
 interface LoadAssetsProps {
 	fonts?: any;
@@ -12,12 +13,13 @@ interface LoadAssetsProps {
 
 const LoadAssets = ({ fonts, children }: LoadAssetsProps) => {
 	const [dataLoaded, setDataLoaded] = useState(false);
-	const authenticated = useAppSelector((state) => state.auth.authenticated);
+	const dispatch = useAppDispatch();
+	const user = useAppSelector((state) => state.auth.currentUser);
 
 	const fetchData = async () => {
-		if (authenticated) {
+		if (user) {
 			console.log('user logged in');
-			// dispatch(fetchFeedAsync(user.uid));
+			dispatch(fetchDarkModeAsync(user.uid));
 		} else {
 			console.log('no user');
 		}

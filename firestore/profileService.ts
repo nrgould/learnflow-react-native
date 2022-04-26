@@ -6,6 +6,7 @@ import {
 	Timestamp,
 } from 'firebase/firestore/lite';
 import { app } from '../firebase/config';
+import { User } from 'firebase/auth';
 
 const db = getFirestore(app);
 
@@ -30,6 +31,7 @@ export function setUserProfileData(user: any) {
 		email: user.email,
 		photoURL: user.photoURL || null,
 		createdAt: Timestamp.now(),
+		darkMode: true,
 		karma: 0,
 		courses: [],
 	}).then(() => console.log('created user'));

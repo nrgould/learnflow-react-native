@@ -11,17 +11,15 @@ import RestyledSafeAreaView from '../../components/atoms/RestyledSafeAreaView';
 import Text from '../../components/atoms/Text';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { useItemHeight } from '../../hooks/useItemHeight';
-import { signOut } from '../../store/authSlice';
 import {
-	clearCurrentUser,
+	clearCurrentUserProfile,
 	fetchCurrentUserAsync,
 } from '../../store/profileSlice';
-import { setDark, setLight } from '../../store/themeSlice';
+import { setDarkMode } from '../../store/themeSlice';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
 import Icon from '../../components/atoms/Icon';
-import SettingsComponent from '../../components/atoms/SettingsComponent';
 import { useNavigation } from '@react-navigation/native';
 import SettingsList from '../../components/molecules/SettingsList';
 
@@ -30,13 +28,12 @@ export default function Profile() {
 	const dispatch = useAppDispatch();
 	const darkMode = useAppSelector((state) => state.theme.darkMode);
 	const itemHeight = useItemHeight();
-	const profile = useAppSelector((state) => state.profile.currentUser);
+	const profile = useAppSelector((state) => state.profile.currentUserProfile);
 	const userId = useAppSelector((state) => state.auth.userId);
 	const status = useAppSelector((state) => state.profile.status);
 	const navigation = useNavigation<any>();
 	const theme = useTheme<Theme>();
 	const { foreground, bottomSheetBackground } = theme.colors;
-
 	const bottomSheetRef = useRef<BottomSheet>(null);
 	const snapPoints = useMemo(() => ['50%', '75%'], []);
 
@@ -48,18 +45,17 @@ export default function Profile() {
 	}, []);
 
 	useEffect(() => {
-		dispatch(fetchCurrentUserAsync(userId!));
+		dispatch(fetchCurrentUserAsync(userId));
 		navigation.setOptions({
 			headerShown: false,
 		});
+		return () => {
+			dispatch(clearCurrentUserProfile());
+		};
 	}, [dispatch]);
 
 	function handleSetDarkMode() {
-		if (darkMode) {
-			dispatch(setLight());
-		} else {
-			dispatch(setDark());
-		}
+		dispatch(setDarkMode({ mode: !darkMode, userId }));
 	}
 
 	if (status === 'loading') {
