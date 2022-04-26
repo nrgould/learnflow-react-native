@@ -6,17 +6,16 @@ import BottomTabsNavigator from './navigation/BottomTabsNavigator';
 import { useAppSelector } from './hooks/reduxHooks';
 import theme, { darkTheme } from './theme/theme';
 import AuthStack from './navigation/AuthStack';
-import useAuthentication from './hooks/useAuthentication';
 
 export default function Layout() {
 	const darkMode = useAppSelector((state) => state.theme.darkMode);
-	const { user } = useAuthentication();
+	const authenticated = useAppSelector((state) => state.auth.authenticated);
 
 	return (
 		<ThemeProvider theme={darkMode ? darkTheme : theme}>
 			<StatusBar style={darkMode ? 'light' : 'dark'} />
 			<SafeAreaProvider>
-				{user ? <BottomTabsNavigator /> : <AuthStack />}
+				{authenticated ? <BottomTabsNavigator /> : <AuthStack />}
 			</SafeAreaProvider>
 		</ThemeProvider>
 	);

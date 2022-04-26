@@ -2,9 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { ReactElement, useState } from 'react';
-import { auth, fetchUser } from '../firestore/authService';
-import { useAppDispatch } from '../hooks/reduxHooks';
-import { fetchFeedAsync } from '../store/feedSlice';
+import { useAppSelector } from '../hooks/reduxHooks';
 
 interface LoadAssetsProps {
 	fonts?: any;
@@ -14,13 +12,12 @@ interface LoadAssetsProps {
 
 const LoadAssets = ({ fonts, children }: LoadAssetsProps) => {
 	const [dataLoaded, setDataLoaded] = useState(false);
-	const dispatch = useAppDispatch();
-
-	const user = auth.currentUser;
+	const authenticated = useAppSelector((state) => state.auth.authenticated);
 
 	const fetchData = async () => {
-		if (user) {
-			await dispatch(fetchFeedAsync(user.uid));
+		if (authenticated) {
+			console.log('user logged in');
+			// dispatch(fetchFeedAsync(user.uid));
 		} else {
 			console.log('no user');
 		}
@@ -32,7 +29,10 @@ const LoadAssets = ({ fonts, children }: LoadAssetsProps) => {
 			<AppLoading
 				startAsync={fetchData}
 				onFinish={() => setDataLoaded(true)}
-				onError={(error: any) => console.log(error)}
+				onError={(error: any) => {
+					console.log(error);
+					throw error;
+				}}
 			/>
 		);
 	}

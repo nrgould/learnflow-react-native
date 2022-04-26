@@ -18,7 +18,7 @@ import { fetchFeedAsync } from '../store/feedSlice';
 import Text from '../components/atoms/Text';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../theme/theme';
-import { fetchCourseAsync } from '../store/courseSlice';
+import { fetchCourseAsync } from '../store/actions/courseActions';
 
 interface RenderItemProps {
 	item: any;
@@ -52,12 +52,13 @@ export default function Feed({ course = false }) {
 	const { feed } = useAppSelector((state) => state.feed);
 	const status = useAppSelector((state) => state.feed.status);
 	const { primary, background } = theme.colors;
-
-	// console.log(feed);
+	const userId = useAppSelector((state) => state.auth.userId);
 
 	useEffect(() => {
 		if (course) {
-			dispatch(fetchCourseAsync('i4wTZ9ioTEj7dte4O9Zb'));
+			dispatch(
+				fetchCourseAsync({ courseId: 'i4wTZ9ioTEj7dte4O9Zb', userId })
+			);
 		} else {
 			dispatch(fetchFeedAsync('i4wTZ9ioTEj7dte4O9Zb'));
 		}

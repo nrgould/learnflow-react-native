@@ -12,6 +12,14 @@ export type FeedState = {
 	loading: boolean;
 };
 
+export type User = {
+	displayName: string;
+	email: string;
+	phoneNumber?: string;
+	photoURL: string | null;
+	uid: string;
+};
+
 export type NavigationTypes = {
 	navigation: any;
 	route?: any;

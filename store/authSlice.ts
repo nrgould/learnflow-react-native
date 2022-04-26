@@ -1,22 +1,42 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchUser, signOutFirebase } from '../firestore/authService';
+import { onAuthStateChanged } from 'firebase/auth';
+import { signOutFirebase, auth } from '../firestore/authService';
+import { User } from '../types';
 
 export interface AuthState {
 	authenticated: boolean;
-	userId: string | undefined;
+	userId: string;
 	status: 'idle' | 'loading' | 'failed';
+	currentUser: User | null;
 }
 
 const initialState: AuthState = {
 	authenticated: false,
-	userId: undefined,
+	userId: '',
 	status: 'idle',
+	currentUser: null,
 };
 
-// export const fetchUserIdAsync = createAsyncThunk('auth/fetchUser', async () => {
-// 	const result = fetchUser();
-// 	console.log(result);
-// });
+export const verifyAuth = createAsyncThunk<any>(
+	'auth/verifyAuth',
+	async (_, { dispatch }) => {
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				const serializedUser = {
+					displayName: user.displayName,
+					email: user.email,
+					photoURL: user.photoURL,
+					uid: user.uid,
+				};
+				dispatch(setUserId(user.uid));
+				dispatch(setCurrentUser(serializedUser));
+				return serializedUser;
+			} else {
+				return null;
+			}
+		});
+	}
+);
 
 export const authSlice = createSlice({
 	name: 'auth',
@@ -25,24 +45,27 @@ export const authSlice = createSlice({
 		signOut: (state) => {
 			signOutFirebase();
 			state.authenticated = false;
-			state.userId = undefined;
+			state.userId = '';
 		},
 		setUserId: (state, action) => {
 			state.userId = action.payload;
 		},
+		setCurrentUser: (state, action) => {
+			state.currentUser = action.payload;
+		},
 	},
-	// extraReducers: (builder) => {
-	// 	builder
-	// 		.addCase(fetchUserIdAsync.pending, (state) => {
-	// 			state.status = 'loading';
-	// 		})
-	// 		.addCase(fetchUserIdAsync.fulfilled, (state, action) => {
-	// 			state.status = 'idle';
-	// 			state.userId = action.payload;
-	// 		});
-	// },
+	extraReducers: (builder) => {
+		builder
+			.addCase(verifyAuth.pending, (state) => {
+				state.status = 'loading';
+			})
+			.addCase(verifyAuth.fulfilled, (state) => {
+				state.status = 'idle';
+				state.authenticated = true;
+			});
+	},
 });
 
-export const { signOut, setUserId } = authSlice.actions;
+export const { signOut, setUserId, setCurrentUser } = authSlice.actions;
 
 export default authSlice.reducer;

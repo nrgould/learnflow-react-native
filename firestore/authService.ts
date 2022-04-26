@@ -1,7 +1,6 @@
 import {
 	createUserWithEmailAndPassword,
 	initializeAuth,
-	onAuthStateChanged,
 	signInWithEmailAndPassword,
 	signOut,
 	updateProfile,
@@ -15,12 +14,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const auth = initializeAuth(app, {
 	persistence: getReactNativePersistence(AsyncStorage),
 });
-
-export async function fetchUser() {
-	onAuthStateChanged(auth, (user) => {
-		return user;
-	});
-}
 
 interface SignInProps {
 	email: string;

@@ -3,12 +3,12 @@ import { getUserProfile } from '../firestore/profileService';
 import { ProfileType } from '../types';
 
 export interface ProfileState {
-	currentUser: ProfileType | null;
+	currentUserProfile: ProfileType | null;
 	status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: ProfileState = {
-	currentUser: null,
+	currentUserProfile: null,
 	status: 'idle',
 };
 
@@ -24,11 +24,11 @@ export const profileSlice = createSlice({
 	name: 'profile',
 	initialState,
 	reducers: {
-		setCurrentUser: (state, action) => {
-			state.currentUser = action.payload;
+		setCurrentUserProfile: (state, action) => {
+			state.currentUserProfile = action.payload;
 		},
-		clearCurrentUser: (state) => {
-			state.currentUser = null;
+		clearCurrentUserProfile: (state) => {
+			state.currentUserProfile = null;
 		},
 	},
 	extraReducers: (builder) => {
@@ -38,11 +38,12 @@ export const profileSlice = createSlice({
 			})
 			.addCase(fetchCurrentUserAsync.fulfilled, (state, action) => {
 				state.status = 'idle';
-				state.currentUser = action.payload as ProfileType;
+				state.currentUserProfile = action.payload as ProfileType;
 			});
 	},
 });
 
-export const { setCurrentUser, clearCurrentUser } = profileSlice.actions;
+export const { setCurrentUserProfile, clearCurrentUserProfile } =
+	profileSlice.actions;
 
 export default profileSlice.reducer;

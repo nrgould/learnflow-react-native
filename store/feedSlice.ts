@@ -1,6 +1,5 @@
 import { ModuleType } from './../types.d';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { serializedParticles } from '../data/dummy-data';
 import { collection, getDocs, getFirestore } from 'firebase/firestore/lite';
 import { app } from '../firebase/config';
 import { auth } from '../firestore/authService';
@@ -26,7 +25,6 @@ const initialState: FeedState = {
 export const fetchFeedAsync = createAsyncThunk(
 	'feed/fetchFeed',
 	async function (courseId: string) {
-		console.log('getting user feed');
 		const colRef = collection(db, 'courses', courseId, 'modules');
 		const snap = await getDocs(colRef);
 

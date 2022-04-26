@@ -4,41 +4,50 @@ import Box from '../../components/atoms/Box';
 import RestyledSafeAreaView from '../../components/atoms/RestyledSafeAreaView';
 import Text from '../../components/atoms/Text';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import {
-	clearCourse,
-	fetchCourseAsync,
-	followCourseAsync,
-	unfollowCourseAsync,
-} from '../../store/courseSlice';
+import { clearCourse } from '../../store/courseSlice';
 import RestyledScrollView from '../../components/atoms/RestyledScrollView';
 import PageHeaderBack from '../../components/molecules/PageHeaderBack';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/atoms/Button';
 import CircularProgressBar from '../../components/atoms/CircularProgressBar';
-import { auth } from '../../firestore/authService';
 import { SCREEN_WIDTH } from '../../theme/layout';
 import CourseContentItem from '../../components/molecules/CourseContentItem';
+import {
+	fetchCourseAsync,
+	fetchFollowingCourseAsync,
+	followCourseAsync,
+	setFollowingCourse,
+} from '../../store/actions/courseActions';
+import useAuthentication from '../../hooks/useAuthentication';
 
 export default function CourseDetails({ route }: NavigationTypes) {
 	const title: string = route.params.title;
-	// const id: string = route.params.id;
-	const user = auth.currentUser;
 	const dispatch = useAppDispatch();
+	const user = useAppSelector((state) => state.auth.currentUser);
+	const userId = useAppSelector((state) => state.auth.userId);
 	const course = useAppSelector((state) => state.course.selectedCourse);
 	const status = useAppSelector((state) => state.course.status);
 	const followingStatus = useAppSelector(
 		(state) => state.course.followingStatus
 	);
-	const navigation = useNavigation<any>();
-	const isFollowing = course?.followers.some(
-		(follower) => follower.id === user!.uid
+	const isFollowing = useAppSelector(
+		(state) => state.course.followingSelectedCourse
 	);
-	const [following, setFollowing] = useState(false);
-
-	console.log('STATUS:', followingStatus);
+	const navigation = useNavigation<any>();
 
 	useEffect(() => {
-		dispatch(fetchCourseAsync('i4wTZ9ioTEj7dte4O9Zb'));
+		dispatch(
+			fetchCourseAsync({
+				courseId: 'i4wTZ9ioTEj7dte4O9Zb',
+				userId,
+			})
+		);
+		dispatch(
+			fetchFollowingCourseAsync({
+				courseId: 'i4wTZ9ioTEj7dte4O9Zb',
+				userId,
+			})
+		);
 		navigation.setOptions({
 			headerShown: false,
 			headerTitle: title,
@@ -49,12 +58,15 @@ export default function CourseDetails({ route }: NavigationTypes) {
 		};
 	}, [dispatch]);
 
-	const onFollow = useCallback(() => {
+	const onFollow = () => {
 		dispatch(
-			followCourseAsync({ courseId: 'i4wTZ9ioTEj7dte4O9Zb', isFollowing })
+			followCourseAsync({
+				courseId: 'i4wTZ9ioTEj7dte4O9Zb',
+				userId,
+				isFollowing: isFollowing!!,
+			})
 		);
-		setFollowing(!following);
-	}, [isFollowing, dispatch]);
+	};
 
 	if (status === 'loading') {
 		return (
@@ -123,8 +135,8 @@ export default function CourseDetails({ route }: NavigationTypes) {
 					/>
 					<Button
 						variant='primary'
-						label='Start Learning'
-						onPress={() => navigation.navigate('ModuleFeed')}
+						label={'Start Learning'}
+						onPress={() => console.log('go to feed')}
 						width={SCREEN_WIDTH * 0.42}
 					/>
 				</Box>
