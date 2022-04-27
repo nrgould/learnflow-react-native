@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect } from 'react';
 import { NavigationTypes } from '../../types';
 import Box from '../../components/atoms/Box';
 import RestyledSafeAreaView from '../../components/atoms/RestyledSafeAreaView';
@@ -16,9 +16,7 @@ import {
 	fetchCourseAsync,
 	fetchFollowingCourseAsync,
 	followCourseAsync,
-	setFollowingCourse,
 } from '../../store/actions/courseActions';
-import useAuthentication from '../../hooks/useAuthentication';
 
 export default function CourseDetails({ route }: NavigationTypes) {
 	const title: string = route.params.title;
@@ -62,7 +60,7 @@ export default function CourseDetails({ route }: NavigationTypes) {
 		dispatch(
 			followCourseAsync({
 				courseId: 'i4wTZ9ioTEj7dte4O9Zb',
-				userId,
+				user: user!,
 				isFollowing: isFollowing!!,
 			})
 		);

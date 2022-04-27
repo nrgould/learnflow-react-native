@@ -15,6 +15,7 @@ interface FormValues {
 
 export default function Login() {
 	const navigation = useNavigation<any>();
+
 	const initialValues: FormValues = {
 		email: '',
 		password: '',
@@ -40,12 +41,13 @@ export default function Login() {
 				) => {
 					try {
 						await signInWithEmail(values);
-					} catch (error) {
-						setErrors(error as FormValues);
-						console.log(error);
-					} finally {
 						setSubmitting(false);
 						resetForm();
+						navigation.navigate('Main');
+					} catch (error) {
+						setErrors(error as FormValues);
+						setSubmitting(false);
+						console.log(error);
 					}
 				}}>
 				{({
@@ -79,7 +81,7 @@ export default function Login() {
 				label='Sign Up'
 				variant='link'
 				margin='s'
-				onPress={() => navigation.push('Signup')}
+				onPress={() => navigation.navigate('Signup')}
 			/>
 		</Box>
 	);

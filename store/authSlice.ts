@@ -46,6 +46,7 @@ export const authSlice = createSlice({
 			signOutFirebase();
 			state.authenticated = false;
 			state.userId = '';
+			state.currentUser = null;
 		},
 		setUserId: (state, action) => {
 			state.userId = action.payload;
@@ -62,6 +63,12 @@ export const authSlice = createSlice({
 			.addCase(verifyAuth.fulfilled, (state) => {
 				state.status = 'idle';
 				state.authenticated = true;
+			})
+			.addCase(verifyAuth.rejected, (state) => {
+				state.status = 'failed';
+				state.authenticated = false;
+				state.currentUser = null;
+				state.userId = '';
 			});
 	},
 });

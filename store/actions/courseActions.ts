@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore/lite';
 import { app } from '../../firebase/config';
 import { getUserCourses } from '../../firestore/moduleService';
+import { User } from '../../types';
 
 const db = getFirestore(app);
 
@@ -118,14 +119,14 @@ export const fetchCourseModulesAsync = createAsyncThunk(
 
 interface Data {
 	courseId: string;
-	userId: string;
+	user: User;
 	isFollowing: boolean;
 }
 
 export const followCourseAsync = createAsyncThunk(
 	'course/followCourse',
 	async function (data: Data, { dispatch }) {
-		const { courseId, userId, isFollowing } = data;
+		const { courseId, user, isFollowing } = data;
 
 		const courseRef = doc(db, 'courses', courseId);
 		const courseSnap = await getDoc(courseRef);
@@ -138,12 +139,12 @@ export const followCourseAsync = createAsyncThunk(
 					'courses',
 					courseId,
 					'followers',
-					userId
+					user.uid
 				);
 				const followingRef = doc(
 					db,
 					'users',
-					userId,
+					user.uid,
 					'courses',
 					courseId
 				);
@@ -154,7 +155,11 @@ export const followCourseAsync = createAsyncThunk(
 					batch.delete(followerRef);
 					batch.delete(followingRef);
 				} else {
-					batch.set(followerRef, {});
+					batch.set(followerRef, {
+						uid: user.uid,
+						displayName: user.displayName,
+						photoURL: user.photoURL,
+					});
 					batch.set(followingRef, {
 						id: courseId,
 						title: course.title,

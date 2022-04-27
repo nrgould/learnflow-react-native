@@ -15,6 +15,9 @@ const LoadAssets = ({ fonts, children }: LoadAssetsProps) => {
 	const [dataLoaded, setDataLoaded] = useState(false);
 	const dispatch = useAppDispatch();
 	const user = useAppSelector((state) => state.auth.currentUser);
+	const authStatus = useAppSelector((state) => state.auth.status);
+
+	console.log(authStatus);
 
 	const fetchData = async () => {
 		if (user) {
@@ -26,7 +29,7 @@ const LoadAssets = ({ fonts, children }: LoadAssetsProps) => {
 		return Font.loadAsync(fonts);
 	};
 
-	if (!dataLoaded) {
+	if (!dataLoaded && authStatus !== 'loading') {
 		return (
 			<AppLoading
 				startAsync={fetchData}
@@ -38,6 +41,7 @@ const LoadAssets = ({ fonts, children }: LoadAssetsProps) => {
 			/>
 		);
 	}
+
 	return <NavigationContainer>{children}</NavigationContainer>;
 };
 

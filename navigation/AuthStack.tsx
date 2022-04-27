@@ -9,7 +9,6 @@ const AuthStackScreen = createNativeStackNavigator();
 
 export default function AuthStack() {
 	const theme = useTheme<Theme>();
-
 	const { background, primaryText } = theme.colors;
 
 	return (

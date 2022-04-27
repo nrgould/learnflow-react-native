@@ -11,10 +11,7 @@ import AnimatedScrollHeader from '../components/molecules/AnimatedScrollHeader';
 import PathCourseItem from '../components/molecules/PathCourseItem';
 import PathModulePlaceholder from '../components/Placeholders/PathModulePlaceholder';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import {
-	fetchCurrentUserCoursesAsync,
-	fetchCoursesAsync,
-} from '../store/courseSlice';
+import { fetchCurrentUserCoursesAsync } from '../store/actions/courseActions';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(RestyledScrollView);
 

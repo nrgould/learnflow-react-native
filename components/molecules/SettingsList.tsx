@@ -13,6 +13,11 @@ interface Props {
 export default function SettingsList({ darkMode, handleSetDarkMode }: Props) {
 	const navigation = useNavigation<any>();
 	const dispatch = useAppDispatch();
+
+	const onSignOut = () => {
+		dispatch(signOut());
+	};
+
 	return (
 		<Box marginHorizontal='m' marginTop={'l'}>
 			<SettingsComponent
@@ -37,7 +42,7 @@ export default function SettingsList({ darkMode, handleSetDarkMode }: Props) {
 				label='Help'
 			/>
 			<SettingsComponent
-				onPress={() => dispatch(signOut())}
+				onPress={onSignOut}
 				name='log-out-outline'
 				label='Sign Out'
 			/>

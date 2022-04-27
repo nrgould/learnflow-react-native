@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import SignupForm from '../../components/organisms/auth/SignupForm';
 import { registerInFirebase } from '../../firestore/authService';
 import { useNavigation } from '@react-navigation/native';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 interface FormValues {
 	name: string;
@@ -16,6 +17,12 @@ interface FormValues {
 
 export default function Signup() {
 	const navigation = useNavigation<any>();
+	const user = useAppSelector((state) => state.auth.currentUser);
+
+	if (user) {
+		navigation.navigate('Main');
+	}
+
 	const initialValues: FormValues = {
 		name: '',
 		email: '',
@@ -43,11 +50,12 @@ export default function Signup() {
 				) => {
 					try {
 						await registerInFirebase(values);
-					} catch (error) {
-						setErrors(error as FormValues);
-					} finally {
 						setSubmitting(false);
 						resetForm();
+						navigation.navigate('Main');
+					} catch (error) {
+						setErrors(error as FormValues);
+						setSubmitting(false);
 					}
 				}}>
 				{({
