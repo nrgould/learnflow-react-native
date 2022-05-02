@@ -12,7 +12,7 @@ import MultipleChoiceQuestionHeader from './MultipleChoiceQuestionHeader';
 
 interface Props {
 	question: string;
-	options: any[];
+	options: Option[];
 }
 
 export default function MultipleChoiceQuestion({ question, options }: Props) {

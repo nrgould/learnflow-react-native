@@ -10,7 +10,6 @@ import { useItemHeight } from '../../hooks/useItemHeight';
 import { Video } from 'expo-av';
 import { useTheme } from '@shopify/restyle';
 import { Theme } from '../../theme/theme';
-import { NavigationTypes } from '../../types';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
 	runOnJS,
@@ -44,7 +43,7 @@ const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
 export default function FeedItemContent({
 	liked,
 	setLiked,
-	videoURL = require('../../assets/video/sampleTikTok.mov'),
+	videoURL,
 	currentVisibleIndex,
 	index,
 	videoPaused,
@@ -64,8 +63,10 @@ export default function FeedItemContent({
 	const progressInc = width / status.durationMillis;
 	const progressWidth = Math.floor(status.positionMillis * progressInc);
 
+	// console.log(videoURL);
+
 	useEffect(() => {
-		return () => unload();
+		return async () => unload();
 	}, []);
 
 	useImperativeHandle(parentRef, () => ({
@@ -206,7 +207,7 @@ export default function FeedItemContent({
 			<GestureDetector gesture={taps}>
 				<Video
 					ref={video}
-					source={videoURL}
+					source={{ uri: videoURL }}
 					style={{ height: height, width: '100%' }}
 					resizeMode='cover'
 					isLooping

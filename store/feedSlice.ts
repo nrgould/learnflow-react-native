@@ -2,10 +2,8 @@ import { ModuleType } from './../types.d';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { collection, getDocs, getFirestore } from 'firebase/firestore/lite';
 import { app } from '../firebase/config';
-import { auth } from '../firestore/authService';
 
 const db = getFirestore(app);
-const user = auth.currentUser;
 
 export interface FeedState {
 	feed: ModuleType[];
@@ -59,6 +57,9 @@ export const feedSlice = createSlice({
 			.addCase(fetchFeedAsync.fulfilled, (state, action) => {
 				state.status = 'idle';
 				state.feed = action.payload;
+			})
+			.addCase(fetchFeedAsync.rejected, (state) => {
+				state.status = 'failed';
 			});
 	},
 });

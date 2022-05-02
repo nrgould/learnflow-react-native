@@ -12,6 +12,9 @@ export default function RootStack() {
 	const theme = useTheme<Theme>();
 	const { background, primaryText } = theme.colors;
 	const user = useAppSelector((state) => state.auth.currentUser);
+	const authStatus = useAppSelector((state) => state.auth.status);
+
+	console.log(authStatus);
 
 	return (
 		<RootStackScreen.Navigator

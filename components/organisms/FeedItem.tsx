@@ -3,7 +3,6 @@ import FeedItemContent from '../molecules/FeedItemContent';
 import { ModuleType } from '../../types';
 import Animated from 'react-native-reanimated';
 import MultipleChoiceQuestion from './questions/MultipleChoiceQuestion';
-import { View } from 'react-native';
 
 interface Props {
 	index: number;
@@ -28,7 +27,7 @@ export default function FeedItem({
 	const { question_text, question_options } = module.question;
 
 	return (
-		<React.Fragment>
+		<>
 			<FeedItemContent
 				videoPaused={videoPaused}
 				setVideoPaused={setVideoPaused}
@@ -36,11 +35,12 @@ export default function FeedItem({
 				setLiked={setLiked}
 				currentVisibleIndex={currentVisibleIndex}
 				index={index}
+				videoURL={module.videoUrl}
 			/>
 			<MultipleChoiceQuestion
 				options={question_options}
 				question={question_text}
 			/>
-		</React.Fragment>
+		</>
 	);
 }

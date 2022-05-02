@@ -9,6 +9,7 @@ import LearningStack from './LearningStack';
 import { isSmallDevice } from '../theme/layout';
 import ProfileStack from './ProfileStack';
 import Create from '../screens/Create';
+import CreateStack from './CreateStack';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -77,8 +78,8 @@ export default function BottomTabsNavigator() {
 						/>
 					),
 				}}
-				name='Create'
-				component={Create}
+				name='CreateStack'
+				component={CreateStack}
 			/>
 			<BottomTabs.Screen
 				options={{

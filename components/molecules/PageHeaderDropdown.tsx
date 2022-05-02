@@ -75,7 +75,10 @@ export default function PageHeaderDropdown({
 			)}
 			<Box
 				width='100%'
+				position='absolute'
+				top={0}
 				flexDirection='row'
+				backgroundColor='background'
 				alignItems='center'
 				justifyContent='flex-start'>
 				<TouchableOpacity onPress={() => setMenuOpen(!menuOpen)}>

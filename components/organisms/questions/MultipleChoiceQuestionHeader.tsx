@@ -46,7 +46,7 @@ export default function MultipleChoiceQuestionHeader({
 							? 'error'
 							: 'primaryText'
 					}>
-					{attempts} {attempts === 1 ? 'attempt' : 'attempts'} left
+					{attempts} attempt{attempts === 1 ? '' : 's'} left
 				</Text>
 			</Box>
 			<Card
@@ -56,7 +56,7 @@ export default function MultipleChoiceQuestionHeader({
 				justifyContent='center'
 				padding='m'
 				width='100%'>
-				<Text variant='questionText' fontSize={24}>
+				<Text variant='questionText' numberOfLines={4} fontSize={24}>
 					{question}
 				</Text>
 			</Card>

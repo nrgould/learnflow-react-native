@@ -18,13 +18,15 @@ export default function Create() {
 	}
 
 	return (
-		<RestyledSafeAreaView edges={['right', 'top', 'left']}>
-			<PageHeaderDropdown
+		// <RestyledSafeAreaView edges={['right', 'top', 'left']}>
+		<>
+			{/* <PageHeaderDropdown
 				menus={MENUS}
 				setMenu={setCurrentMenu}
 				currentMenu={currentMenu}
-			/>
+			/> */}
 			{screen}
-		</RestyledSafeAreaView>
+		</>
+		// </RestyledSafeAreaView>
 	);
 }

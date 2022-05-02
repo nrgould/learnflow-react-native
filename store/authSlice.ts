@@ -12,9 +12,9 @@ export interface AuthState {
 
 const initialState: AuthState = {
 	authenticated: false,
+	currentUser: null,
 	userId: '',
 	status: 'idle',
-	currentUser: null,
 };
 
 export const verifyAuth = createAsyncThunk<any>(
@@ -60,15 +60,14 @@ export const authSlice = createSlice({
 			.addCase(verifyAuth.pending, (state) => {
 				state.status = 'loading';
 			})
-			.addCase(verifyAuth.fulfilled, (state) => {
+			.addCase(verifyAuth.fulfilled, (state, { payload }) => {
+				if (payload) {
+					state.authenticated = true;
+				}
 				state.status = 'idle';
-				state.authenticated = true;
 			})
 			.addCase(verifyAuth.rejected, (state) => {
 				state.status = 'failed';
-				state.authenticated = false;
-				state.currentUser = null;
-				state.userId = '';
 			});
 	},
 });

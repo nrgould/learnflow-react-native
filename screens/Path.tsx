@@ -29,7 +29,7 @@ export default function Path() {
 	});
 
 	useEffect(() => {
-		dispatch(fetchCurrentUserCoursesAsync(userId!));
+		dispatch(fetchCurrentUserCoursesAsync(userId));
 	}, [dispatch]);
 
 	const LoadingPlaceholder = () => (

@@ -8,7 +8,6 @@ import {
 	writeBatch,
 } from 'firebase/firestore/lite';
 import { app } from '../../firebase/config';
-import { getUserCourses } from '../../firestore/moduleService';
 import { User } from '../../types';
 
 const db = getFirestore(app);
@@ -20,7 +19,13 @@ export const setFollowingCourse = createAction<boolean | undefined>(
 export const fetchCurrentUserCoursesAsync = createAsyncThunk(
 	'course/fetchCourses',
 	async (userId: string) => {
-		return getUserCourses(userId);
+		const coursesRef = collection(db, 'users', userId, 'courses');
+		const coursesSnap = await getDocs(coursesRef);
+
+		return coursesSnap.docs.map((course) => {
+			console.log(course.data());
+			return course.data();
+		});
 	}
 );
 
@@ -163,6 +168,10 @@ export const followCourseAsync = createAsyncThunk(
 					batch.set(followingRef, {
 						id: courseId,
 						title: course.title,
+						completed: false,
+						totalContent: course.totalContent,
+						completedContent: course.completedContent,
+						color: course.color,
 					});
 				}
 
