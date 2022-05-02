@@ -5,6 +5,7 @@ import themeReducer from './themeSlice';
 import feedReducer from './feedSlice';
 import profileReducer from './profileSlice';
 import authReducer, { verifyAuth } from './authSlice';
+import postReducer from './postSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
 		theme: themeReducer,
 		profile: profileReducer,
 		auth: authReducer,
+		post: postReducer,
 	},
 });
 

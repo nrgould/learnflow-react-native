@@ -1,8 +1,15 @@
 import { ModuleType } from './../types.d';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { collection, getDocs, getFirestore } from 'firebase/firestore/lite';
+import {
+	addDoc,
+	collection,
+	doc,
+	getDocs,
+	getFirestore,
+} from 'firebase/firestore/lite';
 import { app } from '../firebase/config';
 import { v4 as uuid } from 'uuid';
+import { saveMediaToStorage } from '../util/saveMediaToStorage';
 
 const db = getFirestore(app);
 
@@ -32,11 +39,40 @@ interface CreatePost {
 export const createPost = createAsyncThunk(
 	'post/createPost',
 	async (data: any, { dispatch }) =>
-		new Promise((resolve, reject) => {
+		new Promise((resolve: any, reject) => {
+			console.log('uploading video...');
 			const { description, video, thumbnail, courseId, userId } = data;
 			let storagePostId = uuid();
 			console.log(storagePostId);
-			console.log(data, description);
+			let allSavePromises = Promise.all([
+				saveMediaToStorage(
+					video,
+					`post/${userId}/${storagePostId}/video`
+				),
+				saveMediaToStorage(
+					thumbnail,
+					`post/${userId}/${storagePostId}/thumbnail`
+				),
+			]);
+
+			allSavePromises.then((media) => {
+				console.log('adding to firestore');
+				const modulesRef = collection(
+					db,
+					'courses',
+					courseId,
+					'modules'
+				);
+				addDoc(modulesRef, {
+					creatorId: userId,
+					media,
+					description,
+					like_count: 0,
+				})
+					.then(() => resolve())
+					.catch(() => reject());
+			});
+
 			return null;
 		})
 );

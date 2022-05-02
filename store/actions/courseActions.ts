@@ -54,7 +54,7 @@ export const fetchFollowingCourseAsync = createAsyncThunk(
  */
 export const fetchCourseAsync = createAsyncThunk(
 	'course/fetchCourse',
-	async (data: { courseId: string; userId: string }) => {
+	async (data: { courseId: string; userId: string }, { rejectWithValue }) => {
 		const { courseId } = data;
 		const courseRef = doc(db, 'courses', courseId);
 		const courseSnap = await getDoc(courseRef);
@@ -92,7 +92,7 @@ export const fetchCourseAsync = createAsyncThunk(
 				followers,
 			};
 		} else {
-			return null;
+			return rejectWithValue('No data.');
 		}
 	}
 );

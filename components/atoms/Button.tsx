@@ -28,6 +28,7 @@ type Props = SpacingProps<typeof Theme> &
 	BackgroundColorProps<typeof Theme> & {
 		onPress: () => void;
 		label?: string;
+		tall?: boolean;
 		outline?: boolean;
 		loading?: boolean;
 		disabled?: boolean;
@@ -50,6 +51,7 @@ const restyleFunctions = composeRestyleFunctions([
 
 const Button = ({
 	onPress,
+	tall,
 	label,
 	disabled,
 	loading = false,
@@ -64,7 +66,7 @@ const Button = ({
 		<TouchableOpacity onPress={onPress}>
 			<ButtonContainer
 				variant={disabled ? 'disabled' : variant}
-				padding='s'
+				padding={tall ? 'sm' : 's'}
 				paddingHorizontal='m'
 				marginVertical='s'
 				{...props}>

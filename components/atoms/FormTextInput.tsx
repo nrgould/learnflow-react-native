@@ -66,7 +66,7 @@ export default function FormTextInput({
 	const theme = useTheme<typeof Theme>();
 
 	return (
-		<Box marginVertical='m'>
+		<Box marginVertical='xs'>
 			{label && (
 				<Text fontFamily={'poppins-regular'} color='primaryText'>
 					{label}
@@ -83,7 +83,6 @@ export default function FormTextInput({
 				variant={variant}
 				placeholder={placeholder}
 				onChange={onChange}
-				returnKeyType='done'
 			/>
 		</Box>
 	);

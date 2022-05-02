@@ -5,6 +5,7 @@ import React from 'react';
 import { Theme } from '../theme/theme';
 import SavePostScreen from '../components/organisms/create/SavePost';
 import Create from '../screens/Create';
+import CreateQuestion from '../components/organisms/create/CreateQuestion';
 
 const CreateStackScreen = createNativeStackNavigator();
 
@@ -27,6 +28,10 @@ export default function CreateStack() {
 			<CreateStackScreen.Screen
 				name='SavePost'
 				component={SavePostScreen}
+			/>
+			<CreateStackScreen.Screen
+				name='CreateQuestion'
+				component={CreateQuestion}
 			/>
 		</CreateStackScreen.Navigator>
 	);
