@@ -63,7 +63,7 @@ export default function FeedItemContent({
 	const progressInc = width / status.durationMillis;
 	const progressWidth = Math.floor(status.positionMillis * progressInc);
 
-	// console.log(videoURL);
+	console.log(videoURL);
 
 	useEffect(() => {
 		return async () => unload();

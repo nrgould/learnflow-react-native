@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
 	backgroundColor,
 	BackgroundColorProps,
@@ -33,6 +33,8 @@ type Props = SpacingProps<typeof Theme> &
 		loading?: boolean;
 		disabled?: boolean;
 		style?: object;
+		iconRight?: ReactElement;
+		iconLeft?: ReactElement;
 	};
 
 const ButtonContainer = createRestyleComponent<
@@ -56,20 +58,30 @@ const Button = ({
 	disabled,
 	loading = false,
 	variant = 'primary',
+	iconRight,
+	iconLeft,
 	...rest
 }: Props) => {
 	const props = useRestyle(restyleFunctions, { ...rest, variant });
 	const textVariant = ('button_' + variant) as Partial<
 		keyof Omit<typeof Theme['textVariants'], 'defaults'>
 	>;
+	let icon;
+	if (iconRight || iconLeft) {
+		icon = true;
+	}
 	return (
 		<TouchableOpacity onPress={onPress}>
 			<ButtonContainer
 				variant={disabled ? 'disabled' : variant}
 				padding={tall ? 'sm' : 's'}
-				paddingHorizontal='m'
+				paddingHorizontal={icon ? 's' : 'm'}
 				marginVertical='s'
+				flexDirection='row'
+				alignItems='center'
+				justifyContent={icon ? 'space-evenly' : 'center'}
 				{...props}>
+				{iconLeft}
 				{loading ? (
 					<ActivityIndicator color='fff' />
 				) : (
@@ -80,6 +92,7 @@ const Button = ({
 						{label}
 					</Text>
 				)}
+				{iconRight}
 			</ButtonContainer>
 		</TouchableOpacity>
 	);

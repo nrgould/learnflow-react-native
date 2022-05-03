@@ -1,25 +1,26 @@
-import { ModuleType } from './../types.d';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-	addDoc,
-	collection,
-	doc,
-	getDocs,
-	getFirestore,
-} from 'firebase/firestore/lite';
+import { addDoc, collection, getFirestore } from 'firebase/firestore/lite';
 import { app } from '../firebase/config';
-import { v4 as uuid } from 'uuid';
+import uuid from 'uuid-random';
 import { saveMediaToStorage } from '../util/saveMediaToStorage';
+import {
+	getDownloadURL,
+	getStorage,
+	ref,
+	uploadBytesResumable,
+} from 'firebase/storage';
 
 const db = getFirestore(app);
 
 export interface PostState {
 	post: any;
+	progress: number;
 	status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: PostState = {
 	post: null,
+	progress: 0,
 	status: 'idle',
 };
 
@@ -38,43 +39,108 @@ interface CreatePost {
  */
 export const createPost = createAsyncThunk(
 	'post/createPost',
-	async (data: any, { dispatch }) =>
-		new Promise((resolve: any, reject) => {
-			console.log('uploading video...');
-			const { description, video, thumbnail, courseId, userId } = data;
+	async (data: any, { dispatch }) => {
+		try {
+			const {
+				description,
+				video,
+				thumbnail,
+				courseId,
+				userId,
+				question,
+				title,
+			} = data;
 			let storagePostId = uuid();
-			console.log(storagePostId);
-			let allSavePromises = Promise.all([
-				saveMediaToStorage(
-					video,
-					`post/${userId}/${storagePostId}/video`
-				),
-				saveMediaToStorage(
-					thumbnail,
-					`post/${userId}/${storagePostId}/thumbnail`
-				),
-			]);
 
-			allSavePromises.then((media) => {
-				console.log('adding to firestore');
-				const modulesRef = collection(
-					db,
-					'courses',
-					courseId,
-					'modules'
-				);
-				addDoc(modulesRef, {
-					creatorId: userId,
-					media,
-					description,
-					like_count: 0,
-				})
-					.then(() => resolve())
-					.catch(() => reject());
+			const storage = getStorage();
+			const storageRef = ref(
+				storage,
+				`post/${userId}/${storagePostId}/video`
+			);
+
+			console.log(video);
+
+			const uploadTask = uploadBytesResumable(storageRef, video, {
+				contentType: 'video/mov',
 			});
 
-			return null;
-		})
+			uploadTask.on(
+				'state_changed',
+				(snapshot) => {
+					const prog = Math.round(
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+					);
+					console.log('progress:', prog);
+					dispatch(setProgress(prog));
+				},
+				(error) => {
+					console.log('ERROR:', error);
+				},
+				() => {
+					getDownloadURL(uploadTask.snapshot.ref).then(
+						(downloadURL) => {
+							console.log('File available at:', downloadURL);
+							console.log('adding to firestore');
+							const modulesRef = collection(
+								db,
+								'courses',
+								courseId,
+								'modules'
+							);
+							addDoc(modulesRef, {
+								creatorId: userId,
+								// thumbnail: thumbURL,
+								videoURL: downloadURL,
+								description,
+								likeCount: 0,
+								question,
+								title,
+							});
+						}
+					);
+				}
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	// new Promise((resolve: any, reject) => {
+	// 	console.log('uploading video...');
+	// 	const { description, video, thumbnail, courseId, userId } = data;
+	// 	let storagePostId = uuid();
+	// 	let allSavePromises = Promise.all([
+	// 		saveMediaToStorage(
+	// 			video,
+	// 			`post/${userId}/${storagePostId}/video`,
+	// 			dispatch
+	// 		),
+	// 		saveMediaToStorage(
+	// 			thumbnail,
+	// 			`post/${userId}/${storagePostId}/thumbnail`,
+	// 			dispatch
+	// 		),
+	// 	]);
+
+	// 	allSavePromises.then((media) => {
+	// 		console.log('adding to firestore');
+	// 		const modulesRef = collection(
+	// 			db,
+	// 			'courses',
+	// 			courseId,
+	// 			'modules'
+	// 		);
+	// 		addDoc(modulesRef, {
+	// 			creatorId: userId,
+	// 			media,
+	// 			description,
+	// 			like_count: 0,
+	// 		})
+	// 			.then(() => resolve())
+	// 			.catch(() => reject());
+	// 	});
+
+	// 	return null;
+	// })
 );
 
 export const postSlice = createSlice({
@@ -83,6 +149,9 @@ export const postSlice = createSlice({
 	reducers: {
 		clearFeed: (state) => {
 			state.post = [];
+		},
+		setProgress: (state, action) => {
+			state.progress = action.payload;
 		},
 	},
 
@@ -97,6 +166,6 @@ export const postSlice = createSlice({
 	},
 });
 
-export const { clearFeed } = postSlice.actions;
+export const { clearFeed, setProgress } = postSlice.actions;
 
 export default postSlice.reducer;

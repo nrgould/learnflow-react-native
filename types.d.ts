@@ -63,8 +63,8 @@ export type ModuleType = {
 };
 
 export type QuestionType = {
-	question_text: string;
-	question_options: Option[4];
+	questionText: string;
+	questionOptions: Option[4];
 };
 
 export type Option = {

@@ -24,7 +24,7 @@ export default function FeedItem({
 }: Props) {
 	const [liked, setLiked] = useState(false);
 
-	const { question_text, question_options } = module.question;
+	const { questionText, questionOptions } = module.question;
 
 	return (
 		<>
@@ -38,8 +38,8 @@ export default function FeedItem({
 				videoURL={module.videoUrl}
 			/>
 			<MultipleChoiceQuestion
-				options={question_options}
-				question={question_text}
+				question={questionText}
+				options={questionOptions}
 			/>
 		</>
 	);

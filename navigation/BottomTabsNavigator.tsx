@@ -8,7 +8,6 @@ import DiscoverStack from './DiscoverStack';
 import LearningStack from './LearningStack';
 import { isSmallDevice } from '../theme/layout';
 import ProfileStack from './ProfileStack';
-import Create from '../screens/Create';
 import CreateStack from './CreateStack';
 
 const BottomTabs = createBottomTabNavigator();
