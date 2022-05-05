@@ -24,23 +24,22 @@ export default function FeedItem({
 }: Props) {
 	const [liked, setLiked] = useState(false);
 
-	const { questionText, questionOptions } = module.question;
-
 	return (
-		<>
-			<FeedItemContent
-				videoPaused={videoPaused}
-				setVideoPaused={setVideoPaused}
-				liked={liked}
-				setLiked={setLiked}
-				currentVisibleIndex={currentVisibleIndex}
-				index={index}
-				videoURL={module.videoUrl}
-			/>
-			<MultipleChoiceQuestion
-				question={questionText}
-				options={questionOptions}
-			/>
-		</>
-	);
+    <>
+      <FeedItemContent
+        videoPaused={videoPaused}
+        setVideoPaused={setVideoPaused}
+        liked={liked}
+        setLiked={setLiked}
+        currentVisibleIndex={currentVisibleIndex}
+        index={index}
+        videoURL={module.videoUrl}
+      />
+      <MultipleChoiceQuestion
+        question={module.question.questionText}
+        options={module.question.questionOptions}
+        attempts={module.question.attempts}
+      />
+    </>
+  );
 }

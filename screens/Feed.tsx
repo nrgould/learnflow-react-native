@@ -107,7 +107,6 @@ export default function Feed({ course = false }) {
     if (viewableItems && viewableItems.length > 0) {
       setCurrentVisibleIndex(viewableItems[0].index);
     }
-    console.log("isViewable:", viewableItems[0].isViewable);
     changed.forEach((element: any) => {
       const cell = mediaRefs.current[element.key];
       if (cell) {
@@ -149,20 +148,20 @@ export default function Feed({ course = false }) {
 
   if (status === "loading") {
     return (
-      <Box flex={1} alignItems="center" justifyContent="center" backgroundColor="background">
-        <Text variant="subheader">Loading...</Text>
+      <Box flex={1} alignItems='center' justifyContent='center' backgroundColor='background'>
+        <Text variant='subheader'>Loading...</Text>
       </Box>
     );
   }
 
   if (feed.length === 0) {
     return (
-      <Box flex={1} alignItems="center" justifyContent="center" backgroundColor="background">
-        <Text variant="subheader">No videos.</Text>
+      <Box flex={1} alignItems='center' justifyContent='center' backgroundColor='background'>
+        <Text variant='subheader'>No videos.</Text>
         <Button
-          variant="primary"
+          variant='primary'
           tall
-          label="Find Courses"
+          label='Find Courses'
           onPress={() => navigation.navigate("DiscoverStack")}
         />
       </Box>
@@ -170,7 +169,7 @@ export default function Feed({ course = false }) {
   }
 
   return (
-    <Box backgroundColor="background">
+    <Box backgroundColor='background'>
       <AnimatedFlatList
         data={feed}
         initialNumToRender={0}
@@ -184,11 +183,11 @@ export default function Feed({ course = false }) {
         snapToInterval={itemHeight}
         renderItem={memoizedRenderItem}
         onScroll={scrollHandler}
-        snapToAlignment="center"
+        snapToAlignment='center'
         // scrollEnabled={currentVisibleIndex !== prevVisibleIndex}
         pagingEnabled={true}
         scrollEventThrottle={16}
-        decelerationRate="fast"
+        decelerationRate='fast'
         viewabilityConfig={viewConfigRef.current}
         refreshControl={
           <RefreshControl

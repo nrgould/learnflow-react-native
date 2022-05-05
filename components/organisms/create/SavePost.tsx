@@ -7,12 +7,16 @@ import Button from "../../atoms/Button";
 import { SCREEN_WIDTH } from "../../../theme/layout";
 import PageHeaderBack from "../../molecules/PageHeaderBack";
 import Icon from "../../atoms/Icon";
+import { useTheme } from "@shopify/restyle";
+import { Theme } from "../../../theme/theme";
 
 export default function SavePostScreen({ route }: any) {
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const navigation = useNavigation<any>();
+  const theme = useTheme<Theme>();
+  const { secondaryText } = theme.colors;
 
   return (
     <Box flex={1} paddingTop='xl' backgroundColor='background'>
@@ -26,6 +30,7 @@ export default function SavePostScreen({ route }: any) {
             onChangeText={(text) => setTitle(text)}
             placeholder='Title'
             returnKeyType='done'
+            placeholderTextColor={secondaryText}
             blurOnSubmit
             variant='underline'
           />
@@ -36,6 +41,7 @@ export default function SavePostScreen({ route }: any) {
             onChangeText={(text) => setDescription(text)}
             placeholder='Describe your video'
             returnKeyType='done'
+            placeholderTextColor={secondaryText}
             blurOnSubmit
             variant='underline'
           />
@@ -46,6 +52,7 @@ export default function SavePostScreen({ route }: any) {
             onChangeText={(text) => setCategory(text)}
             placeholder='Course'
             returnKeyType='done'
+            placeholderTextColor={secondaryText}
             blurOnSubmit
             variant='underline'
           />
@@ -56,6 +63,7 @@ export default function SavePostScreen({ route }: any) {
             onChangeText={(text) => setCategory(text)}
             placeholder='Category'
             returnKeyType='done'
+            placeholderTextColor={secondaryText}
             blurOnSubmit
             variant='underline'
           />
