@@ -1,7 +1,9 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  addDoc,
   collection,
   doc,
+  documentId,
   getDoc,
   getDocs,
   getFirestore,
@@ -26,6 +28,30 @@ export const fetchCurrentUserCoursesAsync = createAsyncThunk(
     });
   }
 );
+
+interface CreateCourse {
+  title: string;
+  description: string;
+  category: string;
+  color: string;
+  userId: string;
+}
+
+export const createCourse = createAsyncThunk("course/createCourse", async (data: CreateCourse) => {
+  const { title, description, category, color, userId } = data;
+  console.log("creating course");
+
+  const ref = collection(db, "courses");
+  addDoc(ref, {
+    title,
+    description,
+    category,
+    creatorId: userId,
+    color,
+  }).then((document) => {
+    return document.id;
+  });
+});
 
 /**
  * Fetches whether or not the current user is following the course

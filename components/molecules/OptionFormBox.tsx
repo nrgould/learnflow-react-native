@@ -12,11 +12,19 @@ interface Props {
   option: Option;
   setFormErrors: React.Dispatch<any>;
   setOptions: React.Dispatch<any>;
+  setHasAnswer: React.Dispatch<boolean>;
   index: number;
   error: boolean;
 }
 
-export default function OptionFormBox({ option, setFormErrors, setOptions, index, error }: Props) {
+export default function OptionFormBox({
+  option,
+  setFormErrors,
+  setOptions,
+  index,
+  error,
+  setHasAnswer,
+}: Props) {
   const theme = useTheme<Theme>();
 
   const { border, secondary, primaryText, secondaryText, tertiaryText, buttonTextBlack } =
@@ -66,6 +74,7 @@ export default function OptionFormBox({ option, setFormErrors, setOptions, index
           style={{ borderRadius: 6 }}
           onPress={(isChecked) => {
             lightHaptic();
+            setHasAnswer(isChecked);
             setOptions((options: any) => {
               return [
                 ...options.slice(0, index),

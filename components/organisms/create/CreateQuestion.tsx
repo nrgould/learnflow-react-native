@@ -1,12 +1,12 @@
 import { StackActions, useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native";
+import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import Box from "../../atoms/Box";
 import FormTextInput from "../../atoms/FormTextInput";
 import Button from "../../atoms/Button";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { createPost } from "../../../store/postSlice";
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../theme/layout";
+import { SCREEN_WIDTH } from "../../../theme/layout";
 import PageHeaderBack from "../../molecules/PageHeaderBack";
 import Text from "../../atoms/Text";
 import { Option } from "../../../types";
@@ -14,15 +14,15 @@ import { useTheme } from "@shopify/restyle";
 import { Theme } from "../../../theme/theme";
 import Icon from "../../atoms/Icon";
 import Counter from "../../molecules/Counter";
-import RestyledScrollView from "../../atoms/RestyledScrollView";
 import OptionFormBox from "../../molecules/OptionFormBox";
+import { useItemHeight } from "../../../hooks/useItemHeight";
 
 const TEXT_ERROR = 4;
 
 export default function CreateQuestion({ route }: any) {
   const [formErrors, setFormErrors] = useState<number[]>([]);
   const [hasAnswer, setHasAnswer] = useState<boolean>(false);
-  const [formStatus, setFormStatus] = useState<string>("");
+  const [formStatus, setFormStatus] = useState<string>("Error in form");
   const [formComplete, setFormComplete] = useState<boolean>(false);
   const [questionText, setQuestionText] = useState<string>("");
   const [attempts, setAttempts] = useState<number>(2);
@@ -38,7 +38,8 @@ export default function CreateQuestion({ route }: any) {
   const userId = useAppSelector((state) => state.auth.userId);
   const progress = useAppSelector((state) => state.post.progress);
   const dispatch = useAppDispatch();
-  const { primaryText, secondaryText } = theme.colors;
+  const { primaryText, secondaryText, background } = theme.colors;
+  const height = useItemHeight();
 
   const handleSavePost = () => {
     //check to make sure all forms have been filled
@@ -98,106 +99,115 @@ export default function CreateQuestion({ route }: any) {
   }
 
   return (
-    <Box flex={1} paddingTop='xl' backgroundColor='background'>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "position" : "height"}>
-        <RestyledScrollView style={{ height: SCREEN_HEIGHT }}>
-          <PageHeaderBack title='Add Question' />
-          <Box
-            marginHorizontal='l'
-            marginVertical='m'
-            flexDirection='row'
-            justifyContent='space-between'
-          >
-            <Box flexDirection='column' flex={1}>
-              <Text variant='subheader' fontSize={18} marginBottom='s'>
-                Question Text
-              </Text>
-              <FormTextInput
-                variant='answerBox'
-                maxLength={150}
-                multiline
-                borderColor={formErrors.some((e: number) => e === TEXT_ERROR) ? "error" : "border"}
-                onChangeText={(text) => {
-                  if (text.length > 0) {
-                    setFormErrors((errors: number[]) =>
-                      errors.filter((i: number) => i !== TEXT_ERROR)
-                    );
+    <Box flex={1} backgroundColor='background'>
+      <KeyboardAvoidingView
+        contentContainerStyle={{ backgroundColor: background }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView>
+          <Box flex={1} paddingTop='xl' height={height}>
+            <PageHeaderBack title='Add Question' />
+            <Box
+              marginHorizontal='l'
+              marginVertical='m'
+              flexDirection='row'
+              justifyContent='space-between'
+            >
+              <Box flexDirection='column' flex={1}>
+                <Text variant='subheader' fontSize={18} marginBottom='s'>
+                  Question Text
+                </Text>
+                <FormTextInput
+                  variant='answerBox'
+                  maxLength={160}
+                  multiline
+                  borderColor={
+                    formErrors.some((e: number) => e === TEXT_ERROR) ? "error" : "border"
                   }
-                  setQuestionText(text);
-                }}
-                placeholder='Write your question here'
-                returnKeyType='done'
-                textAlign='center'
-                blurOnSubmit
-                style={{ color: primaryText, fontSize: 18 }}
-                placeholderTextColor={secondaryText}
+                  onChangeText={(text) => {
+                    if (text.length > 0) {
+                      setFormErrors((errors: number[]) =>
+                        errors.filter((i: number) => i !== TEXT_ERROR)
+                      );
+                    }
+                    setQuestionText(text);
+                  }}
+                  placeholder='Write your question here'
+                  returnKeyType='done'
+                  textAlign='center'
+                  blurOnSubmit
+                  style={{ color: primaryText, fontSize: 18 }}
+                  placeholderTextColor={primaryText}
+                />
+              </Box>
+            </Box>
+            <Box margin='l'>
+              <Text variant='subheader' fontSize={18} marginBottom='s'>
+                Attempts
+              </Text>
+              <Counter state={attempts} setState={setAttempts} min={1} max={3} />
+            </Box>
+            <Box margin='l'>
+              <Box flexDirection='row' justifyContent='space-between'>
+                <Text variant='subheader' fontSize={18} marginBottom='s'>
+                  Question Options
+                </Text>
+                <Text variant='subheader' fontSize={18} marginBottom='s'>
+                  Answer?
+                </Text>
+              </Box>
+              <Box flexDirection='column'>
+                {options.map((option: Option, index: number) => {
+                  const error = formErrors.includes(index);
+                  return (
+                    <OptionFormBox
+                      key={option.id}
+                      setFormErrors={setFormErrors}
+                      setHasAnswer={setHasAnswer}
+                      setOptions={setOptions}
+                      index={index}
+                      error={error}
+                      option={option}
+                    />
+                  );
+                })}
+              </Box>
+            </Box>
+            {(formErrors.length > 0 || !hasAnswer) && (
+              <Box position='absolute' bottom={85} left={0} right={0}>
+                <Text color='error' textAlign='center'>
+                  {formStatus}
+                </Text>
+              </Box>
+            )}
+            <View style={{ flex: 1 }} />
+            <Box flex={1} />
+            <Box
+              flexDirection='row'
+              alignItems='center'
+              justifyContent='space-between'
+              margin='l'
+              marginTop='m'
+            >
+              <Button
+                variant='tertiary'
+                width={SCREEN_WIDTH * 0.41}
+                label='Back'
+                tall
+                onPress={() => navigation.goBack()}
+                iconLeft={<Icon name='chevron-back' size={20} color='white' />}
+              />
+              <Button
+                variant={"success"}
+                label='Post'
+                tall
+                width={SCREEN_WIDTH * 0.41}
+                onPress={() => handleSavePost()}
+                iconRight={<Icon name='return-down-forward-outline' size={20} color='white' />}
               />
             </Box>
           </Box>
-          <Box margin='l'>
-            <Text variant='subheader' fontSize={18} marginBottom='s'>
-              Attempts
-            </Text>
-            <Counter state={attempts} setState={setAttempts} min={1} max={3} />
-          </Box>
-          <Box margin='l'>
-            <Box flexDirection='row' justifyContent='space-between'>
-              <Text variant='subheader' fontSize={18} marginBottom='s'>
-                Question Options
-              </Text>
-              <Text variant='subheader' fontSize={18} marginBottom='s'>
-                Answer?
-              </Text>
-            </Box>
-            <Box flexDirection='column'>
-              {options.map((option: Option, index: number) => {
-                const error = formErrors.includes(index);
-                return (
-                  <OptionFormBox
-                    key={option.id}
-                    setFormErrors={setFormErrors}
-                    setOptions={setOptions}
-                    index={index}
-                    error={error}
-                    option={option}
-                  />
-                );
-              })}
-            </Box>
-          </Box>
-          {formStatus.length !== 0 && (
-            <Box position='absolute' bottom={90} left={0} right={0}>
-              <Text color='error' textAlign='center'>
-                {formStatus}
-              </Text>
-            </Box>
-          )}
-          <Box flex={1} />
-          <Box
-            flexDirection='row'
-            alignItems='center'
-            justifyContent='space-around'
-            margin='l'
-            marginTop='m'
-          >
-            <Button
-              variant='tertiary'
-              width={SCREEN_WIDTH * 0.41}
-              label='Back'
-              tall
-              onPress={() => navigation.goBack()}
-              iconLeft={<Icon name='chevron-back' size={20} color='white' />}
-            />
-            <Button
-              variant='primary'
-              label='Post'
-              tall
-              width={SCREEN_WIDTH * 0.41}
-              onPress={() => handleSavePost()}
-              iconRight={<Icon name='return-down-forward-outline' size={20} color='white' />}
-            />
-          </Box>
-        </RestyledScrollView>
+        </ScrollView>
       </KeyboardAvoidingView>
     </Box>
   );

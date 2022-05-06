@@ -98,7 +98,7 @@ const theme = createTheme({
     l: 24,
     xl: 40,
     xxl: 60,
-	xxxl: 100,
+    xxxl: 100,
   },
   textVariants: {
     defaults: {
@@ -197,6 +197,11 @@ const theme = createTheme({
     },
     button_link: {
       color: "secondaryText",
+      fontFamily: "sora-semibold",
+      fontSize: 16,
+    },
+    button_disabled: {
+      color: "primaryText",
       fontFamily: "sora-semibold",
       fontSize: 16,
     },

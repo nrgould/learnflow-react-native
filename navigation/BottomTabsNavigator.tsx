@@ -10,6 +10,7 @@ import { isSmallDevice } from "../theme/layout";
 import ProfileStack from "./ProfileStack";
 import CreateStack from "./CreateStack";
 import CreateQuestion from "../components/organisms/create/CreateQuestion";
+import CreateCourse from "../components/organisms/create/CreateCourse";
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -89,7 +90,7 @@ export default function BottomTabsNavigator() {
           ),
         }}
         name='LearningStack'
-        component={CreateQuestion}
+        component={CreateCourse}
       />
 
       <BottomTabs.Screen
