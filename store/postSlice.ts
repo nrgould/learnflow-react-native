@@ -34,52 +34,55 @@ interface CreatePost {
  * @param {} the id of the course to fetch modules from
  * @returns {}
  */
-export const createPost = createAsyncThunk("post/createPost", async (data: any, { dispatch }) => {
-  try {
-    const { description, video, thumbnail, courseId, userId, question, title } = data;
-    let storagePostId = uuid();
+export const createPost = createAsyncThunk(
+  "post/createPost",
+  async (data: CreatePost, { dispatch }) => {
+    try {
+      const { description, video, thumbnail, courseId, userId, question, title } = data;
+      let storagePostId = uuid();
 
-    const storage = getStorage();
-    const storageRef = ref(storage, `post/${userId}/${storagePostId}/video`);
+      const storage = getStorage();
+      const storageRef = ref(storage, `post/${userId}/${storagePostId}/video`);
 
-    console.log(video);
+      console.log(video);
 
-    const uploadTask = uploadBytesResumable(storageRef, video, {
-      contentType: "video/mov",
-      contentDisposition: "",
-    });
+      const uploadTask = uploadBytesResumable(storageRef, video, {
+        contentType: "video/mp4",
+        contentDisposition: "",
+      });
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        console.log("progress:", prog);
-        dispatch(setProgress(prog));
-      },
-      (error) => {
-        console.log("ERROR:", error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at:", downloadURL);
-          console.log("adding to firestore");
-          const modulesRef = collection(db, "courses", courseId, "modules");
-          addDoc(modulesRef, {
-            creatorId: userId,
-            // thumbnail: thumbURL,
-            videoURL: downloadURL,
-            description,
-            likeCount: 0,
-            question,
-            title,
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          console.log("progress:", prog);
+          dispatch(setProgress(prog));
+        },
+        (error) => {
+          console.log("ERROR:", error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at:", downloadURL);
+            console.log("adding to firestore");
+            const modulesRef = collection(db, "courses", courseId, "modules");
+            addDoc(modulesRef, {
+              creatorId: userId,
+              // thumbnail: thumbURL,
+              videoURL: downloadURL,
+              description,
+              likeCount: 0,
+              question,
+              title,
+            });
           });
-        });
-      }
-    );
-  } catch (error) {
-    console.log(error);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
+);
 
 export const postSlice = createSlice({
   name: "post",
