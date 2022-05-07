@@ -45,7 +45,7 @@ export const createPost = createAsyncThunk(
       const storageRef = ref(storage, `post/${userId}/${storagePostId}/video`);
 
       console.log(video);
-
+      
       const uploadTask = uploadBytesResumable(storageRef, video, {
         contentType: "video/mp4",
         contentDisposition: "",

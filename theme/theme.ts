@@ -6,9 +6,6 @@ const palette = {
 
   blue: "#008BF8",
   darkBlue: "#094074",
-  purple: "#6E6BC7",
-  aqua: "#04A777",
-  brown: "#FB8B24",
 
   lightPink: "#f4cdd5",
   lightBlue: "#e7f3fd",
@@ -42,8 +39,21 @@ const palette = {
   yellow: "#F9AE3F",
   lightYellow: "#FFF8DE",
 
-  // black: '#0B0B0B',
-  // white: '#F0F2F3',
+  purple: "#6E6BC7",
+  aqua: "#04A777",
+  brown: "#FB8B24",
+  royalPurple: "#7D5BA6",
+  fieryRose: "#FC6471",
+  glaucous: "#5C80BC",
+  maizeCrayola: "#E8C547",
+  darkSeaGreen: "#7FB285",
+  claret: "#7D1538",
+  cinnabar: "#F24333",
+  mango: "#FF8C42",
+  mulberryCrayola: "#CB429F",
+  springGreen: "#55F172",
+  pacificBlue: "#01A7C2",
+  hanPurple: "#5E2BFF",
 };
 
 const theme = createTheme({
@@ -88,6 +98,23 @@ const theme = createTheme({
     border: palette.lightGray,
     shadow: palette.smokyBlack,
     icon: palette.charcoal,
+
+    //course palette
+    purple: palette.purple,
+    aqua: palette.aqua,
+    brown: palette.brown,
+    royalPurple: palette.royalPurple,
+    fieryRose: palette.fieryRose,
+    glaucous: palette.glaucous,
+    maizeCrayola: palette.maizeCrayola,
+    darkSeaGreen: palette.darkSeaGreen,
+    claret: palette.claret,
+    cinnabar: palette.cinnabar,
+    mango: palette.mango,
+    mulberryCrayola: palette.mulberryCrayola,
+    springGreen: palette.springGreen,
+    pacificBlue: palette.pacificBlue,
+    hanPurple: palette.hanPurple,
   },
   spacing: {
     none: 0,
@@ -120,15 +147,19 @@ const theme = createTheme({
     },
     subheader: {
       fontSize: 24,
-      fontWeight: "600",
       color: "primaryText",
       fontFamily: "sora-medium",
     },
     cardHeader: {
       fontSize: 20,
-      fontWeight: "600",
       color: "primaryText",
       fontFamily: "sora-medium",
+    },
+    label: {
+      fontSize: 18,
+      color: "primaryText",
+      fontFamily: "sora-bold",
+      marginBottom: "s",
     },
     stat: {
       fontSize: 36,
@@ -274,71 +305,45 @@ const theme = createTheme({
     },
   },
   buttonVariants: {
-    primary: {
+    defaults: {
       backgroundColor: "primary",
-      fontFamily: "Poppins",
       shadowColor: "shadow",
       shadowOffset: { width: 1, height: 2 },
-      borderRadius: "s",
+      borderRadius: "xs",
       shadowOpacity: 0.1,
       shadowRadius: 6,
       elevation: 5,
+      fontFamily: "sora-regular",
+    },
+    primary: {
+      backgroundColor: "primary",
     },
     secondary: {
       backgroundColor: "secondary",
-      borderRadius: "s",
     },
     tertiary: {
       backgroundColor: "grayBtn",
-      borderRadius: "s",
     },
     disabled: {
       backgroundColor: "disabled",
-      borderRadius: "s",
-      shadowColor: "shadow",
-      shadowOffset: { width: 1, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 6,
-      elevation: 5,
     },
     success: {
       backgroundColor: "success",
-      borderRadius: "s",
-      shadowColor: "shadow",
-      shadowOffset: { width: 1, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 6,
-      elevation: 5,
     },
     successSecondary: {
       backgroundColor: "successSoft",
-      borderRadius: "s",
     },
     warning: {
       backgroundColor: "warning",
-      borderRadius: "s",
-      shadowColor: "shadow",
-      shadowOffset: { width: 1, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 6,
-      elevation: 5,
     },
     warningSecondary: {
       backgroundColor: "warningSoft",
-      borderRadius: "s",
     },
     error: {
       backgroundColor: "error",
-      borderRadius: "s",
-      shadowColor: "shadow",
-      shadowOffset: { width: 1, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 6,
-      elevation: 5,
     },
     errorSecondary: {
       backgroundColor: "errorSoft",
-      borderRadius: "s",
     },
     link: {
       // backgroundColor: 'none',

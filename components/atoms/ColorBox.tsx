@@ -17,8 +17,8 @@ export default function ColorBox({ selected, color, setColor }: Props) {
   return (
     <TouchableOpacity onPress={() => setColor(color)}>
       <Box
-        borderColor='primary'
-        borderWidth={selected ? 2 : 0}
+        borderColor='foreground'
+        borderWidth={selected ? 3 : 0}
         borderRadius='xs'
         width={SIZE}
         height={SIZE}

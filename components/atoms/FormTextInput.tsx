@@ -65,15 +65,11 @@ export default function FormTextInput({
   return (
     <Box marginVertical='xs'>
       {label && (
-        <Text fontFamily={"poppins-regular"} color='primaryText'>
+        <Text variant='label' color='primaryText'>
           {label}
         </Text>
       )}
-      {error && (
-        <Text fontWeight='500' color='error'>
-          {error}
-        </Text>
-      )}
+      {error && <Text color='error'>{error}</Text>}
       <TextInputComponent
         {...props}
         variant={variant}
