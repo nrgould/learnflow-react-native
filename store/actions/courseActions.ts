@@ -3,10 +3,11 @@ import {
   addDoc,
   collection,
   doc,
-  documentId,
   getDoc,
   getDocs,
   getFirestore,
+  query,
+  where,
   writeBatch,
 } from "firebase/firestore/lite";
 import { app } from "../../firebase/config";
@@ -37,6 +38,11 @@ interface CreateCourse {
   userId: string;
 }
 
+/**
+ * adds a course to firestore
+ * @param {string} userId id of the user which will be the name of the following document
+ * @returns {string} the id of the document
+ */
 export const createCourse = createAsyncThunk("course/createCourse", async (data: CreateCourse) => {
   const { title, description, category, color, userId } = data;
   console.log("creating course");
@@ -48,10 +54,37 @@ export const createCourse = createAsyncThunk("course/createCourse", async (data:
     category,
     creatorId: userId,
     color,
-  }).then((document) => {
-    return document.id;
-  });
+  })
+    .then((document) => {
+      return document.id;
+    })
+    .catch((error) => {
+      throw error;
+    });
 });
+
+/**
+ * adds a course to firestore
+ * @param {string} userId id of the user which will be the name of the following document
+ * @returns {Array} array of objects with course name and id
+ */
+export const fetchUserCreatedCourses = createAsyncThunk(
+  "course/fetchCreatedCourses",
+  async (userId: string) => {
+    const ref = collection(db, "courses");
+    const q = query(ref, where("creatorId", "==", userId));
+
+    const courses: { id: string; title: string; color: string }[] = [];
+
+    const querySnap = await getDocs(q);
+    querySnap.forEach((doc) => {
+      const data = doc.data();
+      // console.log(doc.id, " => ", doc.data());
+      courses.push({ id: doc.id, title: data.title, color: data.color });
+    });
+    return courses;
+  }
+);
 
 /**
  * Fetches whether or not the current user is following the course

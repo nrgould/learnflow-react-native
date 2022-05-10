@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
 import Box from "../../atoms/Box";
 import FormTextInput from "../../atoms/FormTextInput";
@@ -9,14 +9,27 @@ import PageHeaderBack from "../../molecules/PageHeaderBack";
 import Icon from "../../atoms/Icon";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "../../../theme/theme";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import { fetchUserCreatedCourses } from "../../../store/actions/courseActions";
+import DropdownInput from "../../atoms/DropdownInput";
 
 export default function SavePostScreen({ route }: any) {
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<any>();
+  const [selectedCourse, setSelectedCourse] = useState<any>("");
   const navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
   const theme = useTheme<Theme>();
   const { secondaryText } = theme.colors;
+  const createdCourses = useAppSelector((state) => state.course.createdCourses);
+  const userId = useAppSelector((state) => state.auth.userId);
+
+  console.log("CURRENT COURSE:", selectedCourse);
+
+  useEffect(() => {
+    dispatch(fetchUserCreatedCourses(userId));
+  }, [dispatch]);
 
   return (
     <Box flex={1} paddingTop='xl' backgroundColor='background'>
@@ -34,28 +47,7 @@ export default function SavePostScreen({ route }: any) {
             blurOnSubmit
             variant='underline'
           />
-          <FormTextInput
-            maxLength={150}
-            multiline
-            style={{ width: SCREEN_WIDTH * 0.5 }}
-            onChangeText={(text) => setDescription(text)}
-            placeholder='Describe your video'
-            returnKeyType='done'
-            placeholderTextColor={secondaryText}
-            blurOnSubmit
-            variant='underline'
-          />
-          <FormTextInput
-            maxLength={20}
-            numberOfLines={1}
-            style={{ width: SCREEN_WIDTH * 0.5 }}
-            onChangeText={(text) => setCategory(text)}
-            placeholder='Course'
-            returnKeyType='done'
-            placeholderTextColor={secondaryText}
-            blurOnSubmit
-            variant='underline'
-          />
+
           <FormTextInput
             maxLength={20}
             numberOfLines={1}
@@ -67,7 +59,20 @@ export default function SavePostScreen({ route }: any) {
             blurOnSubmit
             variant='underline'
           />
+          <FormTextInput
+            maxLength={150}
+            multiline
+            marginTop='m'
+            style={{ width: SCREEN_WIDTH * 0.5 }}
+            onChangeText={(text) => setDescription(text)}
+            placeholder='Describe your video'
+            returnKeyType='done'
+            placeholderTextColor={secondaryText}
+            blurOnSubmit
+            variant='underline'
+          />
         </Box>
+
         <Image
           style={{
             aspectRatio: 9 / 16,
@@ -75,6 +80,15 @@ export default function SavePostScreen({ route }: any) {
             width: SCREEN_WIDTH * 0.3,
           }}
           source={{ uri: route.params.source }}
+        />
+      </Box>
+      <Box marginHorizontal='l'>
+        <DropdownInput
+          label='Choose Course'
+          items={createdCourses.map((c) => ({ label: c.title, value: c.id }))}
+          currentValue={selectedCourse}
+          setValue={setSelectedCourse}
+          placeholder='Choose:'
         />
       </Box>
       <Box flex={1} />
@@ -99,7 +113,7 @@ export default function SavePostScreen({ route }: any) {
               title,
               description,
               category,
-              courseId: "i4wTZ9ioTEj7dte4O9Zb",
+              courseId: selectedCourse,
             })
           }
           iconRight={<Icon name='chevron-forward' size={20} color='white' />}

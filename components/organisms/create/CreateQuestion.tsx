@@ -1,5 +1,5 @@
 import { StackActions, useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import Box from "../../atoms/Box";
 import FormTextInput from "../../atoms/FormTextInput";
@@ -22,7 +22,7 @@ const TEXT_ERROR = 4;
 export default function CreateQuestion({ route }: any) {
   const [formErrors, setFormErrors] = useState<number[]>([]);
   const [hasAnswer, setHasAnswer] = useState<boolean>(false);
-  const [formStatus, setFormStatus] = useState<string>("Error in form");
+  const [formStatus, setFormStatus] = useState<string>("");
   const [formComplete, setFormComplete] = useState<boolean>(false);
   const [questionText, setQuestionText] = useState<string>("");
   const [attempts, setAttempts] = useState<number>(2);
@@ -38,18 +38,22 @@ export default function CreateQuestion({ route }: any) {
   const userId = useAppSelector((state) => state.auth.userId);
   const progress = useAppSelector((state) => state.post.progress);
   const dispatch = useAppDispatch();
-  const { primaryText, secondaryText, background } = theme.colors;
+  const { primaryText, background } = theme.colors;
   const height = useItemHeight();
 
-  const handleSavePost = () => {
+  const checkErrors = useCallback(() => {
     //check to make sure all forms have been filled
     if (questionText.length > 0) {
       setFormComplete(true);
     } else if (!formErrors.includes(TEXT_ERROR)) {
+      setFormComplete(false);
       setFormErrors((errors: number[]) => [...errors, TEXT_ERROR]);
     }
 
+    let answerCount = 0;
+
     options.forEach((option: Option, index: number) => {
+      console.log(option);
       if (option.content.length === 0) {
         setFormComplete(false);
         if (!formErrors.includes(index)) {
@@ -59,13 +63,27 @@ export default function CreateQuestion({ route }: any) {
         //remove error
         setFormErrors((errors: number[]) => errors.filter((i: number) => i !== index));
       }
+
       if (option.isAnswer) {
-        //sets to true if question has at least one answer
-        setHasAnswer(true);
+        answerCount++;
       }
     });
 
-    if (formComplete && hasAnswer && formErrors.length === 0) {
+    console.log("=======================");
+    console.log("answerCount:", answerCount);
+    console.log("isFormComplete:", answerCount > 0 && formErrors.length === 0);
+    setHasAnswer(answerCount > 0 ? true : false);
+    setFormComplete(answerCount > 0 && formErrors.length === 0);
+
+    console.log("hasAnswer:", hasAnswer);
+    console.log("formComplete:", formComplete);
+    console.log("=======================");
+  }, [options, formComplete, formErrors, hasAnswer, setHasAnswer, setFormComplete, setFormErrors]);
+
+  const handleSavePost = () => {
+    checkErrors();
+
+    if (formComplete && hasAnswer) {
       setRequestRunning(true);
       dispatch(
         createPost({
@@ -73,7 +91,7 @@ export default function CreateQuestion({ route }: any) {
           video: route.params.source,
           title: route.params.title,
           thumbnail: route.params.sourceThumb,
-          courseId: "i4wTZ9ioTEj7dte4O9Zb",
+          courseId: route.params.courseId,
           userId,
           question: { questionText, questionOptions: options, attempts },
         })
@@ -85,7 +103,7 @@ export default function CreateQuestion({ route }: any) {
     } else if (!formComplete) {
       setFormStatus("Please fill out all fields.");
     } else {
-      setFormStatus("Error in form");
+      setFormStatus("Error in form. Please try again");
     }
   };
 
@@ -129,6 +147,7 @@ export default function CreateQuestion({ route }: any) {
                       setFormErrors((errors: number[]) =>
                         errors.filter((i: number) => i !== TEXT_ERROR)
                       );
+                      setFormStatus("");
                     }
                     setQuestionText(text);
                   }}
@@ -163,17 +182,17 @@ export default function CreateQuestion({ route }: any) {
                     <OptionFormBox
                       key={option.id}
                       setFormErrors={setFormErrors}
-                      setHasAnswer={setHasAnswer}
                       setOptions={setOptions}
                       index={index}
                       error={error}
                       option={option}
+                      // checkAnswer={checkAnswer}
                     />
                   );
                 })}
               </Box>
             </Box>
-            {(formErrors.length > 0 || !hasAnswer) && (
+            {formStatus.length > 0 && (
               <Box position='absolute' bottom={85} left={0} right={0}>
                 <Text color='error' textAlign='center'>
                   {formStatus}
@@ -198,7 +217,7 @@ export default function CreateQuestion({ route }: any) {
                 iconLeft={<Icon name='chevron-back' size={20} color='white' />}
               />
               <Button
-                variant={"success"}
+                variant='secondary'
                 label='Post'
                 tall
                 width={SCREEN_WIDTH * 0.41}

@@ -11,6 +11,7 @@ import ProfileStack from "./ProfileStack";
 import CreateStack from "./CreateStack";
 import CreateQuestion from "../components/organisms/create/CreateQuestion";
 import CreateCourse from "../components/organisms/create/CreateCourse";
+import SavePostScreen from "../components/organisms/create/SavePost";
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -90,7 +91,7 @@ export default function BottomTabsNavigator() {
           ),
         }}
         name='LearningStack'
-        component={CreateCourse}
+        component={CreateQuestion}
       />
 
       <BottomTabs.Screen

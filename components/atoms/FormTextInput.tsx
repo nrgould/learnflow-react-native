@@ -8,9 +8,7 @@ import {
   createVariant,
   spacing,
   SpacingProps,
-  TextProps,
   useRestyle,
-  useTheme,
   VariantProps,
 } from "@shopify/restyle";
 import React from "react";
@@ -38,29 +36,22 @@ type Props = SpacingProps<typeof Theme> &
   InputProps & {
     onChange?: () => void;
     label?: string;
-    // name?: string;
     disabled?: boolean;
     error?: string;
     placeholder?: string;
     variant?: string;
   };
 
-const restyleFunctions = composeRestyleFunctions([spacing, border, backgroundColor]);
+const restyleFunctions = composeRestyleFunctions<typeof Theme, Props>([
+  spacing,
+  border,
+  backgroundColor,
+]);
 
-export default function FormTextInput({
-  label,
-  disabled,
-  error,
-  value,
-  placeholder,
-  onChange,
-  // textContentType = 'none',
-  // autoCorrect = false,
-  variant = "primary",
-  ...rest
-}: Props) {
-  const props = useRestyle(restyleFunctions, { ...rest });
-  const theme = useTheme<typeof Theme>();
+export default function FormTextInput({ ...rest }: Props) {
+  const props = useRestyle(restyleFunctions, rest);
+
+  const { label, error, placeholder, onChange } = props;
 
   return (
     <Box marginVertical='xs'>
@@ -70,12 +61,7 @@ export default function FormTextInput({
         </Text>
       )}
       {error && <Text color='error'>{error}</Text>}
-      <TextInputComponent
-        {...props}
-        variant={variant}
-        placeholder={placeholder}
-        onChange={onChange}
-      />
+      <TextInputComponent {...props} placeholder={placeholder} onChange={onChange} />
     </Box>
   );
 }

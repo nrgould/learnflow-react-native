@@ -54,6 +54,7 @@ const palette = {
   springGreen: "#55F172",
   pacificBlue: "#01A7C2",
   hanPurple: "#5E2BFF",
+  mint: "#8BE8CB",
 };
 
 const theme = createTheme({
@@ -115,6 +116,7 @@ const theme = createTheme({
     springGreen: palette.springGreen,
     pacificBlue: palette.pacificBlue,
     hanPurple: palette.hanPurple,
+    mint: palette.mint,
   },
   spacing: {
     none: 0,
@@ -217,6 +219,11 @@ const theme = createTheme({
       fontSize: 16,
     },
     button_error: {
+      color: "buttonText",
+      fontFamily: "sora-semibold",
+      fontSize: 16,
+    },
+    button_outline: {
       color: "buttonText",
       fontFamily: "sora-semibold",
       fontSize: 16,
@@ -324,6 +331,11 @@ const theme = createTheme({
     tertiary: {
       backgroundColor: "grayBtn",
     },
+    outline: {
+      backgroundColor: "background",
+      borderWidth: 1,
+      borderColor: "border",
+    },
     disabled: {
       backgroundColor: "disabled",
     },
@@ -373,6 +385,9 @@ const theme = createTheme({
       fontSize: 16,
       fontWeight: "500",
     },
+    dropdown: {
+      color: "primaryText",
+    },
     search: {
       borderWidth: 1,
       borderColor: "border",
@@ -386,7 +401,7 @@ const theme = createTheme({
     },
     question: {
       backgroundColor: "primarySoft",
-      borderRadius: "s",
+      borderRadius: "xs",
       shadowColor: "secondaryDark",
       shadowOffset: { width: 0, height: 4 },
       shadowRadius: 0,

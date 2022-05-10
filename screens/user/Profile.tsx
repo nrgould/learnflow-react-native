@@ -13,6 +13,8 @@ import { Theme } from "../../theme/theme";
 import Icon from "../../components/atoms/Icon";
 import { useNavigation } from "@react-navigation/native";
 import SettingsList from "../../components/molecules/SettingsList";
+import { fetchUserCreatedCourses } from "../../store/actions/courseActions";
+import { TouchableOpacity } from "react-native";
 
 export default function Profile() {
   const [bottomSheetActive, setBottomSheetActive] = useState(false);
@@ -22,6 +24,8 @@ export default function Profile() {
   const profile = useAppSelector((state) => state.profile.currentUserProfile);
   const userId = useAppSelector((state) => state.auth.userId);
   const status = useAppSelector((state) => state.profile.status);
+  const createdCourses = useAppSelector((state) => state.course.createdCourses);
+  const courseStatus = useAppSelector((state) => state.course.status);
   const navigation = useNavigation<any>();
   const theme = useTheme<Theme>();
   const { foreground, bottomSheetBackground } = theme.colors;
@@ -37,6 +41,7 @@ export default function Profile() {
 
   useEffect(() => {
     dispatch(fetchCurrentUserAsync(userId));
+    dispatch(fetchUserCreatedCourses(userId));
     navigation.setOptions({
       headerShown: false,
     });
@@ -121,6 +126,30 @@ export default function Profile() {
               zIndex={5}
             />
           </Box>
+        </Box>
+        <Box>
+          <Text variant='cardHeader'>{profile?.displayName}'s' Created Courses</Text>
+          {createdCourses.map((course) => {
+            return (
+              <TouchableOpacity
+                key={course.id}
+                onPress={() =>
+                  navigation.navigate("CourseDetails", { courseId: course.id, title: course.title })
+                }
+              >
+                <Card
+                  borderRadius='xs'
+                  variant='primary'
+                  flexDirection='row'
+                  justifyContent='space-between'
+                  style={{ backgroundColor: course.color }}
+                >
+                  <Text fontFamily='sora-medium'>{course.title}</Text>
+                  <Icon name='arrow-forward' size={20} color='white' />
+                </Card>
+              </TouchableOpacity>
+            );
+          })}
         </Box>
       </Box>
       <BottomSheet

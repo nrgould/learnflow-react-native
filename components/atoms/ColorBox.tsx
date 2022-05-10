@@ -3,12 +3,11 @@ import { TouchableOpacity } from "react-native";
 import { SCREEN_WIDTH } from "../../theme/layout";
 import Box from "./Box";
 import Icon from "./Icon";
-import Text from "./Text";
 
 interface Props {
   selected: boolean;
   color: string;
-  setColor: React.Dispatch<React.SetStateAction<string>>;
+  setColor: (color: string) => void;
 }
 
 const SIZE = SCREEN_WIDTH / 8;
