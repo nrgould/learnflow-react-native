@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import SettingsList from "../../components/molecules/SettingsList";
 import { fetchUserCreatedCourses } from "../../store/actions/courseActions";
 import { TouchableOpacity } from "react-native";
+import { SCREEN_WIDTH } from "../../theme/layout";
 
 export default function Profile() {
   const [bottomSheetActive, setBottomSheetActive] = useState(false);
@@ -128,7 +129,7 @@ export default function Profile() {
           </Box>
         </Box>
         <Box>
-          <Text variant='cardHeader'>{profile?.displayName}'s' Created Courses</Text>
+          <Text variant='cardHeader'>{profile?.displayName}'s Created Courses</Text>
           {createdCourses.map((course) => {
             return (
               <TouchableOpacity
@@ -139,10 +140,11 @@ export default function Profile() {
               >
                 <Card
                   borderRadius='xs'
+                  padding='l'
                   variant='primary'
                   flexDirection='row'
                   justifyContent='space-between'
-                  style={{ backgroundColor: course.color }}
+                  maxWidth={SCREEN_WIDTH * 0.45}
                 >
                   <Text fontFamily='sora-medium'>{course.title}</Text>
                   <Icon name='arrow-forward' size={20} color='white' />

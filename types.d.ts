@@ -38,6 +38,7 @@ export type CourseUserType = {
 export type CourseModuleType = {
   title: string;
   id: string;
+  thumbnail: string;
 };
 
 export type CourseType = {
@@ -55,6 +56,7 @@ export type CourseType = {
 export type ModuleType = {
   title: string;
   videoUrl: string;
+  thumbUrl: string;
   creatorId: string;
   question: QuestionType;
   likeCount: number;

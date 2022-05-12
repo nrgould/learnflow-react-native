@@ -122,7 +122,7 @@ export const fetchCourseAsync = createAsyncThunk(
       const modulesSnap = await getDocs(collection(db, "courses", courseId, "modules"));
 
       const content = modulesSnap.docs.map((modDoc) => {
-        return { id: modDoc.id, title: modDoc.data().title };
+        return { id: modDoc.id, title: modDoc.data().title, thumbnail: modDoc.data().thumbURL };
       });
 
       return {
@@ -157,12 +157,13 @@ export const fetchCourseModulesAsync = createAsyncThunk(
     return modulesSnap.docs.map((modDoc) => {
       const data = modDoc.data();
       const id = modDoc.id;
-      const videoUrl = data.video_url;
-      const likeCount = data.like_count;
+      const videoUrl = data.videoUrl;
+      const thumbUrl = data.thumbUrl;
+      const likeCount = data.likeCount;
       const creatorId = data.creatorId;
       const question = data.question;
       const title = data.title;
-      return { id, videoUrl, title, likeCount, creatorId, question };
+      return { id, videoUrl, thumbUrl, title, likeCount, creatorId, question };
     });
   }
 );

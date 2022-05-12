@@ -19,7 +19,8 @@ import Icon from "../atoms/Icon";
 import { useVector } from "react-native-redash";
 
 interface Props {
-  videoURL?: any;
+  videoURL: any;
+  thumbURL: string;
   liked: boolean;
   setLiked: React.Dispatch<React.SetStateAction<boolean>>;
   currentVisibleIndex: number;
@@ -43,6 +44,7 @@ export default function FeedItemContent({
   videoPaused,
   setVideoPaused,
   parentRef,
+  thumbURL,
 }: Props) {
   const height = useItemHeight();
   const video = useRef<any>(null);
@@ -57,10 +59,9 @@ export default function FeedItemContent({
   const progressInc = width / status.durationMillis;
   const progressWidth = Math.floor(status.positionMillis * progressInc);
 
-  //   console.log(videoURL);
-
   useEffect(() => {
-    return async () => unload();
+    play();
+    return video ? () => video.current.unloadAsync() : undefined;
   }, []);
 
   useImperativeHandle(parentRef, () => ({
@@ -199,8 +200,10 @@ export default function FeedItemContent({
           ref={video}
           source={{ uri: videoURL }}
           style={{ height: height, width: "100%" }}
-          resizeMode='cover'
           isLooping
+          resizeMode='cover'
+          posterSource={{ uri: thumbURL }}
+          posterStyle={{ resizeMode: "cover", height: "100%" }}
           positionMillis={videoPos}
           isMuted={false}
           useNativeControls={false}

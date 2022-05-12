@@ -27,11 +27,10 @@ export const fetchFeedAsync = createAsyncThunk("feed/fetchFeed", async function 
   return snap.docs.map((doc) => {
     const data = doc.data();
 
-    // console.log(data.videoURL);
-
     return {
       id: doc.id,
       videoUrl: data.videoURL,
+      thumbUrl: data.thumbURL,
       title: data.title,
       likeCount: data.likeCount,
       creatorId: data.creatorId,

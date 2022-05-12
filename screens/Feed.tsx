@@ -36,7 +36,6 @@ export default function Feed({ course = false }) {
   const [currentVisibleIndex, setCurrentVisibleIndex] = useState(0);
   const [prevVisibleIndex, setPrevVisibleIndex] = useState(-1);
   const [videoPaused, setVideoPaused] = useState(false);
-  const [answered, setAnswered] = useState(false);
   const theme = useTheme<Theme>();
   const translateY = useSharedValue(0);
   const itemHeight = useItemHeight();
@@ -127,6 +126,7 @@ export default function Feed({ course = false }) {
    * @returns
    */
   const renderItem = ({ item, index }: RenderItemProps) => {
+    console.log(item);
     return (
       <FeedItem
         module={item}

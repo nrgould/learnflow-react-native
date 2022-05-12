@@ -1,5 +1,5 @@
 import { StackActions, useNavigation } from "@react-navigation/native";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import Box from "../../atoms/Box";
 import FormTextInput from "../../atoms/FormTextInput";
@@ -21,7 +21,6 @@ const TEXT_ERROR = 4;
 
 export default function CreateQuestion({ route }: any) {
   const [formErrors, setFormErrors] = useState<number[]>([]);
-  const [hasAnswer, setHasAnswer] = useState<boolean>(false);
   const [formStatus, setFormStatus] = useState<string>("");
   const [formComplete, setFormComplete] = useState<boolean>(false);
   const [questionText, setQuestionText] = useState<string>("");
@@ -34,15 +33,14 @@ export default function CreateQuestion({ route }: any) {
     { id: "04", isAnswer: false, content: "" },
   ]);
   const [requestRunning, setRequestRunning] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const userId = useAppSelector((state) => state.auth.userId);
   const progress = useAppSelector((state) => state.post.progress);
   const dispatch = useAppDispatch();
   const { primaryText, background } = theme.colors;
   const height = useItemHeight();
 
-  const checkErrors = useCallback(() => {
-    //check to make sure all forms have been filled
+  const checkErrors = () => {
     if (questionText.length > 0) {
       setFormComplete(true);
     } else if (!formErrors.includes(TEXT_ERROR)) {
@@ -50,10 +48,7 @@ export default function CreateQuestion({ route }: any) {
       setFormErrors((errors: number[]) => [...errors, TEXT_ERROR]);
     }
 
-    let answerCount = 0;
-
     options.forEach((option: Option, index: number) => {
-      console.log(option);
       if (option.content.length === 0) {
         setFormComplete(false);
         if (!formErrors.includes(index)) {
@@ -63,28 +58,31 @@ export default function CreateQuestion({ route }: any) {
         //remove error
         setFormErrors((errors: number[]) => errors.filter((i: number) => i !== index));
       }
-
-      if (option.isAnswer) {
-        answerCount++;
-      }
     });
 
-    console.log("=======================");
-    console.log("answerCount:", answerCount);
-    console.log("isFormComplete:", answerCount > 0 && formErrors.length === 0);
-    setHasAnswer(answerCount > 0 ? true : false);
-    setFormComplete(answerCount > 0 && formErrors.length === 0);
+    if (formErrors.length === 0) {
+      console.log("form complete");
+      setFormComplete(true);
+    } else {
+      setFormComplete(false);
+    }
 
-    console.log("hasAnswer:", hasAnswer);
-    console.log("formComplete:", formComplete);
-    console.log("=======================");
-  }, [options, formComplete, formErrors, hasAnswer, setHasAnswer, setFormComplete, setFormErrors]);
+    if (formComplete) {
+      return;
+      // } else if (!hasAnswer) {
+      //   setFormStatus("This question needs a correct answer!");
+    } else if (!formComplete) {
+      setFormStatus("Please fill out all fields.");
+    } else {
+      setFormStatus("Error in form. Please try again");
+    }
+  };
 
   const handleSavePost = () => {
     checkErrors();
-
-    if (formComplete && hasAnswer) {
+    if (formComplete) {
       setRequestRunning(true);
+
       dispatch(
         createPost({
           description: route.params.description,
@@ -98,12 +96,6 @@ export default function CreateQuestion({ route }: any) {
       )
         .then(() => navigation.dispatch(StackActions.popToTop()))
         .catch(() => setRequestRunning(false));
-    } else if (!hasAnswer) {
-      setFormStatus("This question needs a correct answer!");
-    } else if (!formComplete) {
-      setFormStatus("Please fill out all fields.");
-    } else {
-      setFormStatus("Error in form. Please try again");
     }
   };
 

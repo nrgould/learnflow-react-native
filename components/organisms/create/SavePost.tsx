@@ -25,8 +25,6 @@ export default function SavePostScreen({ route }: any) {
   const createdCourses = useAppSelector((state) => state.course.createdCourses);
   const userId = useAppSelector((state) => state.auth.userId);
 
-  console.log("CURRENT COURSE:", selectedCourse);
-
   useEffect(() => {
     dispatch(fetchUserCreatedCourses(userId));
   }, [dispatch]);

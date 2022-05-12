@@ -14,6 +14,7 @@ interface Props {
   setOptions: React.Dispatch<any>;
   index: number;
   error: boolean;
+  checkErrors?: () => void;
 }
 
 export default function OptionFormBox({ option, setFormErrors, setOptions, index, error }: Props) {

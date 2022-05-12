@@ -57,7 +57,7 @@ export default function CourseDetails({ route }: NavigationTypes) {
   const onFollow = () => {
     dispatch(
       followCourseAsync({
-        courseId: "i4wTZ9ioTEj7dte4O9Zb",
+        courseId: courseId || "i4wTZ9ioTEj7dte4O9Zb",
         user: user!,
         isFollowing: isFollowing!!,
       })

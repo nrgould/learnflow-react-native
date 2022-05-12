@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addDoc, collection, getFirestore } from "firebase/firestore/lite";
-import { app } from "../firebase/config";
 import uuid from "uuid-random";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { QuestionType } from "../types";
+import { app } from "../firebase/config";
 
 const db = getFirestore(app);
 
@@ -30,8 +30,8 @@ interface CreatePost {
 }
 
 /**
- * Fetches modules for the feed from firestore
- * @param {} the id of the course to fetch modules from
+ * uploads a video in firebase storage, then creates a module under the specified course referencing the video
+ * @param {data} the id of the course to fetch modules from
  * @returns {}
  */
 export const createPost = createAsyncThunk(
@@ -40,44 +40,92 @@ export const createPost = createAsyncThunk(
     try {
       const { description, video, thumbnail, courseId, userId, question, title } = data;
       let storagePostId = uuid();
-
       const storage = getStorage();
-      const storageRef = ref(storage, `post/${userId}/${storagePostId}/video`);
 
-      console.log(video);
-      
-      const uploadTask = uploadBytesResumable(storageRef, video, {
-        contentType: "video/mp4",
-        contentDisposition: "",
+      const thumbBlob: Blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+          console.log(e);
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", thumbnail, true);
+        xhr.send(null);
       });
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-          console.log("progress:", prog);
-          dispatch(setProgress(prog));
+      const videoBlob: Blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+          console.log(e);
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", video, true);
+        xhr.send(null);
+      });
+
+      const files = [
+        {
+          file: video,
+          blob: videoBlob,
+          path: `post/${userId}/${storagePostId}/video.mov`,
+          meta: {
+            contentType: "video/mp4",
+          },
         },
-        (error) => {
-          console.log("ERROR:", error);
+        {
+          file: thumbnail,
+          blob: thumbBlob,
+          path: `post/${userId}/${storagePostId}/image.jpg`,
+          meta: {
+            contentType: "image/jpg",
+          },
         },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at:", downloadURL);
-            console.log("adding to firestore");
-            const modulesRef = collection(db, "courses", courseId, "modules");
-            addDoc(modulesRef, {
-              creatorId: userId,
-              // thumbnail: thumbURL,
-              videoURL: downloadURL,
-              description,
-              likeCount: 0,
-              question,
-              title,
-            });
+      ];
+
+      const uploadedFiles = await Promise.all(
+        files.map(async ({ file, path, blob, meta }, index) => {
+          const storageRef = ref(storage, path);
+          const uploadTask = uploadBytesResumable(storageRef, blob, meta);
+          return new Promise((resolve, reject) => {
+            uploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log("progress:", Math.round(prog) + "%", "file #" + index);
+                // dispatch(setProgress(prog));
+              },
+              (error) => {
+                console.log("ERROR:", error);
+                reject(error);
+              },
+              async () => {
+                await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                  console.log("File available at:", downloadURL);
+                  resolve(downloadURL);
+                });
+              }
+            );
           });
-        }
+        })
       );
+
+      const modulesRef = collection(db, "courses", courseId, "modules");
+      await addDoc(modulesRef, {
+        creatorId: userId,
+        videoURL: uploadedFiles[0],
+        thumbURL: uploadedFiles[1],
+        description,
+        likeCount: 0,
+        question,
+        title,
+      });
     } catch (error) {
       console.log(error);
     }

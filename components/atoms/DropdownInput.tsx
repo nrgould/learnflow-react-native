@@ -6,7 +6,6 @@ import {
   color,
   ColorProps,
   composeRestyleFunctions,
-  createVariant,
   spacing,
   SpacingProps,
   useRestyle,
@@ -19,8 +18,6 @@ import Text from "./Text";
 import Icon from "./Icon";
 import { TouchableOpacity } from "react-native";
 import RestyledScrollView from "./RestyledScrollView";
-
-const inputVariant = createVariant({ themeKey: "inputVariants" });
 
 type Props = SpacingProps<typeof Theme> &
   VariantProps<typeof Theme, "inputVariants"> &
