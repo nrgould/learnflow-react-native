@@ -4,8 +4,8 @@ import React from "react";
 import CourseDetails from "../screens/course/CourseDetails";
 import Account from "../screens/user/Account";
 import Profile from "../screens/user/Profile";
-import UploadVideo from "../screens/user/UploadVideo";
 import { Theme } from "../theme/theme";
+import StudyTips from "../screens/user/StudyTips";
 
 const ProfileStackScreen = createNativeStackNavigator();
 
@@ -27,7 +27,7 @@ export default function ProfileStack() {
     >
       <ProfileStackScreen.Screen name='Profile' component={Profile} />
       <ProfileStackScreen.Screen name='Account' component={Account} />
-      <ProfileStackScreen.Screen name='UploadContent' component={UploadVideo} />
+      <ProfileStackScreen.Screen name='StudyTips' component={StudyTips} />
       <ProfileStackScreen.Screen name='CourseDetails' component={CourseDetails} />
     </ProfileStackScreen.Navigator>
   );

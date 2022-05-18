@@ -112,16 +112,16 @@ export default function CreateQuestion({ route }: any) {
   return (
     <Box flex={1} backgroundColor='background'>
       <KeyboardAvoidingView
-        contentContainerStyle={{ backgroundColor: background, flex: 1 }}
+        contentContainerStyle={{ backgroundColor: background }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
           onScroll={({ nativeEvent }) => {
             console.log(nativeEvent);
           }}
-          style={{ height: height }}
+          contentContainerStyle={{}}
         >
-          <Box flex={1} paddingTop='xl' height={height}>
+          <Box paddingTop='xl' height={height}>
             <PageHeaderBack title='Add Question' />
             <Box
               marginHorizontal='l'
@@ -197,8 +197,7 @@ export default function CreateQuestion({ route }: any) {
                 </Text>
               </Box>
             )}
-            <View style={{ flex: 1 }} />
-            <Box flex={1} />
+            {/* <Box flex={1} /> */}
             <Box
               flexDirection='row'
               alignItems='center'

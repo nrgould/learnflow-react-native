@@ -72,7 +72,7 @@ export default function Profile() {
           </Text>
           <Icon
             onPress={() => setBottomSheetActive(!bottomSheetActive)}
-            name='cog-outline'
+            name='menu-outline'
             color='activeIcon'
             size={32}
           />
@@ -129,7 +129,7 @@ export default function Profile() {
           </Box>
         </Box>
         <Box>
-          <Text variant='cardHeader'>{profile?.displayName}'s Created Courses</Text>
+          <Text variant='cardHeader'>Created Courses</Text>
           {createdCourses.map((course) => {
             return (
               <TouchableOpacity
@@ -144,7 +144,7 @@ export default function Profile() {
                   variant='primary'
                   flexDirection='row'
                   justifyContent='space-between'
-                  maxWidth={SCREEN_WIDTH * 0.45}
+                  // maxWidth={SCREEN_WIDTH * 0.45}
                 >
                   <Text fontFamily='sora-medium'>{course.title}</Text>
                   <Icon name='arrow-forward' size={20} color='white' />
