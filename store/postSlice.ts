@@ -90,7 +90,7 @@ export const createPost = createAsyncThunk(
       ];
 
       const uploadedFiles = await Promise.all(
-        files.map(async ({ file, path, blob, meta }, index) => {
+        files.map(async ({ path, blob, meta }, index) => {
           const storageRef = ref(storage, path);
           const uploadTask = uploadBytesResumable(storageRef, blob, meta);
           return new Promise((resolve, reject) => {
@@ -99,7 +99,7 @@ export const createPost = createAsyncThunk(
               (snapshot) => {
                 const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 console.log("progress:", Math.round(prog) + "%", "file #" + index);
-                // dispatch(setProgress(prog));
+                dispatch(setProgress(prog));
               },
               (error) => {
                 console.log("ERROR:", error);

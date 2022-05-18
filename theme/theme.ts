@@ -358,7 +358,7 @@ const theme = createTheme({
       backgroundColor: "errorSoft",
     },
     link: {
-      // backgroundColor: 'none',
+      backgroundColor: "background",
       marginBottom: "s",
     },
   },

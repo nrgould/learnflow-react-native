@@ -126,7 +126,6 @@ export default function Feed({ course = false }) {
    * @returns
    */
   const renderItem = ({ item, index }: RenderItemProps) => {
-    console.log(item);
     return (
       <FeedItem
         module={item}

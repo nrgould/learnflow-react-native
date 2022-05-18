@@ -23,7 +23,6 @@ export default function FeedItem({
   setVideoPaused,
 }: Props) {
   const [liked, setLiked] = useState(false);
-
   return (
     <>
       <FeedItemContent

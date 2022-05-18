@@ -26,6 +26,7 @@ export default function CreateQuestion({ route }: any) {
   const [questionText, setQuestionText] = useState<string>("");
   const [attempts, setAttempts] = useState<number>(2);
   const theme = useTheme<Theme>();
+
   const [options, setOptions] = useState<Option[]>([
     { id: "01", isAnswer: false, content: "" },
     { id: "02", isAnswer: false, content: "" },
@@ -111,10 +112,15 @@ export default function CreateQuestion({ route }: any) {
   return (
     <Box flex={1} backgroundColor='background'>
       <KeyboardAvoidingView
-        contentContainerStyle={{ backgroundColor: background }}
+        contentContainerStyle={{ backgroundColor: background, flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <ScrollView>
+        <ScrollView
+          onScroll={({ nativeEvent }) => {
+            console.log(nativeEvent);
+          }}
+          style={{ height: height }}
+        >
           <Box flex={1} paddingTop='xl' height={height}>
             <PageHeaderBack title='Add Question' />
             <Box
