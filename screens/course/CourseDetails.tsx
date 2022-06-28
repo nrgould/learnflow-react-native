@@ -17,6 +17,9 @@ import {
   fetchFollowingCourseAsync,
   followCourseAsync,
 } from "../../store/actions/courseActions";
+import { FlatGrid } from "react-native-super-grid";
+
+const ITEM_WIDTH = SCREEN_WIDTH * 0.42;
 
 export default function CourseDetails({ route }: NavigationTypes) {
   const title: string = route.params.title;
@@ -125,10 +128,18 @@ export default function CourseDetails({ route }: NavigationTypes) {
             width={SCREEN_WIDTH * 0.42}
           />
         </Box>
-        <Box marginHorizontal='l' height='100%'>
-          {course?.content.map((module, i) => {
+        <Box marginHorizontal='l' flexDirection='row' flexWrap='wrap' height='100%'>
+          {!course?.content && <Text>No content in this course.</Text>}
+          {course?.content && (
+            <FlatGrid
+              itemDimension={ITEM_WIDTH}
+              data={course!.content}
+              renderItem={({ item }) => <CourseContentItem module={item} />}
+            />
+          )}
+          {/* {course?.content.map((module, i) => {
             return <CourseContentItem key={i} module={module} />;
-          })}
+          })} */}
         </Box>
       </RestyledScrollView>
     </RestyledSafeAreaView>

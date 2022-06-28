@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { Image, ImageBackground, TouchableOpacity } from "react-native";
+import { SCREEN_WIDTH } from "../../theme/layout";
 import { CourseModuleType } from "../../types";
 import Box from "../atoms/Box";
 import Card from "../atoms/Card";
@@ -11,6 +12,8 @@ interface Props {
   module: CourseModuleType;
 }
 
+const ITEM_WIDTH = SCREEN_WIDTH * 0.42;
+
 export default function CourseContentItem({ module }: Props) {
   const navigation = useNavigation<any>();
 
@@ -19,35 +22,36 @@ export default function CourseContentItem({ module }: Props) {
   const completed = false;
   return (
     <TouchableOpacity onPress={() => navigation.navigate("CourseFeed", { id: module.id })}>
-      <Card
-        padding='m'
-        paddingHorizontal='m'
-        variant='primary'
-        flexDirection='row'
-        justifyContent='space-between'
-        alignItems='center'
-        style={{ position: "relative" }}
-      >
-        <Box flexDirection='column' alignItems='center' justifyContent='center' position='relative'>
-          <Box borderRadius='s' opacity={0.5} overflow='hidden' marginBottom='s'>
-            <Image
-              style={{ width: 120, height: 120, resizeMode: "cover" }}
-              source={{ uri: module.thumbnail }}
-            />
-          </Box>
+      <Box flexDirection='column' alignItems='center' justifyContent='center' position='relative'>
+        <ImageBackground
+          style={{
+            width: ITEM_WIDTH,
+            height: ITEM_WIDTH,
+            borderRadius: 4,
+            overflow: "hidden",
+            opacity: 0.5,
+          }}
+          source={{ uri: module.thumbnail }}
+        >
           <Text
             style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
             variant='subheader'
           >
             {module.title}
           </Text>
-        </Box>
-        {completed ? (
-          <Icon size={32} name='checkmark-sharp' color='success' />
-        ) : (
-          <Icon name='chevron-forward-outline' color='activeIcon' size={32} />
-        )}
-      </Card>
+        </ImageBackground>
+        {/* <Box borderRadius='s' opacity={0.5} overflow='hidden' marginBottom='s'>
+          <Image
+            style={{ width: ITEM_WIDTH, height: ITEM_WIDTH, resizeMode: "cover" }}
+            source={{ uri: module.thumbnail }}
+          />
+        </Box> */}
+      </Box>
+      {/* {completed ? (
+        <Icon size={32} name='checkmark-sharp' color='success' />
+      ) : (
+        <Icon name='chevron-forward-outline' color='activeIcon' size={32} />
+      )} */}
     </TouchableOpacity>
   );
 }

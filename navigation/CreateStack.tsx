@@ -3,8 +3,8 @@ import { useTheme } from "@shopify/restyle";
 
 import React from "react";
 import { Theme } from "../theme/theme";
-import SavePostScreen from "../components/organisms/create/SavePost";
 import Create from "../screens/Create";
+import SavePostScreen from "../components/organisms/create/SavePost";
 import CreateQuestion from "../components/organisms/create/CreateQuestion";
 import CreateCourse from "../components/organisms/create/CreateCourse";
 
