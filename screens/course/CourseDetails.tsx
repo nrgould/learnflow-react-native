@@ -125,7 +125,7 @@ export default function CourseDetails({ route }: NavigationTypes) {
             width={SCREEN_WIDTH * 0.42}
           />
         </Box>
-        <Box marginHorizontal='l' height='100%'>
+        <Box marginHorizontal='l' marginVertical='m' height='100%'>
           {course?.content.map((module, i) => {
             return <CourseContentItem key={i} module={module} />;
           })}

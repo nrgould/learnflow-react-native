@@ -28,7 +28,7 @@ export default function LoginForm({
   errors,
   dirty,
   isSubmitting,
-}: Props) {
+}: Readonly<Props>) {
   const theme = useTheme<Theme>();
   const { secondaryText } = theme.colors;
   return (

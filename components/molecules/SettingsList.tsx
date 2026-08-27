@@ -22,7 +22,7 @@ export default function SettingsList({ darkMode, handleSetDarkMode }: Props) {
     <Box marginHorizontal='m' marginTop={"l"}>
       <SettingsComponent
         onPress={() => navigation.navigate("StudyTips")}
-        name='information-circle-outline'
+        name='library-outline'
         label='How To Study'
       />
       <SettingsComponent
@@ -31,7 +31,7 @@ export default function SettingsList({ darkMode, handleSetDarkMode }: Props) {
         label='Account'
       />
       <SettingsComponent
-        name='moon-outline'
+        name={darkMode ? "moon" : "sunny"}
         label='Dark Mode'
         switchAction={handleSetDarkMode}
         switchValue={darkMode}
